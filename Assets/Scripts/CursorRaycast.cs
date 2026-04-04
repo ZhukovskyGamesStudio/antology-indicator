@@ -9,11 +9,10 @@ public class CursorRaycast : MonoBehaviour {
 
     private Camera _camera;
 
-
     private void LateUpdate() {
-        if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out RaycastHit hit)) {
+        if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out RaycastHit hit, 1.3f)) {
             InteractiveObj inter = hit.transform.GetComponent<InteractiveObj>();
-            if (inter != null) {
+            if (inter != null && inter.enabled) {
                 cursor.sprite = canInteract;
                 return;
             }

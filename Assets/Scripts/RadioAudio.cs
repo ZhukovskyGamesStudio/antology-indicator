@@ -11,6 +11,4 @@ public class RadioAudio : MonoBehaviour {
         curse2Source.volume = curse2Curve.Evaluate(percent);
     }
     
-    
-    
 }

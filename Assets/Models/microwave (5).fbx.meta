@@ -3,7 +3,17 @@ guid: 26c6090300af7e84dac163daf61b4fcd
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: microwave_door
+    second: {fileID: 2800000, guid: ebe349c303311364684d0b8cc7b57155, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: microwave_main
+    second: {fileID: 2800000, guid: 8dcaf4a5e24ca114bbbaeb8c7a828054, type: 3}
   materials:
     materialImportMode: 2
     materialName: 0

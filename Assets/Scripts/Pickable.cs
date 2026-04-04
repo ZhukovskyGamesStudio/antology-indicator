@@ -1,7 +1,5 @@
-using System;
 using System.Threading;
 using Cysharp.Threading.Tasks;
-using DG.Tweening;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -11,14 +9,14 @@ public class Pickable : MonoBehaviour {
     private Vector3 startingPos;
     private Quaternion startingRot;
 
-    private CancellationTokenSource _cts = new CancellationTokenSource();
+    private CancellationTokenSource _cts = new();
     public UnityEvent OnPick;
     public UnityEvent OnDrop;
+
     private void Awake() {
         startingPos = transform.position;
         startingRot = transform.rotation;
     }
-
 
     public void PickUp() {
         if (!IsPicked) {
@@ -30,14 +28,14 @@ public class Pickable : MonoBehaviour {
         IsPicked = !IsPicked;
         _cts.Cancel();
         _cts = new CancellationTokenSource();
-        MoveTo(IsPicked ? PlayerPicker.instance.pickedPos.position : startingPos,
-            IsPicked ? PlayerPicker.instance.pickedPos.rotation : startingRot
-        ).Forget();
-        
+        MoveTo().Forget();
+
         if (IsPicked) {
             OnPick?.Invoke();
+            FirstPersonController.isHolding = true;
         } else {
             OnDrop?.Invoke();
+            FirstPersonController.isHolding = false;
         }
     }
 
@@ -46,9 +44,23 @@ public class Pickable : MonoBehaviour {
             TogglePick();
         }
     }
+    
+    Vector3 start => !IsPicked ? PlayerPicker.instance.pickedPos.position : startingPos;
+    Vector3 end => IsPicked ? PlayerPicker.instance.pickedPos.position : startingPos;
+    Quaternion startq => !IsPicked ? PlayerPicker.instance.pickedPos.rotation : startingRot;
+    Quaternion endq => IsPicked ? PlayerPicker.instance.pickedPos.rotation : startingRot;
+    
+    private async UniTask MoveTo() {
+        await UniTask.WaitForSeconds(0.1f);
+       
 
-    private async UniTask MoveTo(Vector3 target, Quaternion targetRot) {
-         transform.DORotate(targetRot.eulerAngles, 0.5f).WithCancellation(_cts.Token);
-        await transform.DOMove(target, 0.5f).WithCancellation(_cts.Token);
+        float t = 0;
+        float max = 0.5f;
+        while (t <= max) {
+            t += Time.deltaTime;
+            transform.position = Vector3.Lerp(start, end, t / max);
+            transform.rotation = Quaternion.Lerp(startq, endq, t / max);
+            await UniTask.WaitForEndOfFrame(_cts.Token);
+        }
     }
 }

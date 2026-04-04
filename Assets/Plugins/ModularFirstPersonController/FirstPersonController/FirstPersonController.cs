@@ -25,6 +25,7 @@ public class FirstPersonController : MonoBehaviour
     public float fov = 60f;
     public bool invertCamera = false;
     public bool cameraCanMove = true;
+    private bool CameraCanMove => cameraCanMove && !isHolding;
     public float mouseSensitivity = 2f;
     public float maxLookAngle = 50f;
 
@@ -56,6 +57,8 @@ public class FirstPersonController : MonoBehaviour
     #region Movement Variables
 
     public bool playerCanMove = true;
+    public static bool isHolding;
+    private bool PlayerCanMove => playerCanMove && !isHolding;
     public float walkSpeed = 5f;
     public float maxVelocityChange = 10f;
 
@@ -205,7 +208,7 @@ public class FirstPersonController : MonoBehaviour
         #region Camera
 
         // Control camera movement
-        if(cameraCanMove)
+        if(CameraCanMove)
         {
             yaw = transform.localEulerAngles.y + Input.GetAxis("Mouse X") * mouseSensitivity;
 
@@ -368,7 +371,7 @@ public class FirstPersonController : MonoBehaviour
     {
         #region Movement
 
-        if (playerCanMove)
+        if (PlayerCanMove)
         {
             // Calculate how fast we should be moving
             Vector3 targetVelocity = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
