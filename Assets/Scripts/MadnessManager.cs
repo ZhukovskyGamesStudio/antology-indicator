@@ -33,6 +33,7 @@ public class MadnessManager : MonoBehaviour {
     public StoryManager StoryManager;
 
     private bool isDead;
+    public bool IsVolumesFixed;
 
     private void Start() {
         humming.Play();
@@ -75,8 +76,12 @@ public class MadnessManager : MonoBehaviour {
         ClickingPower = Mathf.Clamp(ClickingPower, 0, 100);
         Madness = Mathf.Clamp(Madness, 0, TmpMaxMadness);
 
-        UpdateSounds();
-
+        if (!IsVolumesFixed) {
+         
+            UpdateSounds();
+   
+            
+        }
         if (!isDead && Madness >= MaxMadness) {
             StoryManager.Lose();
             isDead = true;

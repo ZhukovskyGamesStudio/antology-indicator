@@ -162,9 +162,9 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 9194404420554039999, guid: 81eeabd306940b44297416389b9f0616, type: 2}
   m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 8300000, guid: 0933d06b2b1d448459145f249563d06c, type: 3}
+  m_Resource: {fileID: 8300000, guid: 0ec17fccd6bfbef4c978a19192955e00, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0
+  m_Volume: 1
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -3874,7 +3874,7 @@ GameObject:
   - component: {fileID: 694799585}
   - component: {fileID: 694799586}
   m_Layer: 0
-  m_Name: Radio
+  m_Name: RadioMadness
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5737,6 +5737,135 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1082513523}
   m_CullTransparentMesh: 1
+--- !u!1 &1095427108
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1095427109}
+  - component: {fileID: 1095427110}
+  m_Layer: 0
+  m_Name: RadioChange
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1095427109
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1095427108}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2103677448}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!82 &1095427110
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1095427108}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 9194404420554039999, guid: 81eeabd306940b44297416389b9f0616, type: 2}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 8300000, guid: 6e0464d485c34734b944d11391e77a26, type: 3}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 1
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &1110146205
 GameObject:
   m_ObjectHideFlags: 0
@@ -8083,6 +8212,7 @@ MonoBehaviour:
   ClickKey: 113
   RadioAudio: {fileID: 694799586}
   StoryManager: {fileID: 1199463263}
+  IsVolumesFixed: 0
 --- !u!1 &1682841083
 GameObject:
   m_ObjectHideFlags: 0
@@ -8572,6 +8702,18 @@ MonoBehaviour:
         m_TargetAssemblyTypeName: StoryManager, Assembly-CSharp
         m_MethodName: LogEvent
         m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: RadioSwitched
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 2103677449}
+        m_TargetAssemblyTypeName: RadioChanger, Assembly-CSharp
+        m_MethodName: ChangeToNext
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -9928,8 +10070,9 @@ GameObject:
   m_Component:
   - component: {fileID: 2103677448}
   - component: {fileID: 2103677447}
+  - component: {fileID: 2103677449}
   m_Layer: 0
-  m_Name: QuadParent
+  m_Name: Radio
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9965,8 +10108,30 @@ Transform:
   - {fileID: 1773752216}
   - {fileID: 694799585}
   - {fileID: 107736389}
+  - {fileID: 1095427109}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 110.517, z: 0}
+--- !u!114 &2103677449
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2103677446}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c69a80dc12ef4cbbbcbdc2fa064bc60b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RadioChanger
+  change: {fileID: 1095427110}
+  normal: {fileID: 22072594}
+  clips:
+  - {fileID: 8300000, guid: 0ec17fccd6bfbef4c978a19192955e00, type: 3}
+  - {fileID: 8300000, guid: 1abbdaab9f316674286957cf3af84bd8, type: 3}
+  - {fileID: 8300000, guid: a25264296d070db4b9d869d18dd4b075, type: 3}
+  - {fileID: 8300000, guid: 1abbdaab9f316674286957cf3af84bd8, type: 3}
+  - {fileID: 8300000, guid: 0ec17fccd6bfbef4c978a19192955e00, type: 3}
+  - {fileID: 8300000, guid: 0933d06b2b1d448459145f249563d06c, type: 3}
 --- !u!1 &2104267102
 GameObject:
   m_ObjectHideFlags: 0
