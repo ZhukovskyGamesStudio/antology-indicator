@@ -10,7 +10,7 @@ public class MadnessManager : MonoBehaviour {
     public float Madness;
 
     public float MaxMadness = 100;
-
+    public float TmpMaxMadness = 100;
     public float MadnessSpeedPerS = 1;
 
     public bool IsMadnessRaising;
@@ -29,6 +29,10 @@ public class MadnessManager : MonoBehaviour {
     public KeyCode ClickKey = KeyCode.Q;
 
     public RadioAudio RadioAudio;
+    
+    public StoryManager StoryManager;
+
+    private bool isDead;
 
     private void Start() {
         humming.Play();
@@ -36,13 +40,20 @@ public class MadnessManager : MonoBehaviour {
     }
 
     private void Update() {
-        if (Input.GetKeyDown(ClickKey) && (DateTime.Now - LastClickTime).TotalSeconds > ClickCooldown) {
+        if ( !isDead && Input.GetKeyDown(ClickKey) && (DateTime.Now - LastClickTime).TotalSeconds > ClickCooldown) {
             LastClickTime = DateTime.Now;
             Click();
         }
 
+        if (HummingPower <= 80) {
+            StoryManager.LogOnce("Hummed");
+        }
+        if (ClickingPower <= 70) {
+            StoryManager.LogOnce("Clicked");
+        }
+
         IsHumming = Input.GetKey(HummingKey);
-        if (IsHumming) {
+        if (!isDead && IsHumming) {
             HummingPower -= HummingChillPerS * 1.5f * Time.deltaTime;
             humming.UnPause();
         } else {
@@ -62,9 +73,14 @@ public class MadnessManager : MonoBehaviour {
 
         HummingPower = Mathf.Clamp(HummingPower, 0, 100);
         ClickingPower = Mathf.Clamp(ClickingPower, 0, 100);
-        Madness = Mathf.Clamp(Madness, 0, MaxMadness);
+        Madness = Mathf.Clamp(Madness, 0, TmpMaxMadness);
 
         UpdateSounds();
+
+        if (!isDead && Madness >= MaxMadness) {
+            StoryManager.Lose();
+            isDead = true;
+        }
     }
 
     private void UpdateSounds() {
