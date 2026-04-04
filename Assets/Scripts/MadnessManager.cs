@@ -69,8 +69,8 @@ public class MadnessManager : MonoBehaviour {
 
     private void UpdateSounds() {
         RadioAudio.SetPercent(Madness / MaxMadness);
-        humming.volume = ClickingPower / 100f;
-        clicking.volume = HummingPower / 100f;
+        humming.volume = HummingPower / 100f;
+        clicking.volume = ClickingPower / 100f;
     }
 
     public void Click() {
