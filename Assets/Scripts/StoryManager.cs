@@ -39,7 +39,7 @@ public class StoryManager : MonoBehaviour {
         storyObjectsContainer.KitchenWire.SetActive(false);
         storyObjectsContainer.LampWire.SetActive(false);
 
-        storyObjectsContainer.SinkVentil.enabled = false;
+        storyObjectsContainer.Watertap.enabled = false;
         storyObjectsContainer.FridgeDoor.enabled = false;
         storyObjectsContainer.MicrowaveDoor.enabled = false;
         FirstPersonController.isHolding = false;
@@ -203,10 +203,10 @@ public class StoryManager : MonoBehaviour {
         await UniTask.WaitUntil(() => EventsLogged.Any(l => l == "KitchenDisabled"));
         tasksUI.CompleteTask();
 
-        storyObjectsContainer.SinkVentil.enabled = true;
+        storyObjectsContainer.Watertap.enabled = true;
         storyObjectsContainer.FridgeDoor.enabled = true;
         storyObjectsContainer.MicrowaveDoor.enabled = true;
-        storyObjectsContainer.SinkVentil.enabled = true;
+        storyObjectsContainer.Watertap.enabled = true;
         storyObjectsContainer.KitchenWater.SetActive(true);
         storyObjectsContainer.KitchenWater.SetActive(true);
         radioAudio.gameObject.SetActive(false);
@@ -222,7 +222,7 @@ public class StoryManager : MonoBehaviour {
         tasksUI.CompleteTask();
         await UniTask.WaitForSeconds(5f);
 
-        storyObjectsContainer.SinkVentil.enabled = false;
+        storyObjectsContainer.Watertap.enabled = false;
         storyObjectsContainer.FridgeDoor.enabled = false;
         storyObjectsContainer.MicrowaveDoor.enabled = false;
 
