@@ -47,10 +47,19 @@ public class MadnessManager : MonoBehaviour {
 
     bool wasHumming = false;
     private void Update() {
-        if (!isDead && Input.GetKeyDown(ClickKey) && (DateTime.Now - LastClickTime).TotalSeconds > ClickCooldown) {
-            LastClickTime = DateTime.Now;
-            Click();
+     
+
+        if (!isDead) {
+            if ( Input.GetKeyDown(ClickKey) && (DateTime.Now - LastClickTime).TotalSeconds > ClickCooldown) {
+                LastClickTime = DateTime.Now;
+                Click();
+            }
+
+            if (Input.GetMouseButtonDown(0) && hud.HasHammer) {
+                hud.TriggerHit();
+            }
         }
+        
 
         if (HummingPower <= 80) {
             StoryManager.LogOnce("Hummed");
@@ -114,7 +123,7 @@ public class MadnessManager : MonoBehaviour {
     public void Click() {
         Madness -= ClickChillPerClick * 0.01f * ClickingPower;
         ClickingPower -= ClickChillPerClick * 1.5f;
-        hud.PlayClick();
+        hud.TriggerClick();
     }
 
     private void BlendHumming(bool isOn) {

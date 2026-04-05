@@ -21,7 +21,7 @@ public class StoryManager : MonoBehaviour {
     public RadioAudio radioAudio;
     public MadnessManager madnessManager;
     public StoryObjectsContainer storyObjectsContainer;
-
+    public HUD HUD;
     public bool isDropProgress = true;
     public int StartingChapter;
 
@@ -42,6 +42,7 @@ public class StoryManager : MonoBehaviour {
         storyObjectsContainer.SinkVentil.enabled = false;
         storyObjectsContainer.FridgeDoor.enabled = false;
         storyObjectsContainer.MicrowaveDoor.enabled = false;
+        FirstPersonController.isHolding = false;
 
         if (isDropProgress) {
             PlayerPrefs.SetInt("Chapter", StartingChapter);
@@ -238,8 +239,10 @@ public class StoryManager : MonoBehaviour {
 
         await UniTask.WaitUntil(() => EventsLogged.Any(l => l == "FakeUmbrella"));
 
+        HUD.SetHammer(true);
         storyObjectsContainer.NormalRooms.SetActive(false);
         storyObjectsContainer.LabirintRooms.SetActive(true);
+        
         await UniTask.WaitForSeconds(1f);
         TalkUI.Say("Пора с этим кончать");
 

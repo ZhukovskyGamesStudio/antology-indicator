@@ -126,10 +126,10 @@ TextureImporter:
       name: Melody_0
       rect:
         serializedVersion: 2
-        x: 38
-        y: 281
-        width: 160
-        height: 186
+        x: 16
+        y: 212
+        width: 131
+        height: 139
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -138,8 +138,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c07210b5c43eeb446a897aab31180387
-      internalID: 342889133
+      spriteID: b3e06e18f06e0c04386d8c1cc3e33719
+      internalID: -786769109
       vertices: []
       indices: 
       edges: []
@@ -148,10 +148,10 @@ TextureImporter:
       name: Melody_1
       rect:
         serializedVersion: 2
-        x: 266
-        y: 281
-        width: 248
-        height: 186
+        x: 201
+        y: 211
+        width: 197
+        height: 138
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -160,8 +160,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b79e9bc9c64f338469ffc035c9450127
-      internalID: 619021873
+      spriteID: 87a762fd0f20be745b30211225ac779e
+      internalID: -1181487733
       vertices: []
       indices: 
       edges: []
@@ -170,10 +170,10 @@ TextureImporter:
       name: Melody_2
       rect:
         serializedVersion: 2
-        x: 626
-        y: 276
-        width: 110
-        height: 185
+        x: 457
+        y: 213
+        width: 101
+        height: 140
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -182,8 +182,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 31bb6cebd75ae09458385a311b1b45b9
-      internalID: 938550378
+      spriteID: 73632521f0ca1014f91845592a965975
+      internalID: -836498227
       vertices: []
       indices: 
       edges: []
@@ -192,10 +192,10 @@ TextureImporter:
       name: Melody_3
       rect:
         serializedVersion: 2
-        x: 78
-        y: 50
-        width: 220
-        height: 182
+        x: 55
+        y: 35
+        width: 173
+        height: 141
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -204,8 +204,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ed070060fa6246e4eb6c1afd58a529ee
-      internalID: 1080642538
+      spriteID: 8d611013a4703444b93c21b100d9e107
+      internalID: -1464320547
       vertices: []
       indices: 
       edges: []
@@ -224,10 +224,10 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Melody_0: 342889133
-      Melody_1: 619021873
-      Melody_2: 938550378
-      Melody_3: 1080642538
+      Melody_0: -786769109
+      Melody_1: -1181487733
+      Melody_2: -836498227
+      Melody_3: -1464320547
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
