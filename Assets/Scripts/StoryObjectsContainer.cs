@@ -8,9 +8,10 @@ public class StoryObjectsContainer : MonoBehaviour {
     public ToggleOnOff Lamp;
     
     
-    public InteractiveObj SinkVentil, FridgeDoor, MicrowaveDoor;
+    public InteractiveObj SinkVentil,LampInteractive, FridgeDoor, MicrowaveDoor;
     public GameObject KitchenWater;
     public PlayAnim microwaveAnim, FridgeAnim;
+    public AudioSource fridgeOpen;
 
     public GameObject NormalRooms, LabirintRooms;
 

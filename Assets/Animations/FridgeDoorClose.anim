@@ -365,7 +365,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_IsActive
-    path: fridge_main/Audio Source
+    path: Audio Source
     classID: 1
     script: {fileID: 0}
     flags: 0
@@ -386,7 +386,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_IsActive
-    path: fridge_main/Spot Light_1
+    path: Spot Light
     classID: 1
     script: {fileID: 0}
     flags: 0
@@ -407,7 +407,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_IsActive
-    path: fridge_main/Spot Light
+    path: Spot Light_1
     classID: 1
     script: {fileID: 0}
     flags: 0
@@ -1802,7 +1802,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_IsActive
-    path: fridge_main/Audio Source
+    path: Audio Source
     classID: 1
     script: {fileID: 0}
     flags: 0
@@ -1823,7 +1823,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_IsActive
-    path: fridge_main/Spot Light_1
+    path: Spot Light
     classID: 1
     script: {fileID: 0}
     flags: 0
@@ -1844,7 +1844,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_IsActive
-    path: fridge_main/Spot Light
+    path: Spot Light_1
     classID: 1
     script: {fileID: 0}
     flags: 0

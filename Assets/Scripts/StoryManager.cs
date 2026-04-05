@@ -196,7 +196,7 @@ public class StoryManager : MonoBehaviour {
         storyObjectsContainer.KitchenWire.SetActive(true);
         storyObjectsContainer.LampWire.SetActive(true);
         storyObjectsContainer.Lamp.Set(false);
-        storyObjectsContainer.Lamp.enabled = false;
+        storyObjectsContainer.LampInteractive.enabled = false;
         await UniTask.WaitForSeconds(1.5f);
 
         tasksUI.ShowTask("Отключите чёртово радио от питания!");
@@ -213,6 +213,7 @@ public class StoryManager : MonoBehaviour {
         madnessManager.TmpMaxMadness = 50;
         storyObjectsContainer.microwaveAnim.Play();
         storyObjectsContainer.FridgeAnim.Play();
+        storyObjectsContainer.fridgeOpen.Play();
 
         await UniTask.WaitForSeconds(1.5f);
 
