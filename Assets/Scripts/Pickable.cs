@@ -3,7 +3,7 @@ using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class Pickable : MonoBehaviour {
+public class Pickable : MonoBehLogger {
     public bool IsPicked = false;
 
     private Vector3 startingPos;
@@ -44,15 +44,14 @@ public class Pickable : MonoBehaviour {
             TogglePick();
         }
     }
-    
-    Vector3 start => !IsPicked ? PlayerPicker.instance.pickedPos.position : startingPos;
-    Vector3 end => IsPicked ? PlayerPicker.instance.pickedPos.position : startingPos;
-    Quaternion startq => !IsPicked ? PlayerPicker.instance.pickedPos.rotation : startingRot;
-    Quaternion endq => IsPicked ? PlayerPicker.instance.pickedPos.rotation : startingRot;
-    
+
+    private Vector3 start => !IsPicked ? PlayerPicker.instance.pickedPos.position : startingPos;
+    private Vector3 end => IsPicked ? PlayerPicker.instance.pickedPos.position : startingPos;
+    private Quaternion startq => !IsPicked ? PlayerPicker.instance.pickedPos.rotation : startingRot;
+    private Quaternion endq => IsPicked ? PlayerPicker.instance.pickedPos.rotation : startingRot;
+
     private async UniTask MoveTo() {
         await UniTask.WaitForSeconds(0.1f);
-       
 
         float t = 0;
         float max = 0.5f;

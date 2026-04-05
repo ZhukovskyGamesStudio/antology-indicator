@@ -7,6 +7,7 @@ using UnityEngine;
 public class HUD : MonoBehaviour {
     private static readonly int Click1 = Animator.StringToHash("Click");
     private static readonly int Hit1 = Animator.StringToHash("Hit");
+    private static readonly int Swing1 = Animator.StringToHash("Swing");
     private static readonly int HasHammerHash = Animator.StringToHash("HasHammer");
     public AudioSource Click, Swing, Hit;
 
@@ -24,6 +25,14 @@ public class HUD : MonoBehaviour {
     }
     public void TriggerHit() {
         anim.SetTrigger(Hit1);
+    }
+    public void TriggerSwing() {
+        anim.SetTrigger(Swing1);
+    }
+
+    public static HUD instance;
+    private void Awake() {
+        instance = this;
     }
 
     public void SetHammer(bool isOn) {

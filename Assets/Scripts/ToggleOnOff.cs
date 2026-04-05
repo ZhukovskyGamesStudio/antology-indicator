@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class ToggleOnOff : MonoBehaviour {
+public class ToggleOnOff : MonoBehLogger {
     public GameObject target;
 
     public void Toggle() {

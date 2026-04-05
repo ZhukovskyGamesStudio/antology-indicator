@@ -8,16 +8,12 @@ public class CursorRaycast : MonoBehaviour {
     public Sprite canInteract, defaultSprite, canHit;
 
     private Camera _camera;
-    public HUD Hud;
 
     private void LateUpdate() {
-        if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out RaycastHit hit, 1.3f)) {
-            if (Hud.HasHammer) {
-                HittableObj hitt = hit.transform.GetComponent<HittableObj>();
-                if (hitt != null && hitt.enabled) {
-                    cursor.sprite = canHit;
-                    return;
-                }
+        if (Raycast(out RaycastHit hit)) {
+            if (CanHit(hit, out HittableObj toHit)) {
+                cursor.sprite = canHit;
+                return;
             }
 
             InteractiveObj inter = hit.transform.GetComponent<InteractiveObj>();
@@ -28,5 +24,20 @@ public class CursorRaycast : MonoBehaviour {
         }
 
         cursor.sprite = defaultSprite;
+    }
+
+    public static bool CanHit(RaycastHit hit, out HittableObj toHit) {
+        if (HUD.instance.HasHammer) {
+            toHit = hit.transform.GetComponent<HittableObj>();
+            if (toHit != null && toHit.enabled) {
+                return true;
+            }
+        }
+        toHit = null;
+        return false;
+    }
+
+    public static bool Raycast(out RaycastHit hit) {
+        return Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, 1.3f);
     }
 }

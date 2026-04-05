@@ -246,8 +246,14 @@ public class StoryManager : MonoBehaviour {
         await UniTask.WaitForSeconds(1f);
         TalkUI.Say("Пора с этим кончать");
 
-        await UniTask.WaitUntil(() => EventsLogged.Count(l => l.Contains("RadioHit")) >= 6);
+        await UniTask.WaitUntil(() => EventsLogged.Count(l => l.Contains("RadioHit")) >= 1);
+        TalkUI.Say("Заткнись");
+        await UniTask.WaitUntil(() => EventsLogged.Count(l => l.Contains("RadioHit")) >= 3);
+        TalkUI.Say("Заткнись, заткнись, заткнись");
+        await UniTask.WaitUntil(() => EventsLogged.Any(l => l == "RadioBroken"));
+        
         tasksUI.CompleteTask();
+        await UniTask.WaitForSeconds(1f);
         TalkUI.Say("АААААААА, неееееет. *звуки отчаяния*");
         await UniTask.WaitForSeconds(1f);
     }
@@ -258,7 +264,7 @@ public class StoryManager : MonoBehaviour {
         await UniTask.WaitUntil(() => EventsLogged.Any(l => l == "NoteFound"));
         tasksUI.ShowTask("Избавьтесь от чипа.");
 
-        await UniTask.WaitUntil(() => EventsLogged.Any(l => l == "FeatherFound"));
+        await UniTask.WaitUntil(() => EventsLogged.Any(l => l == "PepperFound"));
         await UniTask.WaitForSeconds(5f);
     }
 

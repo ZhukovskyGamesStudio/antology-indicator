@@ -45,18 +45,24 @@ public class MadnessManager : MonoBehaviour {
         humming.Pause();
     }
 
-    bool wasHumming = false;
+    private bool _wasHumming;
     private void Update() {
-     
-
-        if (!isDead) {
-            if ( Input.GetKeyDown(ClickKey) && (DateTime.Now - LastClickTime).TotalSeconds > ClickCooldown) {
+        if (!isDead && !FirstPersonController.isHolding) {
+            if (Input.GetKeyDown(ClickKey) && (DateTime.Now - LastClickTime).TotalSeconds > ClickCooldown) {
                 LastClickTime = DateTime.Now;
                 Click();
             }
 
             if (Input.GetMouseButtonDown(0) && hud.HasHammer) {
-                hud.TriggerHit();
+                if (CursorRaycast.Raycast(out RaycastHit hit)) {
+                    if (CursorRaycast.CanHit(hit, out HittableObj obj)) {
+                        obj.Hit();
+                    }
+                    hud.TriggerHit();
+                } else {
+                    hud.TriggerSwing();
+                }
+               
             }
         }
         
@@ -72,7 +78,7 @@ public class MadnessManager : MonoBehaviour {
         IsHumming = Input.GetKey(HummingKey);
         if (!isDead && IsHumming) {
             HummingPower -= HummingChillPerS * 1.5f * Time.deltaTime;
-            if (!wasHumming) {
+            if (!_wasHumming) {
                 humming.UnPause();
                 hud.SetMelody(true);
                 BlendHumming(true);
@@ -81,7 +87,7 @@ public class MadnessManager : MonoBehaviour {
         } else {
             HummingPower += RefillHumming * Time.deltaTime;
           
-            if (wasHumming) {
+            if (_wasHumming) {
                 humming.Pause();
                 hud.SetMelody(false);
                 BlendHumming(false);
@@ -111,7 +117,7 @@ public class MadnessManager : MonoBehaviour {
             isDead = true;
         }
 
-        wasHumming = IsHumming;
+        _wasHumming = IsHumming;
     }
 
     private void UpdateSounds() {
