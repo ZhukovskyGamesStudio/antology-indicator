@@ -3,6 +3,7 @@ using System.Threading;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class HUD : MonoBehaviour {
     private static readonly int Click1 = Animator.StringToHash("Click");
@@ -17,20 +18,28 @@ public class HUD : MonoBehaviour {
     public Animation melodyAnimation;
 
     private CancellationTokenSource cts = new();
-    
-    public bool HasHammer = false;
 
+    public bool HasHammer = false;
+    public static HUD instance;
+    public Image cursor;
+    
     public void TriggerClick() {
         anim.SetTrigger(Click1);
     }
+
     public void TriggerHit() {
         anim.SetTrigger(Hit1);
     }
+
     public void TriggerSwing() {
         anim.SetTrigger(Swing1);
     }
 
-    public static HUD instance;
+    public void SetCursorAndHand(bool isOn) {
+        anim.gameObject.SetActive(isOn);
+        cursor.gameObject.SetActive(isOn);
+    }
+
     private void Awake() {
         instance = this;
     }
@@ -51,7 +60,6 @@ public class HUD : MonoBehaviour {
         melodyAnimation.Play();
         melodyCanvasGroup.DOFade(isOn ? 0.1f : 0f, 0.3f).WithCancellation(cts.Token);
     }
-    
 
     public void PlaySwing() {
         Swing.Play();

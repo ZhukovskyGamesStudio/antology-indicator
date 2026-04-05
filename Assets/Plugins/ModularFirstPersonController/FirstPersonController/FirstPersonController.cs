@@ -154,6 +154,10 @@ public class FirstPersonController : MonoBehaviour
 
     void Start()
     {
+        
+        yaw = transform.localEulerAngles.y;
+        pitch = playerCamera.transform.localEulerAngles.x;
+        
         if(lockCursor)
         {
             Cursor.lockState = CursorLockMode.Locked;

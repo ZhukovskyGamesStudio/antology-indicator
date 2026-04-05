@@ -10,6 +10,7 @@ public class TalkUI : MonoBehaviour {
 
     public void Say(string text) {
         _cts?.Cancel();
+        _cts =  new CancellationTokenSource();
         SayAsync(text);
     }
 

@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 5721769611283901496}
   - component: {fileID: 2062484179426562598}
   m_Layer: 0
-  m_Name: LamoBody
+  m_Name: LampBody
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

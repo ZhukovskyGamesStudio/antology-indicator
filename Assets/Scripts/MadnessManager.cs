@@ -39,13 +39,21 @@ public class MadnessManager : MonoBehaviour {
     public bool IsVolumesFixed;
     public AudioSource FakeHummingFade;
     private CancellationTokenSource humCts = new();
+    public static MadnessManager instance;
+
+    private void Awake() {
+        instance = this;
+    }
 
     private void Start() {
         humming.Play();
-        humming.Pause();
     }
 
     private bool _wasHumming;
+
+    public void SyncHumming(float time) {
+        humming.time = time;
+    }
     private void Update() {
         if (!isDead && !FirstPersonController.isHolding) {
             if (Input.GetKeyDown(ClickKey) && (DateTime.Now - LastClickTime).TotalSeconds > ClickCooldown) {
@@ -79,7 +87,6 @@ public class MadnessManager : MonoBehaviour {
         if (!isDead && IsHumming) {
             HummingPower -= HummingChillPerS * 1.5f * Time.deltaTime;
             if (!_wasHumming) {
-                humming.UnPause();
                 hud.SetMelody(true);
                 BlendHumming(true);
             }
@@ -88,7 +95,6 @@ public class MadnessManager : MonoBehaviour {
             HummingPower += RefillHumming * Time.deltaTime;
           
             if (_wasHumming) {
-                humming.Pause();
                 hud.SetMelody(false);
                 BlendHumming(false);
             }
@@ -111,6 +117,8 @@ public class MadnessManager : MonoBehaviour {
         if (!IsVolumesFixed) {
             UpdateSounds();
         }
+        
+        humming.volume = FakeHummingFade.volume * HummingPower / 100f;
 
         if (!isDead && Madness >= MaxMadness) {
             StoryManager.Lose();
@@ -122,7 +130,6 @@ public class MadnessManager : MonoBehaviour {
 
     private void UpdateSounds() {
         RadioAudio.SetPercent(Madness / MaxMadness);
-        humming.volume = FakeHummingFade.volume * HummingPower / 100f;
         clicking.volume = ClickingPower / 100f;
     }
 
