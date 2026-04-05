@@ -232,7 +232,7 @@ GameObject:
   - component: {fileID: 6740480650194613485}
   - component: {fileID: 1947364314021034025}
   m_Layer: 0
-  m_Name: Spot Light
+  m_Name: MicrowaveLight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

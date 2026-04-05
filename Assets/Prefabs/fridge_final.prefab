@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7863587475348884594}
   - component: {fileID: 4115595422425444739}
   m_Layer: 0
-  m_Name: Spot Light
+  m_Name: FridgeLight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -139,7 +139,7 @@ GameObject:
   - component: {fileID: 6708682256669562940}
   - component: {fileID: 4678359163907753741}
   m_Layer: 0
-  m_Name: Spot Light_1
+  m_Name: FridgeLight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
