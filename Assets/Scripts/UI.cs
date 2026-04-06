@@ -42,7 +42,7 @@ public class UI : MonoBehaviour {
             
             
             Time.timeScale = EscapePanel.gameObject.activeSelf ? 0 : 1;
-            AudioListener.volume = EscapePanel.gameObject.activeSelf ? 0.2f : 1;
+            //AudioListener.volume = EscapePanel.gameObject.activeSelf ? 0.2f : 1;
             OtherUi.SetActive(!EscapePanel.gameObject.activeSelf);
             Cursor.visible = EscapePanel.gameObject.activeSelf;
             Cursor.lockState = EscapePanel.gameObject.activeSelf ? CursorLockMode.None : CursorLockMode.Locked;

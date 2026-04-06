@@ -16,7 +16,6 @@ public class StoryObjectsContainer : MonoBehaviour {
     public PlayAnim WardrobeAnim;
     public GameObject NormalRooms, LabirintRooms;
     public GameObject Radio, NextRadioPoint;
-
-    public HittableObj Pepper;
+    public List<InteractiveObj> PepperDusts;
 
 }

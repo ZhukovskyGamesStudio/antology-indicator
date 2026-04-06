@@ -18,7 +18,8 @@ public class GallucinationManager : MonoBehaviour {
 
     [Header("Chromatic Aberration")]
     public bool IsChromaticAberration = true;
-
+    public AnimationCurve aberrationCurve;
+    
     [Header("Channels Mixer")]
     public bool IsChannelMixer = true;
 
@@ -52,7 +53,7 @@ public class GallucinationManager : MonoBehaviour {
         }
 
         if (IsChromaticAberration) {
-            chromaticAberration.intensity.Override(Mathf.Lerp(chromaticAberration.intensity.value, curved, lerpSpeed));
+            chromaticAberration.intensity.Override( aberrationCurve.Evaluate(Mathf.Lerp(chromaticAberration.intensity.value, curved, lerpSpeed)));
         }
 
         if (IsDof) {

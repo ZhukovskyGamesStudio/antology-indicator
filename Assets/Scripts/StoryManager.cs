@@ -30,6 +30,7 @@ public class StoryManager : MonoBehaviour {
     }
 
     private void Start() {
+        playerMovement.playerCanMove = false;
         hintUI.ShowHint("");
         tasksUI.ShowTask("");
         madnessManager.IsMadnessRaising = false;
@@ -38,7 +39,6 @@ public class StoryManager : MonoBehaviour {
         storyObjectsContainer.FakeRadioWire.SetActive(true);
         storyObjectsContainer.KitchenWire.SetActive(false);
         storyObjectsContainer.LampWire.SetActive(false);
-        storyObjectsContainer.Pepper.gameObject.SetActive(false);
         
         storyObjectsContainer.Watertap.enabled = false;
         storyObjectsContainer.FridgeDoor.enabled = false;
@@ -46,6 +46,10 @@ public class StoryManager : MonoBehaviour {
         storyObjectsContainer.RadioOnOff.enabled = false;
         foreach (BlendItem VARIABLE in FindObjectsByType<BlendItem>(FindObjectsInactive.Include, FindObjectsSortMode.None)) {
             VARIABLE.GetComponent<InteractiveObj>().enabled = false;
+        }
+
+        foreach (var VARIABLE in storyObjectsContainer.PepperDusts) {
+            VARIABLE.enabled = false;
         }
 
         FirstPersonController.isHolding = false;
@@ -288,10 +292,18 @@ public class StoryManager : MonoBehaviour {
         await UniTask.WaitUntil(() => EventsLogged.Any(l => l == "NoteFound"));
         tasksUI.ShowTask("Избавьтесь от чипа.");
         
-        storyObjectsContainer.Pepper.gameObject.SetActive(true);
+        foreach (var VARIABLE in storyObjectsContainer.PepperDusts) {
+            VARIABLE.enabled = true;
+        }
         
-        await UniTask.WaitUntil(() => EventsLogged.Any(l => l == "PepperFound"));
-        await UniTask.WaitForSeconds(5f);
+        await UniTask.WaitUntil(() => EventsLogged.Count(l => l.Contains("PepperDust")) >= 1);
+        tasksUI.ShowTask("Избавьтесь от чипа 1/3");
+        await UniTask.WaitUntil(() => EventsLogged.Count(l => l.Contains("PepperDust")) >= 2);
+        tasksUI.ShowTask("Избавьтесь от чипа 2/3");
+        await UniTask.WaitUntil(() => EventsLogged.Count(l => l.Contains("PepperDust")) >= 3);
+        tasksUI.ShowTask("Избавьтесь от чипа 3/3");
+        tasksUI.CompleteTask();
+        await UniTask.WaitForSeconds(1f);
     }
 
     private void TeleportRadio() {

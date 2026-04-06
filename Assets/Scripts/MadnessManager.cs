@@ -66,9 +66,12 @@ public class MadnessManager : MonoBehaviour {
 
             if (Input.GetMouseButtonDown(0) && hud.HasHammer) {
                 if (CursorRaycast.Raycast(out RaycastHit hit)) {
+                    InteractiveObj inter = hit.transform.GetComponent<InteractiveObj>();
                     if (CursorRaycast.CanHit(hit, out HittableObj obj)) {
                         obj.Hit();
                         hud.TriggerHit();
+                    } else if (inter != null && inter.enabled) {
+                        hud.PlaySwing();
                     } else {
                         hud.TriggerSwing();
                     }

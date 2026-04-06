@@ -48,7 +48,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Pickable
   IsPicked: 0
-  shiftRot: {x: 0, y: 0, z: 0}
+  shiftRot: {x: -10, y: 0, z: 0}
   shiftPos: {x: 0, y: 0, z: -0.15}
   OnPick:
     m_PersistentCalls:

@@ -57,9 +57,7 @@ public class Pickable : MonoBehLogger, IDragHandler {
               PlayerPicker.instance.pickedPos.up * shiftPos.y + PlayerPicker.instance.pickedPos.forward * shiftPos.z
             : startingPos;
     private Quaternion endq => IsPicked
-        ? PlayerPicker.instance.pickedPos.rotation * Quaternion.Euler(PlayerPicker.instance.pickedPos.right * shiftRot.x +
-                                                                      PlayerPicker.instance.pickedPos.up * shiftRot.y +
-                                                                      PlayerPicker.instance.pickedPos.forward * shiftRot.z)
+        ? PlayerPicker.instance.pickedPos.rotation * Quaternion.Euler(shiftRot)
         : startingRot;
 
     private async UniTask MoveTo() {
