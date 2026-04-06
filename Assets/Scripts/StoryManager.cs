@@ -246,7 +246,12 @@ public class StoryManager : MonoBehaviour {
         await UniTask.WaitForSeconds(1.5f);
 
         tasksUI.ShowTask("Избавьтесь от шума");
+        await UniTask.WaitUntil(() => EventsLogged.Count(l => l.Contains("KitchenNoise")) >= 1);
+        tasksUI.ShowTask("Избавьтесь от шума (1 из 3)");
+        await UniTask.WaitUntil(() => EventsLogged.Count(l => l.Contains("KitchenNoise")) >= 2);
+        tasksUI.ShowTask("Избавьтесь от шума (2 из 3)");
         await UniTask.WaitUntil(() => EventsLogged.Count(l => l.Contains("KitchenNoise")) >= 3);
+        tasksUI.ShowTask("Избавьтесь от шума (3 из 3)");
         tasksUI.CompleteTask();
         await UniTask.WaitForSeconds(5f);
 
@@ -293,12 +298,11 @@ public class StoryManager : MonoBehaviour {
         tasksUI.CompleteTask();
         await UniTask.WaitForSeconds(2.5f);
         TalkUI.Say("АААААААА, неееееет. *звуки отчаяния*");
-        await UniTask.WaitForSeconds(5f);
+        await UniTask.WaitForSeconds(4f);
     }
 
     private async UniTask ChipChapter() {
-        TalkUI.Say("Что это за бумажка?");
-        await UniTask.WaitForSeconds(1.5f);
+       
         tasksUI.ShowTask("Прочитайте записку.");
         
         await UniTask.WaitUntil(() => EventsLogged.Any(l => l == "NoteFound"));

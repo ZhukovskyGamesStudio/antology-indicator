@@ -36,7 +36,7 @@ public class LoadingManager : MonoBehaviour {
     }
 
     private async UniTask LoadGameScene() {
-        _sceneName = "GameScene";
+        _sceneName = "MainMenu";
         var op = SceneManager.LoadSceneAsync(_sceneName, LoadSceneMode.Additive);
         op.allowSceneActivation = false;
 
