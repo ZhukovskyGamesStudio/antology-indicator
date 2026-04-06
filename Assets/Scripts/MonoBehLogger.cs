@@ -11,4 +11,8 @@ public class MonoBehLogger: MonoBehaviour {
     public void LogClear(string msg) {
         StoryManager.instance.LogClear(msg);
     }
+
+    public void React(string msg) {
+        TalkUI.instance.Say(msg);
+    }
 }

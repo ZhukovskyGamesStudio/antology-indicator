@@ -5,6 +5,7 @@ using Random = UnityEngine.Random;
 
 public class GallucinationManager : MonoBehaviour {
     public FirstPersonController firstPersonController;
+    public Volume volume;
     public VolumeProfile VolumeProfile;
 
     public AnimationCurve gallucinationCurve;
@@ -33,6 +34,7 @@ public class GallucinationManager : MonoBehaviour {
     private float lerpSpeed = 0.1f;
     
     private void Start() {
+        VolumeProfile = volume.profile;
         VolumeProfile.TryGet(out chromaticAberration);
         VolumeProfile.TryGet(out channelMixer);
         VolumeProfile.TryGet(out dof);
@@ -57,12 +59,12 @@ public class GallucinationManager : MonoBehaviour {
         }
 
         if (IsDof) {
-            dof.focusDistance.value = Mathf.Lerp(dof.focusDistance.value, 0.7f * (1 - curved), lerpSpeed);
+            dof.focusDistance.Override( Mathf.Lerp(dof.focusDistance.value, 0.7f * (1 - curved), lerpSpeed));
         }
 
         if (IsChannelMixer) {
-            channelMixer.blueOutBlueIn.value = Mathf.Lerp(firstPersonController.fov, Mathf.Lerp(100, 50f, curved), lerpSpeed); 
-            channelMixer.redOutBlueIn.value =  Mathf.Lerp(firstPersonController.fov, Mathf.Lerp(0, 50f, curved), lerpSpeed); 
+            channelMixer.blueOutBlueIn.Override( Mathf.Lerp(channelMixer.blueOutBlueIn.value, Mathf.Lerp(100, 50f, curved), lerpSpeed));
+            channelMixer.redOutBlueIn.Override( Mathf.Lerp(channelMixer.redOutBlueIn.value, Mathf.Lerp(0, 50f, curved), lerpSpeed));
         }
     }
 }

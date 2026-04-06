@@ -25,7 +25,7 @@ public class TalkUI : MonoBehaviour {
     private async UniTask SayAsync(string phraze) {
         back.gameObject.SetActive(true);
         text.text = phraze;
-        await UniTask.WaitForSeconds(2f, cancellationToken: _cts.Token);
+        await UniTask.WaitForSeconds(5f, cancellationToken: _cts.Token);
         text.text = "";
         back.gameObject.SetActive(false);
     }

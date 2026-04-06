@@ -216,6 +216,19 @@ MonoBehaviour:
           m_StringArgument: PepperFound
           m_BoolArgument: 1
         m_CallState: 2
+      - m_Target: {fileID: 1625648131038942083}
+        m_TargetAssemblyTypeName: InteractiveObj, Assembly-CSharp
+        m_MethodName: React
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: "\u0423 \u043C\u0435\u043D\u044F \u0430\u043B\u043B\u0435\u0440\u0433\u0433\u0438\u044F
+            \u043D\u0430 \u043F\u0435\u0440\u0435\u0446..."
+          m_BoolArgument: 1
+        m_CallState: 2
 --- !u!1 &7980730967876774502
 GameObject:
   m_ObjectHideFlags: 0
