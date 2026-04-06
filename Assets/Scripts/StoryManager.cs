@@ -38,13 +38,16 @@ public class StoryManager : MonoBehaviour {
         storyObjectsContainer.FakeRadioWire.SetActive(true);
         storyObjectsContainer.KitchenWire.SetActive(false);
         storyObjectsContainer.LampWire.SetActive(false);
-
+        storyObjectsContainer.Pepper.gameObject.SetActive(false);
+        
         storyObjectsContainer.Watertap.enabled = false;
         storyObjectsContainer.FridgeDoor.enabled = false;
         storyObjectsContainer.MicrowaveDoor.enabled = false;
         storyObjectsContainer.RadioOnOff.enabled = false;
-        
-        
+        foreach (BlendItem VARIABLE in FindObjectsByType<BlendItem>(FindObjectsInactive.Include, FindObjectsSortMode.None)) {
+            VARIABLE.GetComponent<InteractiveObj>().enabled = false;
+        }
+
         FirstPersonController.isHolding = false;
 
         if (isDropProgress) {
@@ -111,15 +114,15 @@ public class StoryManager : MonoBehaviour {
         playerMovement.playerCanMove = false;
 
         book.TogglePick();
-        
+
         //поработать над анимацией вступления
-        
+
         await UniTask.WaitForSeconds(3f);
         TalkUI.Say("Надоели уже эти подкасты, включу ка я лоу-фай");
         await UniTask.WaitForSeconds(3f);
-        tasksUI.ShowTask("Найдите музыкальную волну" + (EventsLogged.Any(l => l == "BookPicked")? "[<b>ПКМ</b> положить предмет]" :""));
+        tasksUI.ShowTask("Найдите музыкальную волну" + (EventsLogged.Any(l => l == "BookPicked") ? "[<b>ПКМ</b> положить предмет]" : ""));
         await UniTask.WaitForSeconds(1.5f);
-        
+
         await UniTask.WaitUntil(() => EventsLogged.All(l => l != "BookPicked"));
         hintUI.Hide();
         await UniTask.WaitUntil(() => EventsLogged.Any(l => l == "RadioMusic"));
@@ -148,7 +151,7 @@ public class StoryManager : MonoBehaviour {
         TalkUI.Say("То что нужно");
         storyObjectsContainer.RadioChange.enabled = false;
         await UniTask.WaitUntil(() => EventsLogged.Any(l => l == "RadioNoise"));
-    
+
         madnessManager.IsVolumesFixed = false;
         madnessManager.IsMadnessRaising = true;
         madnessManager.TmpMaxMadness = 25;
@@ -193,7 +196,7 @@ public class StoryManager : MonoBehaviour {
         madnessManager.TmpMaxMadness = 100;
         TalkUI.Say("Может кнопка выключения сломалась?");
         await UniTask.WaitForSeconds(0.5f);
-        
+
         playerMovement.playerCanMove = true;
         tasksUI.ShowTask("Отключите радио от питания [WASD]");
         await UniTask.WaitUntil(() => EventsLogged.Any(l => l == "LampDisabled"));
@@ -209,7 +212,7 @@ public class StoryManager : MonoBehaviour {
         await UniTask.WaitForSeconds(1.5f);
 
         TalkUI.Say("Хм, я же точно видел, это радио-провод...");
-        
+
         await UniTask.WaitForSeconds(1.5f);
         tasksUI.ShowTask("Отключите РАДИО от питания");
         await UniTask.WaitUntil(() => EventsLogged.Any(l => l == "KitchenDisabled"));
@@ -239,7 +242,7 @@ public class StoryManager : MonoBehaviour {
         storyObjectsContainer.MicrowaveDoor.enabled = false;
 
         madnessManager.TmpMaxMadness = 100;
-        
+
         radioAudio.gameObject.SetActive(true);
     }
 
@@ -247,7 +250,14 @@ public class StoryManager : MonoBehaviour {
         TalkUI.Say("Снова оно... Как же раскалывается головааа...");
         await UniTask.WaitForSeconds(1.5f);
         tasksUI.ShowTask("Найдите способ остановить радио");
+
+        foreach (BlendItem VARIABLE in FindObjectsByType<BlendItem>(FindObjectsInactive.Include, FindObjectsSortMode.None)) {
+            VARIABLE.GetComponent<InteractiveObj>().enabled = true;
+            VARIABLE.Blend(false);
+        }
+
         await UniTask.WaitUntil(() => EventsLogged.Any(l => l == "FakeHammer"));
+        storyObjectsContainer.WardrobeAnim.Play();
         await UniTask.WaitForSeconds(0.5f);
         TalkUI.Say("Померещилось, но кажется молоток был в прихожей");
 
@@ -257,7 +267,7 @@ public class StoryManager : MonoBehaviour {
         storyObjectsContainer.NormalRooms.SetActive(false);
         storyObjectsContainer.LabirintRooms.SetActive(true);
         TeleportRadio();
-        
+
         await UniTask.WaitForSeconds(1f);
         TalkUI.Say("Пора с ним кончать");
 
@@ -266,7 +276,7 @@ public class StoryManager : MonoBehaviour {
         await UniTask.WaitUntil(() => EventsLogged.Count(l => l.Contains("RadioHit")) >= 3);
         TalkUI.Say("Заткнись, заткнись, заткнись");
         await UniTask.WaitUntil(() => EventsLogged.Any(l => l == "RadioBroken"));
-        
+
         tasksUI.CompleteTask();
         await UniTask.WaitForSeconds(1f);
         TalkUI.Say("АААААААА, неееееет. *звуки отчаяния*");
@@ -278,7 +288,9 @@ public class StoryManager : MonoBehaviour {
 
         await UniTask.WaitUntil(() => EventsLogged.Any(l => l == "NoteFound"));
         tasksUI.ShowTask("Избавьтесь от чипа.");
-
+        
+        storyObjectsContainer.Pepper.gameObject.SetActive(true);
+        
         await UniTask.WaitUntil(() => EventsLogged.Any(l => l == "PepperFound"));
         await UniTask.WaitForSeconds(5f);
     }
@@ -292,12 +304,19 @@ public class StoryManager : MonoBehaviour {
     private async UniTask WinChapter() {
         await UniTask.WaitForSeconds(1.5f);
         playerMovement.enabled = false;
+        HUD.TriggerWin();
+        madnessManager.IsMadnessRaising = false;
+        madnessManager.DropMadness(3f).Forget();
+        
+        await UniTask.WaitForSeconds(7f);
         UI.ShowWinScreen();
     }
 
-    public void Lose() {
+    public async UniTask Lose() {
         _deathCts?.Cancel();
         playerMovement.enabled = false;
+        HUD.TriggerDeath();
+        await UniTask.WaitForSeconds(5f);
         UI.ShowLoseScreen();
     }
 }

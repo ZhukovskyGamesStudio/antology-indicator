@@ -1,20 +1,22 @@
-
-using Unity.Profiling.LowLevel.Unsafe;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class StoryObjectsContainer : MonoBehaviour {
-    public GameObject LampWire,FakeRadioWire;
+    public GameObject LampWire, FakeRadioWire;
     public GameObject KitchenWire;
     public ToggleOnOff Lamp;
     public ToggleEmission LampEmission;
     public InteractiveObj RadioChange, RadioOnOff;
-    
-    public InteractiveObj Watertap,LampInteractive, FridgeDoor, MicrowaveDoor;
+
+    public InteractiveObj Watertap, LampInteractive, FridgeDoor, MicrowaveDoor;
     public GameObject KitchenWater;
     public PlayAnim microwaveAnim, FridgeAnim;
     public AudioSource fridgeOpen;
 
+    public PlayAnim WardrobeAnim;
     public GameObject NormalRooms, LabirintRooms;
     public GameObject Radio, NextRadioPoint;
+
+    public HittableObj Pepper;
 
 }

@@ -5,10 +5,12 @@ using UnityEngine;
 
 public class HUD : MonoBehaviour {
     private static readonly int Click1 = Animator.StringToHash("Click");
+    private static readonly int Win1 = Animator.StringToHash("Win");
+    private static readonly int Death1 = Animator.StringToHash("Death");
     private static readonly int Hit1 = Animator.StringToHash("Hit");
     private static readonly int Swing1 = Animator.StringToHash("Swing");
     private static readonly int HasHammerHash = Animator.StringToHash("HasHammer");
-    public AudioSource Click, Swing, Hit;
+    public AudioSource Click, Swing, Hit, Sneeze, Death;
 
     public Animator anim;
 
@@ -21,6 +23,11 @@ public class HUD : MonoBehaviour {
     public static HUD instance;
     private CancellationTokenSource fadeCts = new();
 
+    
+    public FirstPersonController firstPersonController;
+    public Animation fpsAnim;
+    public AnimationClip sneeze, death;
+
     public void TriggerClick() {
         anim.SetTrigger(Click1);
     }
@@ -31,6 +38,14 @@ public class HUD : MonoBehaviour {
 
     public void TriggerSwing() {
         anim.SetTrigger(Swing1);
+    }
+
+    public void TriggerWin() {
+        anim.SetTrigger(Win1);
+    }
+
+    public void TriggerDeath() {
+        anim.SetTrigger(Death1);
     }
 
     public void SetCursorAndHand(bool isOn) {
@@ -67,5 +82,37 @@ public class HUD : MonoBehaviour {
 
     public void PlayHit() {
         Hit.Play();
+    }
+
+    public void PlaySneeze() {
+        Sneeze.Play();
+    }
+
+    public void PlayDeath() {
+        Death.Play();
+    }
+
+    public void PlayDeathAnim() {
+        AsyncDeath();
+    }
+
+    private async UniTask AsyncDeath() {
+        firstPersonController.cameraCanMove = false;
+        firstPersonController.playerCanMove = false;
+        var camT = Camera.main.transform;
+        await camT.DORotate(new Vector3(0, camT.eulerAngles.y, camT.eulerAngles.z), 0.7f);
+        fpsAnim.Play(death.name);
+    }
+
+    public void PlaySneezeAnim() {
+        AsyncSneeze();
+    }
+
+    private async UniTask AsyncSneeze() {
+        firstPersonController.cameraCanMove = false;
+        firstPersonController.playerCanMove = false;
+        var camT = Camera.main.transform;
+        await camT.DORotate(new Vector3(0, camT.eulerAngles.y, camT.eulerAngles.z), 0.7f);
+        fpsAnim.Play(sneeze.name);
     }
 }

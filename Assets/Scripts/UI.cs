@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class UI : MonoBehaviour {
-    public GameObject WinPanel, LosePanel, EscapePanel;
+    public GameObject WinPanel, LosePanel, EscapePanel,OtherUi;
     public FirstPersonController FirstPersonController;
     bool canMove;
     bool canRotate;
@@ -12,12 +12,14 @@ public class UI : MonoBehaviour {
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
         LosePanel.SetActive(true);
+        OtherUi.SetActive(false);
     }
 
     public void ShowWinScreen() {
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
         WinPanel.SetActive(true);
+        OtherUi.SetActive(false);
     }
 
     private void Update() {
@@ -41,7 +43,7 @@ public class UI : MonoBehaviour {
             
             Time.timeScale = EscapePanel.gameObject.activeSelf ? 0 : 1;
             AudioListener.volume = EscapePanel.gameObject.activeSelf ? 0.2f : 1;
-
+            OtherUi.SetActive(!EscapePanel.gameObject.activeSelf);
             Cursor.visible = EscapePanel.gameObject.activeSelf;
             Cursor.lockState = EscapePanel.gameObject.activeSelf ? CursorLockMode.None : CursorLockMode.Locked;
         }

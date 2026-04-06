@@ -11,8 +11,8 @@ public class BlendItem : MonoBehaviour {
     public float time = 0.4f;
 
     private void Start() {
-        rend1.material.DOFade(1, 0.01f);
-        rend2.material.DOFade(0, 0.01f);
+        rend1.material.DOFade(0, 0.01f);
+        rend2.material.DOFade(1, 0.01f);
     }
 
     public void Blend(bool isSecond) {

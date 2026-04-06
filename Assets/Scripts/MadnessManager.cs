@@ -146,4 +146,12 @@ public class MadnessManager : MonoBehaviour {
         humCts = new CancellationTokenSource();
         FakeHummingFade.DOFade(isOn ? 1 : 0f, 0.3f).WithCancellation(humCts.Token);
     }
+
+    public async UniTask DropMadness(float maxTime) {
+        float time = 0;
+        while (time > maxTime) {
+            TmpMaxMadness = Mathf.Lerp(100, 0, time / maxTime);
+            await UniTask.WaitForEndOfFrame();
+        }
+    }
 }

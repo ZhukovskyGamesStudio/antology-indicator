@@ -1,9 +1,14 @@
 fileFormatVersion: 2
-guid: e2144e7dc39695741a37d7e5cc865a41
+guid: 1d17394181e4eb4409825e9719294aac
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: socket Base Color
+    second: {fileID: 2800000, guid: 3ce4f61201b85d743931771f6c4105c4, type: 3}
   materials:
     materialImportMode: 2
     materialName: 0
