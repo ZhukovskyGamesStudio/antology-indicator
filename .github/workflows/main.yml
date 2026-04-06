@@ -144,7 +144,7 @@ jobs:
           curl -L -o butler.zip https://github.com/itchio/butler/releases/latest/download/butler-linux-amd64.zip
           unzip butler.zip
           chmod +x linux-amd64/butler
-          sudo mv butler /usr/local/bin/
+          sudo mv linux-amd64/butler /usr/local/bin/
 
       - name: Authenticate butler
         run: |
