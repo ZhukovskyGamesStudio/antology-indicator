@@ -8,4 +8,7 @@ public class MonoBehLogger: MonoBehaviour {
     public void LogOnce(string msg) {
         StoryManager.instance.LogOnce(msg);
     }
+    public void LogClear(string msg) {
+        StoryManager.instance.LogClear(msg);
+    }
 }

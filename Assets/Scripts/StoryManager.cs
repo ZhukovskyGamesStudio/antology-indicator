@@ -120,7 +120,7 @@ public class StoryManager : MonoBehaviour {
         await UniTask.WaitForSeconds(3f);
         TalkUI.Say("Надоели уже эти подкасты, включу ка я лоу-фай");
         await UniTask.WaitForSeconds(3f);
-        tasksUI.ShowTask("Найдите музыкальную волну" + (EventsLogged.Any(l => l == "BookPicked") ? "[<b>ПКМ</b> положить предмет]" : ""));
+        tasksUI.ShowTask("Найдите музыкальную волну" + (EventsLogged.Any(l => l == "BookPicked") ? "(<b>ПКМ</b> положить предмет)" : ""));
         await UniTask.WaitForSeconds(1.5f);
 
         await UniTask.WaitUntil(() => EventsLogged.All(l => l != "BookPicked"));
@@ -130,12 +130,12 @@ public class StoryManager : MonoBehaviour {
         tasksUI.CompleteTask();
         await UniTask.WaitForSeconds(1.5f);
 
-        tasksUI.ShowTask("Подпевайте радиостанции [<b>E</b>]");
+        tasksUI.ShowTask("Подпевайте радиостанции (<b>E</b>)");
         await UniTask.WaitUntil(() => EventsLogged.Any(l => l == "Hummed"));
         tasksUI.CompleteTask();
         await UniTask.WaitForSeconds(1.5f);
 
-        tasksUI.ShowTask("Щёлкайте в ритм радиостанции [<b>Q</b>]");
+        tasksUI.ShowTask("Щёлкайте в ритм радиостанции (<b>Q</b>)");
         await UniTask.WaitUntil(() => EventsLogged.Any(l => l == "Clicked"));
         tasksUI.CompleteTask();
         await UniTask.WaitForSeconds(1.5f);
@@ -185,7 +185,7 @@ public class StoryManager : MonoBehaviour {
 
         TalkUI.Say("Голова начинает кружится, надо отвлечься");
 
-        tasksUI.ShowTask("Отвлекитеcь от шума [<b>Q</b>] или [<b>E</b>]");
+        tasksUI.ShowTask("Отвлекитеcь от шума (<b>Q</b>) или (<b>E</b>)");
         await UniTask.WaitUntil(() => madnessManager.Madness < 10);
         madnessManager.IsMadnessRaising = true;
         tasksUI.CompleteTask();
@@ -198,7 +198,7 @@ public class StoryManager : MonoBehaviour {
         await UniTask.WaitForSeconds(0.5f);
 
         playerMovement.playerCanMove = true;
-        tasksUI.ShowTask("Отключите радио от питания [WASD]");
+        tasksUI.ShowTask("Отключите радио от питания (WASD)");
         await UniTask.WaitUntil(() => EventsLogged.Any(l => l == "LampDisabled"));
         tasksUI.CompleteTask();
 

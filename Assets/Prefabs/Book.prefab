@@ -48,11 +48,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Pickable
   IsPicked: 0
+  shiftRot: {x: 0, y: 0, z: 0}
+  shiftPos: {x: 0, y: 0, z: -0.15}
   OnPick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: StoryManager, Assembly-CSharp
+      - m_Target: {fileID: 4175008286083188579}
+        m_TargetAssemblyTypeName: InteractiveObj, Assembly-CSharp
         m_MethodName: LogOnce
         m_Mode: 5
         m_Arguments:
@@ -66,8 +68,8 @@ MonoBehaviour:
   OnDrop:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: StoryManager, Assembly-CSharp
+      - m_Target: {fileID: 4175008286083188579}
+        m_TargetAssemblyTypeName: InteractiveObj, Assembly-CSharp
         m_MethodName: LogClear
         m_Mode: 5
         m_Arguments:
@@ -78,6 +80,7 @@ MonoBehaviour:
           m_StringArgument: BookPicked
           m_BoolArgument: 0
         m_CallState: 2
+  rotateSpeed: 100
 --- !u!114 &4175008286083188579
 MonoBehaviour:
   m_ObjectHideFlags: 0
