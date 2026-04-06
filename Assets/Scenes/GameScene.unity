@@ -4223,8 +4223,8 @@ MonoBehaviour:
   HummingChillPerS: 3
   ClickChillPerClick: 5
   IsHumming: 0
-  RefillHumming: 1.1
-  RefillClicking: 1.1
+  RefillHumming: 1.8
+  RefillClicking: 1.8
   ClickCooldown: 0.5
   HummingKey: 101
   ClickKey: 113
@@ -6036,6 +6036,10 @@ PrefabInstance:
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: 66125b3c94ed14d40ab0037a669a5677, type: 2}
+    - target: {fileID: 1621867884029806414, guid: 4f4e7c962f838d64f98702de9983c3b2, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.628
+      objectReference: {fileID: 0}
     - target: {fileID: 2699508267607000246, guid: 4f4e7c962f838d64f98702de9983c3b2, type: 3}
       propertyPath: m_LocalPosition.y
       value: 3.33

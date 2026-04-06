@@ -168,7 +168,6 @@ public class StoryManager : MonoBehaviour {
         await UniTask.WaitUntil(() => EventsLogged.Count(l => l == "RadioSwitched") >= 4);
         tasksUI.CompleteTask();
         await UniTask.WaitForSeconds(1f);
-        madnessManager.Madness += 10;
         madnessManager.TmpMaxMadness = 45;
 
         TalkUI.Say("Ладно, почитаю в тишине");
@@ -178,7 +177,6 @@ public class StoryManager : MonoBehaviour {
         await UniTask.WaitUntil(() => EventsLogged.Any(l => l == "RadioDisabled"));
         tasksUI.CompleteTask();
         TalkUI.Say("Что?! Почему оно работает?");
-        madnessManager.Madness += 10;
         madnessManager.TmpMaxMadness = 55;
         madnessManager.IsMadnessRaising = false;
         await UniTask.WaitForSeconds(1.5f);
@@ -217,6 +215,7 @@ public class StoryManager : MonoBehaviour {
         tasksUI.ShowTask("Отключите РАДИО от питания");
         await UniTask.WaitUntil(() => EventsLogged.Any(l => l == "KitchenDisabled"));
         tasksUI.CompleteTask();
+        storyObjectsContainer.KitchenWire.SetActive(false);
 
         storyObjectsContainer.Watertap.enabled = true;
         storyObjectsContainer.FridgeDoor.enabled = true;
