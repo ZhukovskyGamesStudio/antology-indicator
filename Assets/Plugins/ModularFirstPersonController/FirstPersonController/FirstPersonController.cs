@@ -175,10 +175,11 @@ public class FirstPersonController : MonoBehaviour
 
         #region Sprint Bar
 
-        sprintBarCG = GetComponentInChildren<CanvasGroup>();
+       
 
         if(useSprintBar)
         {
+            sprintBarCG = GetComponentInChildren<CanvasGroup>();
             sprintBarBG.gameObject.SetActive(true);
             sprintBar.gameObject.SetActive(true);
 
@@ -191,14 +192,14 @@ public class FirstPersonController : MonoBehaviour
             sprintBarBG.rectTransform.sizeDelta = new Vector3(sprintBarWidth, sprintBarHeight, 0f);
             sprintBar.rectTransform.sizeDelta = new Vector3(sprintBarWidth - 2, sprintBarHeight - 2, 0f);
 
-            if(hideBarWhenFull)
+            if(hideBarWhenFull && sprintBarCG)
             {
                 sprintBarCG.alpha = 0;
             }
         }
         else
         {
-            sprintBarBG.gameObject.SetActive(false);
+            sprintBarBG?.gameObject.SetActive(false);
             sprintBar.gameObject.SetActive(false);
         }
 
@@ -427,7 +428,7 @@ public class FirstPersonController : MonoBehaviour
             {
                 isSprinting = false;
 
-                if (hideBarWhenFull && sprintRemaining == sprintDuration)
+                if (hideBarWhenFull && sprintRemaining == sprintDuration && sprintBarCG)
                 {
                     sprintBarCG.alpha -= 3 * Time.deltaTime;
                 }

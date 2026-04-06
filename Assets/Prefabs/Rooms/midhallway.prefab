@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 8796715020152850395}
   - component: {fileID: 2003839575423839475}
   - component: {fileID: 1025113261793458130}
+  - component: {fileID: 5480572372221948567}
   m_Layer: 0
   m_Name: midhallway
   m_TagString: Untagged
@@ -90,3 +91,25 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &5480572372221948567
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5411034198690094647}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -7822797269417891961, guid: f860a6b2db0a53a438bdfaca58008bfa, type: 3}

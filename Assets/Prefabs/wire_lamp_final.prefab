@@ -48,9 +48,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: fff58fe0b92ec1c44b839d37f40949fe, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: a49b6d89c3413ce4088139430062c836, type: 2}
     - target: {fileID: 919132149155446097, guid: fff58fe0b92ec1c44b839d37f40949fe, type: 3}
       propertyPath: m_Name
       value: wire_lamp_final
+      objectReference: {fileID: 0}
+    - target: {fileID: 2969244679656547268, guid: fff58fe0b92ec1c44b839d37f40949fe, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2969244679656547268, guid: fff58fe0b92ec1c44b839d37f40949fe, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'

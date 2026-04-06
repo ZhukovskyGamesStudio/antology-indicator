@@ -121,6 +121,10 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: -0.487
       objectReference: {fileID: 0}
+    - target: {fileID: 3406306369159013629, guid: f3ca7d4e75cb2ad4cb73784be3637abe, type: 3}
+      propertyPath: shiftRot.x
+      value: 15
+      objectReference: {fileID: 0}
     - target: {fileID: 4709494966427757138, guid: f3ca7d4e75cb2ad4cb73784be3637abe, type: 3}
       propertyPath: m_Name
       value: livingroom

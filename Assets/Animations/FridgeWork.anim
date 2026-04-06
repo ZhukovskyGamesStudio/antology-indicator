@@ -1196,7 +1196,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_IsActive
-    path: Spot Light
+    path: FridgeLight1
     classID: 1
     script: {fileID: 0}
     flags: 0
@@ -1280,7 +1280,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_IsActive
-    path: Spot Light_1
+    path: FridgeLight2
     classID: 1
     script: {fileID: 0}
     flags: 0
@@ -5720,7 +5720,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_IsActive
-    path: Spot Light
+    path: FridgeLight1
     classID: 1
     script: {fileID: 0}
     flags: 0
@@ -5804,7 +5804,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_IsActive
-    path: Spot Light_1
+    path: FridgeLight2
     classID: 1
     script: {fileID: 0}
     flags: 0

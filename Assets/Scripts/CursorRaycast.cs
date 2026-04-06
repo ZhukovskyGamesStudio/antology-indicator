@@ -45,4 +45,7 @@ public class CursorRaycast : MonoBehaviour {
     public static bool Raycast(out RaycastHit hit) {
         return Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, RangeStatic);
     }
+    public static bool IsInRange(Transform obj) {
+        return (Camera.main.transform.position - obj.position).magnitude< RangeStatic;
+    }
 }

@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
@@ -42,12 +41,12 @@ public class RadioChanger : MonoBehLogger {
         await UniTask.WaitForSeconds(0.75f);
         change.Pause();
         LogOnce("RadioSwitched");
-       
+
         if (_clipIndex < clips.Count - 2) {
             normal.clip = clips[_clipIndex];
             normal.time = Random.Range(0.1f, 10f);
             normal.Play();
-        } else if (_clipIndex == clips.Count-1) {
+        } else if (_clipIndex == clips.Count - 1) {
             normal.clip = clips[_clipIndex];
             normal.Play();
             normal.time = Random.Range(0.1f, 10f);
@@ -60,16 +59,18 @@ public class RadioChanger : MonoBehLogger {
 
         if (_clipIndex == RadioMusic) {
             LogOnce("RadioMusic");
-            MadnessManager.instance.SyncHumming( normal.time);
+            MadnessManager.instance.SyncHumming(normal.time);
         }
+
         isChanging = false;
     }
 
     private async UniTask BlendToNoise() {
         isBlending = true;
-        float time = 10f;
+        await UniTask.WaitForSeconds(4f);
+        float time = 10;
         normal.DOFade(0, time);
-        await noise.DOFade(0.3f, time);
+        await noise.DOFade(0.5f, time);
         LogOnce("RadioNoise");
         isBlending = false;
     }

@@ -9,6 +9,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: -9058065558209574390, guid: 94fc953e6b1a40f48b6b05a9e6037710, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -9058065558209574390, guid: 94fc953e6b1a40f48b6b05a9e6037710, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: a49b6d89c3413ce4088139430062c836, type: 2}
@@ -52,6 +56,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 94fc953e6b1a40f48b6b05a9e6037710, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: a49b6d89c3413ce4088139430062c836, type: 2}
     - target: {fileID: 919132149155446097, guid: 94fc953e6b1a40f48b6b05a9e6037710, type: 3}
       propertyPath: m_Name
       value: wire_radio_final

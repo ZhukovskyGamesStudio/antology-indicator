@@ -12,8 +12,6 @@ GameObject:
   - component: {fileID: 4379949315766604232}
   - component: {fileID: 5319784931915745506}
   - component: {fileID: 3874249061728221727}
-  - component: {fileID: 7157867806926342408}
-  - component: {fileID: 4042675280229531937}
   m_Layer: 6
   m_Name: Hammer
   m_TagString: Untagged
@@ -115,46 +113,6 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &7157867806926342408
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1621049880356925890}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 164dcbf52469186408828bc46022539e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::InteractiveObj
-  OnClick:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 4042675280229531937}
-        m_TargetAssemblyTypeName: ToggleOnOff, Assembly-CSharp
-        m_MethodName: Toggle
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
---- !u!114 &4042675280229531937
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1621049880356925890}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b65d2db72a094e0e9eb0d64840c26a38, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ToggleOnOff
-  target: {fileID: 0}
 --- !u!1 &2155071290968061023
 GameObject:
   m_ObjectHideFlags: 0
@@ -168,6 +126,7 @@ GameObject:
   - component: {fileID: 4697869659575235661}
   - component: {fileID: 6880349380911472244}
   - component: {fileID: 4274024013645122121}
+  - component: {fileID: 3893346527106383816}
   m_Layer: 6
   m_Name: FakeHammer
   m_TagString: Untagged
@@ -272,6 +231,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Pickable
   IsPicked: 0
+  shiftRot: {x: 0, y: 20, z: -30}
+  shiftPos: {x: 0, y: 0, z: -0.6}
   OnPick:
     m_PersistentCalls:
       m_Calls:
@@ -287,21 +248,9 @@ MonoBehaviour:
           m_StringArgument: FakeHammer
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1621049880356925890}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: FakeHammer
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 6456765937123499163}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
+      - m_Target: {fileID: 3893346527106383816}
+        m_TargetAssemblyTypeName: BlendItem, Assembly-CSharp
+        m_MethodName: Blend
         m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -314,21 +263,9 @@ MonoBehaviour:
   OnDrop:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1621049880356925890}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
-      - m_Target: {fileID: 6456765937123499163}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
+      - m_Target: {fileID: 3893346527106383816}
+        m_TargetAssemblyTypeName: BlendItem, Assembly-CSharp
+        m_MethodName: Blend
         m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -338,6 +275,22 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  rotateSpeed: 100
+--- !u!114 &3893346527106383816
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2155071290968061023}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f22b1354de73bc47a7ea3622b692e20, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BlendItem
+  rend1: {fileID: 5319784931915745506}
+  rend2: {fileID: 5251440316372596222}
+  time: 0.4
 --- !u!1 &6456765937123499163
 GameObject:
   m_ObjectHideFlags: 0
@@ -350,15 +303,13 @@ GameObject:
   - component: {fileID: 4789558579568922807}
   - component: {fileID: 5251440316372596222}
   - component: {fileID: 393627464464482022}
-  - component: {fileID: 2844541138592769100}
-  - component: {fileID: 332860414739044787}
   m_Layer: 6
   m_Name: Umbrella
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &8924646449690340474
 Transform:
   m_ObjectHideFlags: 0
@@ -453,43 +404,3 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &2844541138592769100
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6456765937123499163}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 164dcbf52469186408828bc46022539e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::InteractiveObj
-  OnClick:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 332860414739044787}
-        m_TargetAssemblyTypeName: ToggleOnOff, Assembly-CSharp
-        m_MethodName: Toggle
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
---- !u!114 &332860414739044787
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6456765937123499163}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b65d2db72a094e0e9eb0d64840c26a38, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ToggleOnOff
-  target: {fileID: 0}

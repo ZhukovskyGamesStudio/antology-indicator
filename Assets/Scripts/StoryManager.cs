@@ -184,17 +184,18 @@ public class StoryManager : MonoBehaviour {
 
         tasksUI.ShowTask("Отвлекитеcь от шума [<b>Q</b>] или [<b>E</b>]");
         await UniTask.WaitUntil(() => madnessManager.Madness < 10);
+        madnessManager.IsMadnessRaising = true;
         tasksUI.CompleteTask();
         await UniTask.WaitForSeconds(1.5f);
     }
 
     private async UniTask ElecticityChapter() {
         madnessManager.TmpMaxMadness = 100;
-        playerMovement.playerCanMove = true;
         TalkUI.Say("Может кнопка выключения сломалась?");
         await UniTask.WaitForSeconds(0.5f);
         
-        tasksUI.ShowTask("Отключите радио от питания");
+        playerMovement.playerCanMove = true;
+        tasksUI.ShowTask("Отключите радио от питания [WASD]");
         await UniTask.WaitUntil(() => EventsLogged.Any(l => l == "LampDisabled"));
         tasksUI.CompleteTask();
 
@@ -238,6 +239,7 @@ public class StoryManager : MonoBehaviour {
         storyObjectsContainer.MicrowaveDoor.enabled = false;
 
         madnessManager.TmpMaxMadness = 100;
+        
         radioAudio.gameObject.SetActive(true);
     }
 
