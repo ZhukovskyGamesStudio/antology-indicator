@@ -298,20 +298,28 @@ public class StoryManager : MonoBehaviour {
 
     private async UniTask ChipChapter() {
         TalkUI.Say("Что это за бумажка?");
-
+        await UniTask.WaitForSeconds(1.5f);
+        tasksUI.ShowTask("Прочитайте записку.");
+        
         await UniTask.WaitUntil(() => EventsLogged.Any(l => l == "NoteFound"));
-        tasksUI.ShowTask("Избавьтесь от чипа.");
+        tasksUI.CompleteTask();
+        
+        await UniTask.WaitForSeconds(1.5f);
+        tasksUI.ShowTask("Найдите как избавится от чипа.");
         
         foreach (var VARIABLE in storyObjectsContainer.PepperDusts) {
             VARIABLE.enabled = true;
         }
         
+        await UniTask.WaitUntil(() => EventsLogged.Count(l => l.Contains("PepperBroken")) >= 1);
+        tasksUI.ShowTask("Вдохните перец!");
+        
         await UniTask.WaitUntil(() => EventsLogged.Count(l => l.Contains("PepperDust")) >= 1);
-        tasksUI.ShowTask("Избавьтесь от чипа (1 из 3)");
+        tasksUI.ShowTask("Заставьте себя чихнуть (1 из 3)");
         await UniTask.WaitUntil(() => EventsLogged.Count(l => l.Contains("PepperDust")) >= 2);
-        tasksUI.ShowTask("Избавьтесь от чипа (2 из 3)");
+        tasksUI.ShowTask("Заставьте себя чихнуть  (2 из 3)");
         await UniTask.WaitUntil(() => EventsLogged.Count(l => l.Contains("PepperDust")) >= 3);
-        tasksUI.ShowTask("Избавьтесь от чипа (3 из 3)");
+        tasksUI.ShowTask("Заставьте себя чихнуть  (3 из 3)");
         tasksUI.CompleteTask();
         await UniTask.WaitForSeconds(1f);
     }

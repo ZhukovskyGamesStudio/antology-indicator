@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6732854812590357505}
   - component: {fileID: 6636372025174145667}
   - component: {fileID: 2602421894881983285}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: NewsPaper
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -138,7 +138,7 @@ GameObject:
   - component: {fileID: 991463660952099028}
   - component: {fileID: 8862220365012715864}
   - component: {fileID: 6312911303268188669}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Quad
   m_TagString: Untagged
   m_Icon: {fileID: 0}
