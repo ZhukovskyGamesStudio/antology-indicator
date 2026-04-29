@@ -9,10 +9,16 @@ public static class GameViewScreenshotBatch
     private const string GameScenePath = "Assets/Scenes/GameScene.unity";
     private const string OutputFolder = "Assets/Screenshots";
     private const int PostPlayWarmupFrames = 120;
+    private const double MaxTotalSeconds = 180;
+    private const double MaxWaitEnterPlaySeconds = 60;
+    private const double MaxWaitExitPlaySeconds = 90;
 
     private static int _stage;
     private static int _sceneSettleFrames;
     private static int _warmupFrames;
+    private static double _batchStartTime;
+    private static double _enterPlayRequestedTime;
+    private static double _exitPlayRequestedTime;
 
     public static void CaptureGameSceneScreenshotAndQuit()
     {
@@ -21,10 +27,26 @@ public static class GameViewScreenshotBatch
         _stage = 0;
         _sceneSettleFrames = 0;
         _warmupFrames = 0;
+        _batchStartTime = EditorApplication.timeSinceStartup;
+        _enterPlayRequestedTime = 0;
+        _exitPlayRequestedTime = 0;
+    }
+
+    private static void FailAndExit(string message)
+    {
+        Debug.LogError(message);
+        EditorApplication.update -= OnUpdate;
+        EditorApplication.Exit(1);
     }
 
     private static void OnUpdate()
     {
+        if (EditorApplication.timeSinceStartup - _batchStartTime > MaxTotalSeconds)
+        {
+            FailAndExit("Batch screenshot aborted: total time limit exceeded.");
+            return;
+        }
+
         if (_stage == 0)
         {
             EditorSceneManager.OpenScene(GameScenePath);
@@ -46,6 +68,7 @@ public static class GameViewScreenshotBatch
             }
 
             EditorApplication.isPlaying = true;
+            _enterPlayRequestedTime = EditorApplication.timeSinceStartup;
             _stage = 2;
             return;
         }
@@ -54,6 +77,13 @@ public static class GameViewScreenshotBatch
         {
             if (!EditorApplication.isPlaying)
             {
+                if (_enterPlayRequestedTime > 0
+                    && EditorApplication.timeSinceStartup - _enterPlayRequestedTime > MaxWaitEnterPlaySeconds)
+                {
+                    FailAndExit(
+                        "Batch screenshot aborted: Play Mode did not start (batch mode without license, domain reload stuck, or Play Mode blocked).");
+                }
+
                 return;
             }
 
@@ -78,6 +108,7 @@ public static class GameViewScreenshotBatch
             Debug.Log($"Batch screenshot saved: {assetPath}");
 
             EditorApplication.isPlaying = false;
+            _exitPlayRequestedTime = EditorApplication.timeSinceStartup;
             _stage = 3;
             return;
         }
@@ -86,6 +117,11 @@ public static class GameViewScreenshotBatch
         {
             if (EditorApplication.isPlaying)
             {
+                if (EditorApplication.timeSinceStartup - _exitPlayRequestedTime > MaxWaitExitPlaySeconds)
+                {
+                    FailAndExit("Batch screenshot aborted: Play Mode did not stop.");
+                }
+
                 return;
             }
 
