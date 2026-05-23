@@ -152,9 +152,12 @@ public class MadnessManager : MonoBehaviour {
 
     public async UniTask DropMadness(float maxTime) {
         float time = 0;
-        while (time > maxTime) {
+        while (time < maxTime) {
             TmpMaxMadness = Mathf.Lerp(100, 0, time / maxTime);
+            time += Time.deltaTime;
             await UniTask.WaitForEndOfFrame();
         }
+
+        TmpMaxMadness = 0;
     }
 }
