@@ -15,6 +15,14 @@ public class RadioChanger : MonoBehLogger {
 
     public int RadioMusic = 3;
 
+    // Кнопка переключения волн (тот же InteractiveObj, что StoryManager
+    // дёргает через storyObjectsContainer.RadioChange). Нужна, чтобы
+    // мгновенно блокировать дальнейшие клики, как только игрок попал
+    // на сюжетно важную волну — иначе игрок успевает перекрутить дальше
+    // до того, как StoryManager среагирует на событие в следующем кадре.
+    [SerializeField]
+    private InteractiveObj changeInteractive;
+
     private void Start() {
         change.Play();
         change.Pause();
@@ -52,7 +60,8 @@ public class RadioChanger : MonoBehLogger {
             normal.time = Random.Range(0.1f, 10f);
             noise.UnPause();
             LogOnce("RadioMusic2");
-            BlendToNoise();
+            LockChangeButton();
+            BlendToNoise().Forget();
         } else {
             noise.UnPause();
         }
@@ -60,9 +69,20 @@ public class RadioChanger : MonoBehLogger {
         if (_clipIndex == RadioMusic) {
             LogOnce("RadioMusic");
             MadnessManager.instance.SyncHumming(normal.time);
+            LockChangeButton();
         }
 
         isChanging = false;
+    }
+
+    private void LockChangeButton() {
+        // Мгновенно отключаем кнопку переключения, чтобы быстрый второй клик
+        // не сорвал игрока с найденной волны на следующую (clip.Stop() мгновенно
+        // обрывает текущую музыку). StoryManager сам включит её обратно
+        // через storyObjectsContainer.RadioChange.enabled = true.
+        if (changeInteractive != null) {
+            changeInteractive.enabled = false;
+        }
     }
 
     private async UniTask BlendToNoise() {
