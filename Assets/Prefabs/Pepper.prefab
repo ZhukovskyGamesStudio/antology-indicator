@@ -218,7 +218,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 1625648131038942083}
         m_TargetAssemblyTypeName: InteractiveObj, Assembly-CSharp
-        m_MethodName: ReactOnce
+        m_MethodName: React
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

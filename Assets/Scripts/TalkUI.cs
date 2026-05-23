@@ -42,6 +42,10 @@ public class TalkUI : MonoBehaviour {
 
     private readonly Queue<Entry> _queue = new Queue<Entry>();
     private bool _isPlaying;
+    // Фраза и tcs текущей проигрываемой реплики — нужны для дедупа
+    // подряд идущих одинаковых вставок.
+    private string _currentPhrase;
+    private UniTaskCompletionSource _currentTcs;
 
     /// <summary>Есть ли что-то в очереди или активно проигрывается.</summary>
     public bool IsBusy => _isPlaying || _queue.Count > 0;
@@ -57,6 +61,14 @@ public class TalkUI : MonoBehaviour {
     /// Можно не ждать (вызывать без await) - реплика всё равно отыграет.
     /// </summary>
     public UniTask Say(string phrase) {
+        // Дедуп подряд идущих дублей: если такая же реплика уже играет или
+        // уже сидит в очереди, не добавляем — возвращаем её tcs, чтобы все
+        // ожидающие синхронно завершились с реальной репликой.
+        UniTaskCompletionSource existingTcs = FindPendingTcs(phrase);
+        if (existingTcs != null) {
+            return existingTcs.Task;
+        }
+
         UniTaskCompletionSource tcs = new UniTaskCompletionSource();
         _queue.Enqueue(new Entry(phrase, tcs));
         if (!_isPlaying) {
@@ -64,6 +76,24 @@ public class TalkUI : MonoBehaviour {
         }
 
         return tcs.Task;
+    }
+
+    private UniTaskCompletionSource FindPendingTcs(string phrase) {
+        if (phrase == null) {
+            return null;
+        }
+
+        if (_currentPhrase == phrase) {
+            return _currentTcs;
+        }
+
+        foreach (Entry e in _queue) {
+            if (e.Phrase == phrase) {
+                return e.Tcs;
+            }
+        }
+
+        return null;
     }
 
     /// <summary>
@@ -96,12 +126,16 @@ public class TalkUI : MonoBehaviour {
                     continue;
                 }
 
+                _currentPhrase = e.Phrase;
+                _currentTcs = e.Tcs;
                 try {
                     await PlayOne(e.Phrase);
                 }
                 catch (System.Exception ex) {
                     Debug.LogException(ex);
                 }
+                _currentPhrase = null;
+                _currentTcs = null;
 
                 e.Tcs.TrySetResult();
             }
