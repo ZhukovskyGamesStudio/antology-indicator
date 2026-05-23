@@ -376,6 +376,19 @@ public class FirstPersonController : MonoBehaviour
     {
         #region Movement
 
+        if (!PlayerCanMove)
+        {
+            // Игрок заблокирован (например, поднял предмет). Без сброса
+            // горизонтальной инерции Rigidbody продолжает ехать — особенно
+            // заметно после установки PhysicsMaterial с нулевым трением.
+            Vector3 v = rb.linearVelocity;
+            if (v.x != 0f || v.z != 0f)
+            {
+                rb.linearVelocity = new Vector3(0f, v.y, 0f);
+            }
+            isWalking = false;
+        }
+
         if (PlayerCanMove)
         {
             // Calculate how fast we should be moving

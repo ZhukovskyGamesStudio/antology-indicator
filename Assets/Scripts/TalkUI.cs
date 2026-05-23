@@ -18,6 +18,26 @@ public class TalkUI : MonoBehaviour {
     [Tooltip("Минимальное суммарное время показа реплики (typewriter + hold).")]
     public float minTotalDuration = 3f;
 
+    [Header("Humanization")]
+    [Tooltip("Множитель паузы после . ! ? - длинный 'вдох' в конце предложения.")]
+    public float sentenceEndPauseMultiplier = 9f;
+
+    [Tooltip("Множитель паузы после , ; : - короткая пауза в середине фразы.")]
+    public float clausePauseMultiplier = 4f;
+
+    [Tooltip("Множитель паузы после тире/многоточия.")]
+    public float dashPauseMultiplier = 5f;
+
+    [Tooltip("Множитель паузы после перевода строки.")]
+    public float newlinePauseMultiplier = 6f;
+
+    [Tooltip("Множитель паузы после пробела.")]
+    public float spacePauseMultiplier = 1.2f;
+
+    [Tooltip("Случайный джиттер длительности обычной буквы (0 = ровный набор, 0.3 = +-30%).")]
+    [Range(0f, 0.5f)]
+    public float letterJitter = 0.18f;
+
     public static TalkUI instance;
 
     private readonly Queue<Entry> _queue = new Queue<Entry>();
@@ -33,8 +53,8 @@ public class TalkUI : MonoBehaviour {
     /// <summary>
     /// Ставит реплику в очередь. Возвращаемый UniTask завершается, когда
     /// именно эта реплика будет показана и снята. Реплика никогда не
-    /// прерывает уже играющую — она встаёт в очередь.
-    /// Можно не ждать (вызывать без await) — реплика всё равно отыграет.
+    /// прерывает уже играющую - она встаёт в очередь.
+    /// Можно не ждать (вызывать без await) - реплика всё равно отыграет.
     /// </summary>
     public UniTask Say(string phrase) {
         UniTaskCompletionSource tcs = new UniTaskCompletionSource();
@@ -48,7 +68,7 @@ public class TalkUI : MonoBehaviour {
 
     /// <summary>
     /// Ждёт, пока все поставленные на момент вызова реплики не отыграют.
-    /// Если очередь пуста — возвращает завершённый UniTask мгновенно.
+    /// Если очередь пуста - возвращает завершённый UniTask мгновенно.
     /// </summary>
     public UniTask WaitUntilDone() {
         if (!IsBusy) {
@@ -102,16 +122,19 @@ public class TalkUI : MonoBehaviour {
         text.ForceMeshUpdate();
         int total = text.textInfo.characterCount;
 
-        float charDelay = charsPerSecond > 0 ? 1f / charsPerSecond : 0f;
+        float baseDelay = charsPerSecond > 0 ? 1f / charsPerSecond : 0f;
+        float typed = 0f;
 
         for (int i = 1; i <= total; i++) {
             text.maxVisibleCharacters = i;
-            if (charDelay > 0) {
-                await UniTask.WaitForSeconds(charDelay);
+            if (baseDelay > 0f) {
+                char shown = text.textInfo.characterInfo[i - 1].character;
+                float delay = baseDelay * GetDelayMultiplier(shown);
+                typed += delay;
+                await UniTask.WaitForSeconds(delay);
             }
         }
 
-        float typed = total * charDelay;
         float hold = Mathf.Max(holdAfterTyping, minTotalDuration - typed);
         if (hold > 0) {
             await UniTask.WaitForSeconds(hold);
@@ -121,6 +144,40 @@ public class TalkUI : MonoBehaviour {
         text.maxVisibleCharacters = 0;
         if (back != null) {
             back.gameObject.SetActive(false);
+        }
+    }
+
+    private float GetDelayMultiplier(char c) {
+        switch (c) {
+            case '.':
+            case '!':
+            case '?':
+                return sentenceEndPauseMultiplier;
+
+            case ',':
+            case ';':
+            case ':':
+                return clausePauseMultiplier;
+
+            case '-':
+            case '–': // –
+            case '—': // —
+            case '…': // …
+                return dashPauseMultiplier;
+
+            case '\n':
+            case '\r':
+                return newlinePauseMultiplier;
+
+            case ' ':
+            case ' ': // non-breaking space
+                return spacePauseMultiplier;
+
+            default:
+                if (letterJitter <= 0f) {
+                    return 1f;
+                }
+                return 1f + Random.Range(-letterJitter, letterJitter);
         }
     }
 
