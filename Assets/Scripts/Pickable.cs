@@ -1,10 +1,18 @@
+using System.Collections.Generic;
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.EventSystems;
 
-public class Pickable : MonoBehLogger, IDragHandler {
+public class Pickable : MonoBehLogger {
+    /// <summary>
+    /// Имя слоя, на который переключается поднятый предмет.
+    /// Через этот слой работает рендеринг "поверх остального":
+    /// основная камера его исключает, отдельная HeldItemCamera
+    /// рисует только его (Clear Flags = Depth only, depth выше).
+    /// </summary>
+    public const string HeldLayerName = "HeldItem";
+
     public bool IsPicked = false;
 
     private Vector3 startingPos;
@@ -16,10 +24,18 @@ public class Pickable : MonoBehLogger, IDragHandler {
     private CancellationTokenSource _cts = new();
     public UnityEvent OnPick;
     public UnityEvent OnDrop;
-    public float rotateSpeed = 100;
+
+    [Tooltip("Скорость вращения предмета мышью (°/сек на единицу mouse delta).")]
+    public float rotateSpeed = 200f;
+
+    private int _heldLayer = -1;
+    private readonly Dictionary<Transform, int> _originalLayers = new();
+    private bool _isMoving;
+
     private void Awake() {
         startingPos = transform.position;
         startingRot = transform.rotation;
+        _heldLayer = LayerMask.NameToLayer(HeldLayerName);
     }
 
     public void PickUp() {
@@ -35,10 +51,12 @@ public class Pickable : MonoBehLogger, IDragHandler {
         MoveTo().Forget();
 
         if (IsPicked) {
+            ApplyHeldLayer();
             OnPick?.Invoke();
             FirstPersonController.isHolding = true;
             HUD.instance.SetCursorAndHand(false);
         } else {
+            RestoreOriginalLayer();
             OnDrop?.Invoke();
             FirstPersonController.isHolding = false;
             HUD.instance.SetCursorAndHand(true);
@@ -46,9 +64,51 @@ public class Pickable : MonoBehLogger, IDragHandler {
     }
 
     private void Update() {
-        if (IsPicked && Input.GetMouseButtonDown(1)) {
-            TogglePick();
+        if (!IsPicked) {
+            return;
         }
+
+        if (Input.GetMouseButtonDown(1)) {
+            TogglePick();
+            return;
+        }
+
+        // Вращение драгом ЛКМ. Пока MoveTo тянет предмет к точке в руке -
+        // не вмешиваемся, чтобы лерп не дёргало.
+        if (!_isMoving && Input.GetMouseButton(0)) {
+            float dx = Input.GetAxis("Mouse X");
+            float dy = Input.GetAxis("Mouse Y");
+            if (dx != 0f || dy != 0f) {
+                Camera cam = Camera.main;
+                Vector3 upAxis = cam != null ? cam.transform.up : Vector3.up;
+                Vector3 rightAxis = cam != null ? cam.transform.right : Vector3.right;
+                float frame = rotateSpeed * Time.deltaTime;
+                transform.RotateAround(transform.position, upAxis, -dx * frame);
+                transform.RotateAround(transform.position, rightAxis, dy * frame);
+            }
+        }
+    }
+
+    private void ApplyHeldLayer() {
+        if (_heldLayer < 0) {
+            return;
+        }
+
+        _originalLayers.Clear();
+        foreach (Transform t in GetComponentsInChildren<Transform>(true)) {
+            _originalLayers[t] = t.gameObject.layer;
+            t.gameObject.layer = _heldLayer;
+        }
+    }
+
+    private void RestoreOriginalLayer() {
+        foreach (KeyValuePair<Transform, int> kv in _originalLayers) {
+            if (kv.Key != null) {
+                kv.Key.gameObject.layer = kv.Value;
+            }
+        }
+
+        _originalLayers.Clear();
     }
 
     private Vector3 end =>
@@ -61,25 +121,21 @@ public class Pickable : MonoBehLogger, IDragHandler {
         : startingRot;
 
     private async UniTask MoveTo() {
-        await UniTask.WaitForSeconds(0.1f);
+        _isMoving = true;
+        try {
+            await UniTask.WaitForSeconds(0.1f);
 
-        float t = 0;
-        float max = 0.5f;
-        while (t <= max) {
-            t += Time.deltaTime;
-            transform.position = Vector3.Lerp(transform.position, end, t / max);
-            transform.rotation = Quaternion.Lerp(transform.rotation, endq, t / max);
-            await UniTask.WaitForEndOfFrame(_cts.Token);
+            float t = 0;
+            float max = 0.5f;
+            while (t <= max) {
+                t += Time.deltaTime;
+                transform.position = Vector3.Lerp(transform.position, end, t / max);
+                transform.rotation = Quaternion.Lerp(transform.rotation, endq, t / max);
+                await UniTask.WaitForEndOfFrame(_cts.Token);
+            }
         }
-    }
-
-    public void OnDrag(PointerEventData eventData) {
-        if (!IsPicked) {
-            return;
-        }
-        if (eventData.delta.magnitude > 0) {
-            transform.RotateAround(Vector3.up, eventData.delta.x * rotateSpeed);
-            transform.RotateAround(Vector3.right, eventData.delta.y * rotateSpeed);
+        finally {
+            _isMoving = false;
         }
     }
 }
