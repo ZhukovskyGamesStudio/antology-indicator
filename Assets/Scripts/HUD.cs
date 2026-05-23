@@ -21,7 +21,6 @@ public class HUD : MonoBehaviour {
 
     public bool HasHammer;
     public static HUD instance;
-    private CancellationTokenSource fadeCts = new();
 
     
     public FirstPersonController firstPersonController;
@@ -49,10 +48,17 @@ public class HUD : MonoBehaviour {
     }
 
     public void SetCursorAndHand(bool isOn) {
-        fadeCts?.Cancel();
-        fadeCts = new CancellationTokenSource();
-        handCg.DOFade(isOn ? 1 : 0, 0.3f).WithCancellation(fadeCts.Token);
-        cursorCg.DOFade(isOn ? 1 : 0, 0.3f).WithCancellation(fadeCts.Token);
+        // Важно убить активные tweens на target — иначе при быстром
+        // pick/drop накапливаются параллельные DOFade-ы (WithCancellation
+        // отменяет только UniTask-await, но не сам твин), и они дерутся
+        // за alpha канваса. Из-за этого рука с молотком "застревала"
+        // на промежуточной/нулевой прозрачности — animator продолжал
+        // дёргать Hit/Swing, но в невидимый канвас.
+        float target = isOn ? 1f : 0f;
+        handCg.DOKill();
+        cursorCg.DOKill();
+        handCg.DOFade(target, 0.3f);
+        cursorCg.DOFade(target, 0.3f);
     }
 
     private void Awake() {
