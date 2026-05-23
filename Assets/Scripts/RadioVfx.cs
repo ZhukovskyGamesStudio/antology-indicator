@@ -23,10 +23,14 @@ public class RadioVfx : MonoBehaviour {
     }
 
     public void LogRadioHit() {
+        if (isBroken) {
+            return;
+        }
+
         Animation.Play(hitClip.name);
         StoryManager.instance.LogEvent("RadioHit");
     }
-    
+
 
     public void LogRadioBroken() {
         if (isBroken) {
@@ -34,10 +38,21 @@ public class RadioVfx : MonoBehaviour {
         }
 
         isBroken = true;
-        BreakAsync();
+        DisableHittables();
+        BreakAsync().Forget();
+    }
+
+    private void DisableHittables() {
+        // Сразу гасим Hittable на Base и на активирующемся в анимации Broken,
+        // чтобы новые удары не прервали breakClip и не оставили Broken
+        // в промежуточном (маленьком) масштабе.
+        foreach (HittableObj hittable in GetComponentsInChildren<HittableObj>(true)) {
+            hittable.enabled = false;
+        }
     }
 
     private async UniTask BreakAsync() {
+        Animation.Stop();
         Animation.Play(breakClip.name);
         await UniTask.WaitWhile(() => Animation.isPlaying);
         radioMain.SetActive(false);
