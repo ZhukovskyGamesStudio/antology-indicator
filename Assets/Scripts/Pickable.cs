@@ -30,6 +30,7 @@ public class Pickable : MonoBehLogger {
 
     private int _heldLayer = -1;
     private readonly Dictionary<Transform, int> _originalLayers = new();
+    private readonly Dictionary<Collider, bool> _originalColliderEnabled = new();
     private bool _isMoving;
 
     private void Awake() {
@@ -52,15 +53,38 @@ public class Pickable : MonoBehLogger {
 
         if (IsPicked) {
             ApplyHeldLayer();
+            DisableColliders();
             OnPick?.Invoke();
             FirstPersonController.isHolding = true;
             HUD.instance.SetCursorAndHand(false);
         } else {
             RestoreOriginalLayer();
+            RestoreColliders();
             OnDrop?.Invoke();
             FirstPersonController.isHolding = false;
             HUD.instance.SetCursorAndHand(true);
         }
+    }
+
+    private void DisableColliders() {
+        // На время удержания предмет не должен физически взаимодействовать
+        // с игроком — иначе при вращении он толкает капсулу. Гасим все
+        // коллайдеры предмета и восстанавливаем при опускании.
+        _originalColliderEnabled.Clear();
+        foreach (Collider c in GetComponentsInChildren<Collider>(true)) {
+            _originalColliderEnabled[c] = c.enabled;
+            c.enabled = false;
+        }
+    }
+
+    private void RestoreColliders() {
+        foreach (KeyValuePair<Collider, bool> kv in _originalColliderEnabled) {
+            if (kv.Key != null) {
+                kv.Key.enabled = kv.Value;
+            }
+        }
+
+        _originalColliderEnabled.Clear();
     }
 
     private void Update() {
