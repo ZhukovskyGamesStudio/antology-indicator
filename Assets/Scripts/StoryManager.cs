@@ -122,18 +122,13 @@ public class StoryManager : MonoBehaviour {
 
         //поработать над анимацией вступления
         await UniTask.WaitForSeconds(4f);
-        TalkUI.Say("\"В мемах есть гипнотическое послание...\"\nХах, ну и бред. Кто вообще верит в такое?");
-        await UniTask.WaitForSeconds(5f); 
-        TalkUI.Say("\"Такое только мой дядька и читает.\n  Атлантида!.. Планета нибиру...");
-        await UniTask.WaitForSeconds(6f);
-        TalkUI.Say("\"Сам то в больницу уехал - как на похороны, жутко ему от врачей..\n А я после перелома как новенький!");
-        await UniTask.WaitForSeconds(6f);
-        TalkUI.Say("\"Поразвлекаюсь пока с его книжками, всё равно он нескоро вернётся.");
-        await UniTask.WaitForSeconds(5f);
-        
-        TalkUI.Say("Надоели уже эти подкасты, включу ка я лоу-фай");
+        await TalkUI.Say("\"В мемах есть гипнотическое послание...\"\nХах, ну и бред. Кто вообще верит в такое?");
+        await TalkUI.Say("\"Такое только мой дядька и читает.\n  Атлантида!.. Планета нибиру...");
+        await TalkUI.Say("\"Сам то в больницу уехал - как на похороны, жутко ему от врачей..\n А я после перелома как новенький!");
+        await TalkUI.Say("\"Поразвлекаюсь пока с его книжками, всё равно он нескоро вернётся.");
+
+        await TalkUI.Say("Надоели уже эти подкасты, включу ка я лоу-фай");
         storyObjectsContainer.RadioChange.enabled = true;
-        await UniTask.WaitForSeconds(3f);
         tasksUI.ShowTask("Найдите музыкальную волну " + (EventsLogged.Any(l => l == "BookPicked") ? "(<b>ПКМ</b> положить предмет)" : ""));
         await UniTask.WaitForSeconds(1.5f);
 
@@ -154,7 +149,7 @@ public class StoryManager : MonoBehaviour {
         tasksUI.CompleteTask();
         await UniTask.WaitForSeconds(1.5f);
 
-        TalkUI.Say("Найду лучше что-то нейтральное");
+        await TalkUI.Say("Найду лучше что-то нейтральное");
 
         tasksUI.ShowTask("Найдите расслабляющую волну");
         storyObjectsContainer.RadioChange.enabled = true;
@@ -162,7 +157,7 @@ public class StoryManager : MonoBehaviour {
         EventsLogged.Clear();
         await UniTask.WaitUntil(() => EventsLogged.Any(l => l == "RadioMusic2"));
         tasksUI.CompleteTask();
-        TalkUI.Say("То что нужно");
+        TalkUI.Say("То что нужно").Forget();
         storyObjectsContainer.RadioChange.enabled = false;
         await UniTask.WaitUntil(() => EventsLogged.Any(l => l == "RadioNoise"));
 
@@ -170,32 +165,29 @@ public class StoryManager : MonoBehaviour {
         madnessManager.IsMadnessRaising = true;
         madnessManager.TmpMaxMadness = 25;
 
-        TalkUI.Say("Старое барахло, постоянно ломается");
-        await UniTask.WaitForSeconds(1f);
+        await TalkUI.Say("Старое барахло, постоянно ломается");
         tasksUI.ShowTask("Восстановите волну");
         storyObjectsContainer.RadioChange.enabled = true;
         EventsLogged.Clear();
         await UniTask.WaitUntil(() => EventsLogged.Count(l => l == "RadioSwitched") >= 2);
         madnessManager.TmpMaxMadness = 35;
 
-        TalkUI.Say("Хм, странно");
+        TalkUI.Say("Хм, странно").Forget();
         await UniTask.WaitUntil(() => EventsLogged.Count(l => l == "RadioSwitched") >= 4);
         tasksUI.CompleteTask();
         await UniTask.WaitForSeconds(1f);
         madnessManager.TmpMaxMadness = 45;
 
-        TalkUI.Say("Ладно, почитаю в тишине");
-        await UniTask.WaitForSeconds(1f);
+        await TalkUI.Say("Ладно, почитаю в тишине");
         tasksUI.ShowTask("Выключите радио");
         storyObjectsContainer.RadioOnOff.enabled = true;
         await UniTask.WaitUntil(() => EventsLogged.Any(l => l == "RadioDisabled"));
         tasksUI.CompleteTask();
-        TalkUI.Say("Что?! Почему оно работает?");
+        await TalkUI.Say("Что?! Почему оно работает?");
         madnessManager.TmpMaxMadness = 55;
         madnessManager.IsMadnessRaising = false;
-        await UniTask.WaitForSeconds(1.5f);
 
-        TalkUI.Say("Голова начинает кружится, надо отвлечься");
+        await TalkUI.Say("Голова начинает кружится, надо отвлечься");
 
         tasksUI.ShowTask("Отвлекитеcь от шума (<b>Q</b>) или (<b>E</b>)");
         await UniTask.WaitUntil(() => madnessManager.Madness < 10);
@@ -206,8 +198,7 @@ public class StoryManager : MonoBehaviour {
 
     private async UniTask ElecticityChapter() {
         madnessManager.TmpMaxMadness = 100;
-        TalkUI.Say("Может кнопка выключения сломалась?");
-        await UniTask.WaitForSeconds(0.5f);
+        await TalkUI.Say("Может кнопка выключения сломалась?");
 
         playerMovement.playerCanMove = true;
         tasksUI.ShowTask("Отключите радио от питания (WASD)");
@@ -223,9 +214,8 @@ public class StoryManager : MonoBehaviour {
         storyObjectsContainer.LampInteractive.enabled = false;
         await UniTask.WaitForSeconds(1.5f);
 
-        TalkUI.Say("Хм, я же точно видел, это радио-провод...");
+        await TalkUI.Say("Хм, я же точно видел, это радио-провод...");
 
-        await UniTask.WaitForSeconds(1.5f);
         tasksUI.ShowTask("Отключите РАДИО от питания");
         await UniTask.WaitUntil(() => EventsLogged.Any(l => l == "KitchenDisabled"));
         tasksUI.CompleteTask();
@@ -265,8 +255,7 @@ public class StoryManager : MonoBehaviour {
     }
 
     private async UniTask BreakRadioChapter() {
-        TalkUI.Say("Снова оно... Как же раскалывается головааа...");
-        await UniTask.WaitForSeconds(1.5f);
+        await TalkUI.Say("Снова оно... Как же раскалывается головааа...");
         tasksUI.ShowTask("Найдите способ остановить радио");
 
         foreach (BlendItem VARIABLE in FindObjectsByType<BlendItem>(FindObjectsInactive.Include, FindObjectsSortMode.None)) {
@@ -277,7 +266,7 @@ public class StoryManager : MonoBehaviour {
         await UniTask.WaitUntil(() => EventsLogged.Any(l => l == "FakeHammer"));
         storyObjectsContainer.WardrobeAnim.Play();
         await UniTask.WaitForSeconds(0.5f);
-        TalkUI.Say("Померещилось, но кажется молоток был в прихожей");
+        await TalkUI.Say("Померещилось, но кажется молоток был в прихожей");
 
         await UniTask.WaitUntil(() => EventsLogged.Any(l => l == "FakeUmbrella"));
 
@@ -287,18 +276,18 @@ public class StoryManager : MonoBehaviour {
         TeleportRadio();
 
         await UniTask.WaitForSeconds(1f);
-        TalkUI.Say("Пора с ним кончать");
+        await TalkUI.Say("Пора с ним кончать");
 
         await UniTask.WaitUntil(() => EventsLogged.Count(l => l.Contains("RadioHit")) >= 1);
-        TalkUI.Say("Заткнись");
+        TalkUI.Say("Заткнись").Forget();
         await UniTask.WaitUntil(() => EventsLogged.Count(l => l.Contains("RadioHit")) >= 3);
-        TalkUI.Say("Заткнись, заткнись, заткнись");
+        TalkUI.Say("Заткнись, заткнись, заткнись").Forget();
         await UniTask.WaitUntil(() => EventsLogged.Any(l => l == "RadioBroken"));
 
         tasksUI.CompleteTask();
         await UniTask.WaitForSeconds(2.5f);
-        TalkUI.Say("АААААААА, неееееет. *звуки отчаяния*");
-        await UniTask.WaitForSeconds(4f);
+        await TalkUI.Say("АААААААА, неееееет. *звуки отчаяния*");
+        await UniTask.WaitForSeconds(2f);
     }
 
     private async UniTask ChipChapter() {

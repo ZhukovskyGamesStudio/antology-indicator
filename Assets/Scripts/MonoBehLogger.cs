@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 public class MonoBehLogger: MonoBehaviour {
@@ -13,6 +14,8 @@ public class MonoBehLogger: MonoBehaviour {
     }
 
     public void React(string msg) {
-        TalkUI.instance.Say(msg);
+        // Реакция fire-and-forget — TalkUI.Say теперь возвращает UniTask
+        // и встаёт в очередь, не перебивая активную реплику.
+        TalkUI.instance.Say(msg).Forget();
     }
 }
