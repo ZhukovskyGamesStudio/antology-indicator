@@ -38,6 +38,14 @@ public class TalkUI : MonoBehaviour {
     [Range(0f, 0.5f)]
     public float letterJitter = 0.18f;
 
+    [Header("Skip")]
+    [Tooltip("Клавиша скипа в дополнение к ЛКМ. Первое нажатие во время печати " +
+             "мгновенно дописывает реплику, второе во время hold-фазы — закрывает её.")]
+    public KeyCode skipKey = KeyCode.Space;
+
+    [Tooltip("Разрешать ли скипать реплику по ЛКМ. Если false — только по skipKey.")]
+    public bool skipOnLeftClick = true;
+
     public static TalkUI instance;
 
     private readonly Queue<Entry> _queue = new Queue<Entry>();
@@ -158,20 +166,32 @@ public class TalkUI : MonoBehaviour {
 
         float baseDelay = charsPerSecond > 0 ? 1f / charsPerSecond : 0f;
         float typed = 0f;
+        bool fastForwarded = false;
 
         for (int i = 1; i <= total; i++) {
+            if (!fastForwarded && WasSkipPressed()) {
+                fastForwarded = true;
+                text.maxVisibleCharacters = total;
+                break;
+            }
+
             text.maxVisibleCharacters = i;
             if (baseDelay > 0f) {
                 char shown = text.textInfo.characterInfo[i - 1].character;
                 float delay = baseDelay * GetDelayMultiplier(shown);
                 typed += delay;
-                await UniTask.WaitForSeconds(delay);
+                bool skipped = await WaitOrSkip(delay);
+                if (skipped) {
+                    fastForwarded = true;
+                    text.maxVisibleCharacters = total;
+                    break;
+                }
             }
         }
 
         float hold = Mathf.Max(holdAfterTyping, minTotalDuration - typed);
-        if (hold > 0) {
-            await UniTask.WaitForSeconds(hold);
+        if (hold > 0f) {
+            await WaitOrSkip(hold);
         }
 
         text.text = "";
@@ -179,6 +199,35 @@ public class TalkUI : MonoBehaviour {
         if (back != null) {
             back.gameObject.SetActive(false);
         }
+    }
+
+    /// <summary>
+    /// Ждёт указанное время, проверяя каждый кадр скип-инпут.
+    /// Возвращает true, если был нажат скип — иначе false.
+    /// </summary>
+    private async UniTask<bool> WaitOrSkip(float seconds) {
+        float remaining = seconds;
+        while (remaining > 0f) {
+            if (WasSkipPressed()) {
+                return true;
+            }
+            await UniTask.Yield();
+            remaining -= Time.deltaTime;
+        }
+
+        return false;
+    }
+
+    private bool WasSkipPressed() {
+        if (skipOnLeftClick && Input.GetMouseButtonDown(0)) {
+            return true;
+        }
+
+        if (skipKey != KeyCode.None && Input.GetKeyDown(skipKey)) {
+            return true;
+        }
+
+        return false;
     }
 
     private float GetDelayMultiplier(char c) {
