@@ -111,6 +111,11 @@ public class StoryManager : MonoBehaviour {
             await ChipChapter();
             Save(4);
         }
+        
+        if (currentChapter <= 4) {
+            await FinalChapter();
+            Save(5);
+        }
 
         await WinChapter();
     }
@@ -314,24 +319,41 @@ public class StoryManager : MonoBehaviour {
         await UniTask.WaitUntil(() => EventsLogged.Count(l => l.Contains("PepperDust")) >= 3);
         tasksUI.ShowTask("Заставьте себя чихнуть  (3 из 3)");
         tasksUI.CompleteTask();
-        await UniTask.WaitForSeconds(1f);
-    }
-
-    private void TeleportRadio() {
-        storyObjectsContainer.Radio.transform.SetParent(storyObjectsContainer.NextRadioPoint.transform);
-        storyObjectsContainer.Radio.transform.localPosition = Vector3.zero;
-        storyObjectsContainer.Radio.transform.localRotation = Quaternion.identity;
-    }
-
-    private async UniTask WinChapter() {
-        await UniTask.WaitForSeconds(1.5f);
+        
         playerMovement.enabled = false;
-        HUD.TriggerWin();
+
+        HUD.TriggerSneeze();
+        
+        await UniTask.WaitForSeconds(1f);
         madnessManager.IsMadnessRaising = false;
         madnessManager.DropMadness(3f).Forget();
+    }
+
+    private async UniTask FinalChapter() {
+        playerMovement.enabled = false;
+        //дожидаемся нажатия любой клавиши клавиатуры
+        await UniTask.WaitUntil(() => Input.anyKeyDown);
+        storyObjectsContainer.ChipOnTable.PickUp();
+        await TalkUI.Say("Теперь они меня не отследят");
         
-        await UniTask.WaitForSeconds(7f);
-        UI.ShowWinScreen();
+        playerMovement.enabled = true;
+        
+        storyObjectsContainer.ApartmentsExit.enabled = true;
+        await UniTask.WaitUntil(() => EventsLogged.Any(l => l == "ApartmentsExit"));
+        playerMovement.enabled = false;
+        //show fadeaway
+    }
+    
+    
+   
+
+    private async UniTask WinChapter() {
+        await UniTask.WaitForSeconds(2f);
+        //
+        //show fadein
+        UI.ShowTitlesScreen();
+        storyObjectsContainer.TitlesAnimation.Play();
+        
     }
 
     public async UniTask Lose() {
@@ -340,5 +362,11 @@ public class StoryManager : MonoBehaviour {
         HUD.TriggerDeath();
         await UniTask.WaitForSeconds(5f);
         UI.ShowLoseScreen();
+    }
+    
+    private void TeleportRadio() {
+        storyObjectsContainer.Radio.transform.SetParent(storyObjectsContainer.NextRadioPoint.transform);
+        storyObjectsContainer.Radio.transform.localPosition = Vector3.zero;
+        storyObjectsContainer.Radio.transform.localRotation = Quaternion.identity;
     }
 }
