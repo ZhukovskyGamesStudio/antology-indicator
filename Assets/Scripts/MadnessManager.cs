@@ -142,6 +142,7 @@ public class MadnessManager : MonoBehaviour {
         Madness -= ClickChillPerClick * 0.01f * ClickingPower;
         ClickingPower -= ClickChillPerClick * speedMultiplier * 1.5f;
         hud.TriggerClick();
+        Openable.SnapAllVisible();
     }
 
     private void BlendHumming(bool isOn) {
