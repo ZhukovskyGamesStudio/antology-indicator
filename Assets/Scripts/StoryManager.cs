@@ -39,6 +39,7 @@ public class StoryManager : MonoBehaviour {
         storyObjectsContainer.FakeRadioWire.SetActive(true);
         storyObjectsContainer.KitchenWire.SetActive(false);
         storyObjectsContainer.LampWire.SetActive(false);
+        storyObjectsContainer.ChipOnTable.gameObject.SetActive(false);
         
         storyObjectsContainer.Watertap.enabled = false;
         storyObjectsContainer.FridgeDoor.enabled = false;
@@ -90,7 +91,7 @@ public class StoryManager : MonoBehaviour {
     }
 
     private async UniTask Story() {
-        playerMovement.enabled = true;
+        playerMovement.playerCanMove = true;
         int currentChapter = PlayerPrefs.GetInt("Chapter", 0);
         if (currentChapter <= 0) {
             await TableChapter();
@@ -309,56 +310,72 @@ public class StoryManager : MonoBehaviour {
             VARIABLE.enabled = true;
         }
         
+        //TODO refactor
         await UniTask.WaitUntil(() => EventsLogged.Count(l => l.Contains("PepperBroken")) >= 1);
         tasksUI.ShowTask("Вдохните перец!");
         
-        await UniTask.WaitUntil(() => EventsLogged.Count(l => l.Contains("PepperDust")) >= 1);
+        await UniTask.WaitUntil(() => EventsLogged.Count(IsSneezeItem) >= 1);
         tasksUI.ShowTask("Заставьте себя чихнуть (1 из 3)");
-        await UniTask.WaitUntil(() => EventsLogged.Count(l => l.Contains("PepperDust")) >= 2);
+        await UniTask.WaitUntil(() => EventsLogged.Count(IsSneezeItem) >= 2);
         tasksUI.ShowTask("Заставьте себя чихнуть  (2 из 3)");
-        await UniTask.WaitUntil(() => EventsLogged.Count(l => l.Contains("PepperDust")) >= 3);
+        await UniTask.WaitUntil(() => EventsLogged.Count(IsSneezeItem) >= 3);
         tasksUI.ShowTask("Заставьте себя чихнуть  (3 из 3)");
         tasksUI.CompleteTask();
         
-        playerMovement.enabled = false;
-
+        playerMovement.playerCanMove = false;
+        storyObjectsContainer.BookMoved.gameObject.SetActive(true);
+        storyObjectsContainer.BookUnmoved.gameObject.SetActive(false);
         HUD.TriggerSneeze();
+        //teleport player to starting pos
         
-        await UniTask.WaitForSeconds(1f);
         madnessManager.IsMadnessRaising = false;
         madnessManager.DropMadness(3f).Forget();
+        await UniTask.WaitForSeconds(6f);
+    }
+
+    private bool IsSneezeItem(string l) {
+        return l.Contains("PepperDust") || l.Contains("Earstick") || l.Contains("Feather");
     }
 
     private async UniTask FinalChapter() {
-        playerMovement.enabled = false;
-        //дожидаемся нажатия любой клавиши клавиатуры
-        await UniTask.WaitUntil(() => Input.anyKeyDown);
+        playerMovement.playerCanMove = false;
+        storyObjectsContainer.BookMoved.gameObject.SetActive(true);
+        storyObjectsContainer.BookUnmoved.gameObject.SetActive(false);
+        
+        
+        storyObjectsContainer.ChipOnTable.gameObject.SetActive(true);
         storyObjectsContainer.ChipOnTable.PickUp();
+        await UniTask.WaitUntil(() => EventsLogged.Any(l => l == "ChipPuttedAway"));
         await TalkUI.Say("Теперь они меня не отследят");
         
-        playerMovement.enabled = true;
-        
+        tasksUI.ShowTask("Отправьтесь к дяде.");
+        playerMovement.playerCanMove = true;
+        await TalkUI.Say("надо добраться до дяди, и поскорее");
         storyObjectsContainer.ApartmentsExit.enabled = true;
         await UniTask.WaitUntil(() => EventsLogged.Any(l => l == "ApartmentsExit"));
-        playerMovement.enabled = false;
-        //show fadeaway
+        
+        //await TalkUI.Say("не помню как запирал дверь, но ключ точно где-то рядом");
+        //await UniTask.WaitUntil(() => EventsLogged.Any(l => l == "ApartmentsOpened"));
     }
     
     
    
 
     private async UniTask WinChapter() {
-        await UniTask.WaitForSeconds(2f);
-        //
-        //show fadein
+        playerMovement.playerCanMove = false;
+        await UI.ShowFade(1, 0.5f);
         UI.ShowTitlesScreen();
         storyObjectsContainer.TitlesAnimation.Play();
-        
+        tasksUI.ShowTask("Вы спасли свой разум!");
+        await UniTask.WaitForSeconds(1f);
+        await UI.ShowFade(0, 3f);
+        await UniTask.WaitForSeconds(10f);
+        tasksUI.ShowTask("Вы спасли свой разум?");
     }
 
     public async UniTask Lose() {
         _deathCts?.Cancel();
-        playerMovement.enabled = false;
+        playerMovement.playerCanMove = false;
         HUD.TriggerDeath();
         await UniTask.WaitForSeconds(5f);
         UI.ShowLoseScreen();
@@ -368,5 +385,12 @@ public class StoryManager : MonoBehaviour {
         storyObjectsContainer.Radio.transform.SetParent(storyObjectsContainer.NextRadioPoint.transform);
         storyObjectsContainer.Radio.transform.localPosition = Vector3.zero;
         storyObjectsContainer.Radio.transform.localRotation = Quaternion.identity;
+    }
+    public void TeleportRadioBack() {
+        storyObjectsContainer.Radio.transform.SetParent(storyObjectsContainer.FirstRadioPoint.transform);
+        storyObjectsContainer.Radio.transform.localPosition = Vector3.zero;
+        storyObjectsContainer.Radio.transform.localRotation = Quaternion.identity;
+        storyObjectsContainer.Lamp.Set(true);
+        storyObjectsContainer.LampEmission.Set(true);
     }
 }

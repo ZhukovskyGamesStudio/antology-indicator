@@ -7,6 +7,7 @@ public class StoryObjectsContainer : MonoBehaviour {
     public ToggleOnOff Lamp;
     public ToggleEmission LampEmission;
     public InteractiveObj RadioChange, RadioOnOff;
+    
 
     public InteractiveObj Watertap, LampInteractive, FridgeDoor, MicrowaveDoor;
     public GameObject KitchenWater;
@@ -15,7 +16,12 @@ public class StoryObjectsContainer : MonoBehaviour {
 
     public PlayAnim WardrobeAnim;
     public GameObject NormalRooms, LabirintRooms;
-    public GameObject Radio, NextRadioPoint;
+    public GameObject Radio, FirstRadioPoint, NextRadioPoint;
     public List<InteractiveObj> PepperDusts;
+
+    
+    public Pickable ChipOnTable, BookMoved, BookUnmoved;
+    public InteractiveObj ApartmentsExit;
+    public PlayAnim TitlesAnimation;
 
 }

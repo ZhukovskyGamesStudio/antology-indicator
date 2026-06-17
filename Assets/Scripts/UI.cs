@@ -1,10 +1,14 @@
 using System;
+using Cysharp.Threading.Tasks;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class UI : MonoBehaviour {
-    public GameObject WinPanel, LosePanel, EscapePanel,OtherUi;
+    public CanvasGroup FadePanel;
+    public GameObject WinPanel, LosePanel, EscapePanel,TaskPanel,OtherUi;
     public FirstPersonController FirstPersonController;
+    public GameObject Crosshair;
     bool canMove;
     bool canRotate;
     
@@ -13,13 +17,15 @@ public class UI : MonoBehaviour {
         Cursor.lockState = CursorLockMode.None;
         LosePanel.SetActive(true);
         OtherUi.SetActive(false);
+        TaskPanel.SetActive(false);
     }
 
-    public void ShowWinScreen() {
+    public void ShowTitlesScreen() {
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
         WinPanel.SetActive(true);
         OtherUi.SetActive(false);
+        Crosshair.gameObject.SetActive(false);
     }
 
     private void Update() {
@@ -29,6 +35,17 @@ public class UI : MonoBehaviour {
 
         if (Input.GetKeyDown(KeyCode.Escape)) {
             OnPressedEsc();
+        }
+    }
+
+    public async UniTask ShowFade(float fin, float duration) {
+        FadePanel.gameObject.SetActive(true);
+        FadePanel.blocksRaycasts = fin > 0f;
+
+        await FadePanel.DOFade(fin, duration).SetUpdate(true).WithCancellation(this.GetCancellationTokenOnDestroy());
+
+        if (Mathf.Approximately(fin, 0f)) {
+            FadePanel.gameObject.SetActive(false);
         }
     }
 
@@ -49,6 +66,7 @@ public class UI : MonoBehaviour {
         Time.timeScale = EscapePanel.gameObject.activeSelf ? 0 : 1;
         //AudioListener.volume = EscapePanel.gameObject.activeSelf ? 0.2f : 1;
         OtherUi.SetActive(!EscapePanel.gameObject.activeSelf);
+        TaskPanel.SetActive(!EscapePanel.gameObject.activeSelf);
         Cursor.visible = EscapePanel.gameObject.activeSelf;
         Cursor.lockState = EscapePanel.gameObject.activeSelf ? CursorLockMode.None : CursorLockMode.Locked;
     }

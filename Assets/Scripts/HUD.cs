@@ -39,7 +39,7 @@ public class HUD : MonoBehaviour {
         anim.SetTrigger(Swing1);
     }
 
-    public void TriggerWin() {
+    public void TriggerSneeze() {
         anim.SetTrigger(Win1);
     }
 
@@ -120,5 +120,13 @@ public class HUD : MonoBehaviour {
         var camT = Camera.main.transform;
         await camT.DORotate(new Vector3(0, camT.eulerAngles.y, camT.eulerAngles.z), 0.7f);
         fpsAnim.Play(sneeze.name);
+        firstPersonController.cameraCanMove = true;
+    }
+
+    public void TeleportBack() {
+        firstPersonController.gameObject.transform.position = new Vector3(3.08f, 1.25f, 7.41f);
+        StoryManager.instance.storyObjectsContainer.NormalRooms.SetActive(true);
+        StoryManager.instance.storyObjectsContainer.LabirintRooms.SetActive(false);
+        StoryManager.instance.TeleportRadioBack();
     }
 }

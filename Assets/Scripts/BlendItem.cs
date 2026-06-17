@@ -4,21 +4,21 @@ using DG.Tweening;
 using UnityEngine;
 
 public class BlendItem : MonoBehaviour {
-    public Renderer rend1, rend2;
+    public Renderer BeforeBlend, AfterBlend;
 
-    private CancellationTokenSource cts =  new();
+    private CancellationTokenSource _cts =  new();
 
-    public float time = 0.4f;
+    public float Time = 0.4f;
 
     private void Start() {
-        rend1.material.DOFade(0, 0.01f);
-        rend2.material.DOFade(1, 0.01f);
+        BeforeBlend.material.DOFade(1, 0.01f);
+        AfterBlend.material.DOFade(0, 0.01f);
     }
 
-    public void Blend(bool isSecond) {
-        cts?.Cancel();
-        cts = new CancellationTokenSource();
-        rend1.material.DOFade(isSecond ? 0 : 1, time).WithCancellation(cts.Token);
-        rend2.material.DOFade(isSecond ? 1 : 0, time).WithCancellation(cts.Token);
+    public void Blend(bool isBlended) {
+        _cts?.Cancel();
+        _cts = new CancellationTokenSource();
+        BeforeBlend.material.DOFade(isBlended ? 0 : 1, Time).WithCancellation(_cts.Token);
+        AfterBlend.material.DOFade(isBlended ? 1 : 0, Time).WithCancellation(_cts.Token);
     }
 }

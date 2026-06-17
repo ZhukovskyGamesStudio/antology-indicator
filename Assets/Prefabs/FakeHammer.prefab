@@ -288,9 +288,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f22b1354de73bc47a7ea3622b692e20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BlendItem
-  rend1: {fileID: 5319784931915745506}
-  rend2: {fileID: 5251440316372596222}
-  time: 0.4
+  BeforeBlend: {fileID: 5319784931915745506}
+  AfterBlend: {fileID: 5251440316372596222}
+  Time: 0.4
 --- !u!1 &6456765937123499163
 GameObject:
   m_ObjectHideFlags: 0

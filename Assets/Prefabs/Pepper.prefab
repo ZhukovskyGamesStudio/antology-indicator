@@ -386,7 +386,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1625648131038942083}
         m_TargetAssemblyTypeName: InteractiveObj, Assembly-CSharp
-        m_MethodName: Log
+        m_MethodName: LogOnce
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
