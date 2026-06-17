@@ -17,7 +17,7 @@ public class StoryObjectsContainer : MonoBehaviour {
     public PlayAnim WardrobeAnim;
     public GameObject NormalRooms, LabirintRooms;
     public GameObject Radio, FirstRadioPoint, NextRadioPoint;
-    public List<InteractiveObj> PepperDusts;
+    public GameObject[] SneezeObjects => GameObject.FindGameObjectsWithTag("Sneeze");
 
     
     public Pickable ChipOnTable, BookMoved, BookUnmoved;

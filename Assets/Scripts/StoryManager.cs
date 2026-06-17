@@ -46,12 +46,13 @@ public class StoryManager : MonoBehaviour {
         storyObjectsContainer.MicrowaveDoor.enabled = false;
         storyObjectsContainer.RadioOnOff.enabled = false;
         storyObjectsContainer.RadioChange.enabled = false;
-        foreach (BlendItem VARIABLE in FindObjectsByType<BlendItem>(FindObjectsInactive.Include, FindObjectsSortMode.None)) {
-            VARIABLE.GetComponent<InteractiveObj>().enabled = false;
+        foreach (BlendItem blendItem in FindObjectsByType<BlendItem>(FindObjectsInactive.Include, FindObjectsSortMode.None)) {
+            blendItem.GetComponent<InteractiveObj>().enabled = false;
+            blendItem.Blend(true);
         }
 
-        foreach (var VARIABLE in storyObjectsContainer.PepperDusts) {
-            VARIABLE.enabled = false;
+        foreach (GameObject dust in storyObjectsContainer.SneezeObjects) {
+            dust.GetComponent<InteractiveObj>().enabled = false;
         }
 
         FirstPersonController.isHolding = false;
@@ -306,13 +307,13 @@ public class StoryManager : MonoBehaviour {
         await UniTask.WaitForSeconds(1.5f);
         tasksUI.ShowTask("Найдите как избавится от чипа.");
         
-        foreach (var VARIABLE in storyObjectsContainer.PepperDusts) {
-            VARIABLE.enabled = true;
+        foreach (GameObject dust in storyObjectsContainer.SneezeObjects) {
+            dust.GetComponent<InteractiveObj>().enabled = true;
         }
-        
+      
         //TODO refactor
-        await UniTask.WaitUntil(() => EventsLogged.Count(l => l.Contains("PepperBroken")) >= 1);
-        tasksUI.ShowTask("Вдохните перец!");
+        // await UniTask.WaitUntil(() => EventsLogged.Count(l => l.Contains("PepperBroken")) >= 1);
+        // tasksUI.ShowTask("Вдохните перец!");
         
         await UniTask.WaitUntil(() => EventsLogged.Count(IsSneezeItem) >= 1);
         tasksUI.ShowTask("Заставьте себя чихнуть (1 из 3)");
