@@ -4,7 +4,11 @@ public class FaceCamera : MonoBehaviour {
     public bool IsLockX;
 
     private void Update() {
-        transform.forward =  transform.position - Camera.main.transform.position;
+        if (Camera.main == null) {
+            return;
+        }
+
+        transform.forward = transform.position - Camera.main.transform.position;
         Vector3 rot = transform.rotation.eulerAngles;
         rot.z = 0;
         if (IsLockX) {

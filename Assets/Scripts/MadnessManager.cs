@@ -48,6 +48,7 @@ public class MadnessManager : MonoBehaviour {
     }
 
     private void Start() {
+        hud.OnHitLand = TryHit;
         humming.Play();
     }
 
@@ -57,6 +58,15 @@ public class MadnessManager : MonoBehaviour {
         humming.time = time;
     }
 
+    private void TryHit() {
+        if (hud.HasHammer && CursorRaycast.Raycast(out RaycastHit hit)) {
+            hit.transform.GetComponent<InteractiveObj>();
+            if (CursorRaycast.CanHit(hit, out HittableObj obj)) {
+                obj.Hit();
+            }
+        }
+    }
+    
     private void Update() {
         if (!isDead && !FirstPersonController.isHolding) {
             if (Input.GetKeyDown(ClickKey) && (DateTime.Now - LastClickTime).TotalSeconds > ClickCooldown) {
@@ -68,7 +78,6 @@ public class MadnessManager : MonoBehaviour {
                 if (CursorRaycast.Raycast(out RaycastHit hit)) {
                     InteractiveObj inter = hit.transform.GetComponent<InteractiveObj>();
                     if (CursorRaycast.CanHit(hit, out HittableObj obj)) {
-                        obj.Hit();
                         hud.TriggerHit();
                     } else if (inter != null && inter.enabled) {
                         hud.PlaySwing();

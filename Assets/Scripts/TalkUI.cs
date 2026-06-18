@@ -219,9 +219,9 @@ public class TalkUI : MonoBehaviour {
     }
 
     private bool WasSkipPressed() {
-        if (skipOnLeftClick && Input.GetMouseButtonDown(0)) {
+       /* if (skipOnLeftClick && Input.GetMouseButtonDown(0)) {
             return true;
-        }
+        }*/
 
         if (skipKey != KeyCode.None && Input.GetKeyDown(skipKey)) {
             return true;

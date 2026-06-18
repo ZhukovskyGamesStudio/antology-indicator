@@ -1,3 +1,4 @@
+using System;
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
@@ -26,6 +27,12 @@ public class HUD : MonoBehaviour {
     public FirstPersonController firstPersonController;
     public Animation fpsAnim;
     public AnimationClip sneeze, death;
+
+    public Action OnHitLand; 
+    
+    public void HitLand() {
+        OnHitLand?.Invoke();
+    }
 
     public void TriggerClick() {
         anim.SetTrigger(Click1);
@@ -67,7 +74,7 @@ public class HUD : MonoBehaviour {
 
     public void SetHammer(bool isOn) {
         HasHammer = isOn;
-        anim.SetBool(HasHammerHash, isOn);
+        anim.SetBool(HasHammerHash, HasHammer);
     }
 
     public void ClickSound() {

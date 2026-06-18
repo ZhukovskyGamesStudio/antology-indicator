@@ -176,7 +176,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6448566867742480693}
   - component: {fileID: 3788666839488866404}
-  - component: {fileID: 1754861177166171445}
+  - component: {fileID: 3204481918360744287}
   m_Layer: 6
   m_Name: Earstick
   m_TagString: Untagged
@@ -258,7 +258,7 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
---- !u!65 &1754861177166171445
+--- !u!65 &3204481918360744287
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -277,8 +277,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.33000028, y: 2.46, z: 0.20000017}
-  m_Center: {x: -0.000015258789, y: -0.0000019073486, z: 0}
+  m_Size: {x: 0.03300007, y: 0.2460001, z: 0.05}
+  m_Center: {x: 0, y: 0.00000023841858, z: 0.00000011920929}
 --- !u!1 &5794326785870559981
 GameObject:
   m_ObjectHideFlags: 0
@@ -289,7 +289,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4493354419814966921}
   - component: {fileID: 1529448429772687169}
-  - component: {fileID: 576926187521289011}
+  - component: {fileID: 6800030670057033169}
   m_Layer: 6
   m_Name: Fake
   m_TagString: Untagged
@@ -371,7 +371,7 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
---- !u!65 &576926187521289011
+--- !u!65 &6800030670057033169
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -390,5 +390,5 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.4000004, y: 4.47, z: 0.20000023}
-  m_Center: {x: -0.000015258789, y: -0.0000019073486, z: 0}
+  m_Size: {x: 0.040000103, y: 0.44700015, z: 0.05}
+  m_Center: {x: 0, y: 0.00000023841858, z: 0.00000011920929}

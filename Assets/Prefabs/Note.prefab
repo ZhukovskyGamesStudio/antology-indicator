@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4821116825704649741}
   - component: {fileID: 5713792756262172642}
-  - component: {fileID: 2864252897816284819}
+  - component: {fileID: 2965642744404246481}
   m_Layer: 0
   m_Name: shizo_theory_new
   m_TagString: Untagged
@@ -92,7 +92,7 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
---- !u!65 &2864252897816284819
+--- !u!65 &2965642744404246481
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -111,8 +111,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 9.340005, y: 9.350002, z: 0.2000025}
-  m_Center: {x: 0.00000011920929, y: 0.00000011920929, z: -0.00000047683716}
+  m_Size: {x: 0.93400127, y: 0.93500096, z: 0.02}
+  m_Center: {x: -0.00000011920929, y: 0.000000059604645, z: 0}
 --- !u!1 &5114126275602598348
 GameObject:
   m_ObjectHideFlags: 0
