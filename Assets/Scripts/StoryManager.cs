@@ -27,6 +27,9 @@ public class StoryManager : MonoBehaviour {
 
     private void Awake() {
         instance = this;
+#if !UNITY_EDITOR
+       StartingChapter = 0;
+#endif
     }
 
     private void Start() {
