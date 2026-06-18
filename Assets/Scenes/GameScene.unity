@@ -3995,7 +3995,7 @@ CanvasGroup:
   m_Enabled: 1
   m_Alpha: 0
   m_Interactable: 1
-  m_BlocksRaycasts: 1
+  m_BlocksRaycasts: 0
   m_IgnoreParentGroups: 0
 --- !u!1 &1446258842
 GameObject:
@@ -8528,6 +8528,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Hallway
       objectReference: {fileID: 0}
+    - target: {fileID: 408169180052774945, guid: dee1a000ab584574fb08306f70473d95, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1058201417900850699, guid: dee1a000ab584574fb08306f70473d95, type: 3}
       propertyPath: m_RenderingLayerMask
       value: 17
@@ -8544,9 +8548,17 @@ PrefabInstance:
       propertyPath: m_RenderingLayerMask
       value: 17
       objectReference: {fileID: 0}
+    - target: {fileID: 2314726864134747569, guid: dee1a000ab584574fb08306f70473d95, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3308055566516583367, guid: dee1a000ab584574fb08306f70473d95, type: 3}
       propertyPath: m_RenderingLayerMask
       value: 17
+      objectReference: {fileID: 0}
+    - target: {fileID: 4127243080896697098, guid: dee1a000ab584574fb08306f70473d95, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 1.072
       objectReference: {fileID: 0}
     - target: {fileID: 5000194913484675124, guid: dee1a000ab584574fb08306f70473d95, type: 3}
       propertyPath: m_LocalPosition.x
@@ -9107,6 +9119,10 @@ PrefabInstance:
     - target: {fileID: 6287151692294272025, guid: 4f4e7c962f838d64f98702de9983c3b2, type: 3}
       propertyPath: m_Name
       value: NormalRooms
+      objectReference: {fileID: 0}
+    - target: {fileID: 6287151692294272025, guid: 4f4e7c962f838d64f98702de9983c3b2, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6318412943927155643, guid: 4f4e7c962f838d64f98702de9983c3b2, type: 3}
       propertyPath: m_RenderingLayerMask

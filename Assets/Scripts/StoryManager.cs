@@ -165,6 +165,7 @@ public class StoryManager : MonoBehaviour {
         await UniTask.WaitUntil(() => EventsLogged.Any(l => l == "RadioMusic2"));
         tasksUI.CompleteTask();
         TalkUI.Say("То что нужно").Forget();
+        tasksUI.ShowTask("Продолжите читать");
         storyObjectsContainer.RadioChange.enabled = false;
         await UniTask.WaitUntil(() => EventsLogged.Any(l => l == "RadioNoise"));
 
@@ -310,16 +311,19 @@ public class StoryManager : MonoBehaviour {
         foreach (GameObject dust in storyObjectsContainer.SneezeObjects) {
             dust.GetComponent<InteractiveObj>().enabled = true;
         }
-      
-        //TODO refactor
-        // await UniTask.WaitUntil(() => EventsLogged.Count(l => l.Contains("PepperBroken")) >= 1);
-        // tasksUI.ShowTask("Вдохните перец!");
         
         await UniTask.WaitUntil(() => EventsLogged.Count(IsSneezeItem) >= 1);
+        tasksUI.CompleteTask();
+        await UniTask.WaitForSeconds(1f);
         tasksUI.ShowTask("Заставьте себя чихнуть (1 из 3)");
+      
         await UniTask.WaitUntil(() => EventsLogged.Count(IsSneezeItem) >= 2);
+        tasksUI.CompleteTask();
+        await UniTask.WaitForSeconds(1f);
         tasksUI.ShowTask("Заставьте себя чихнуть  (2 из 3)");
         await UniTask.WaitUntil(() => EventsLogged.Count(IsSneezeItem) >= 3);
+        tasksUI.CompleteTask();
+        await UniTask.WaitForSeconds(1f);
         tasksUI.ShowTask("Заставьте себя чихнуть  (3 из 3)");
         tasksUI.CompleteTask();
         
@@ -333,6 +337,7 @@ public class StoryManager : MonoBehaviour {
         madnessManager.DropMadness(3f).Forget();
         await UniTask.WaitForSeconds(6f);
     }
+
 
     private bool IsSneezeItem(string l) {
         return l.Contains("PepperDust") || l.Contains("Earstick") || l.Contains("Feather");
@@ -365,6 +370,10 @@ public class StoryManager : MonoBehaviour {
     private async UniTask WinChapter() {
         playerMovement.playerCanMove = false;
         await UI.ShowFade(1, 0.5f);
+        // Под чёрным фейдом гасим рендер основной камеры (Base + оверлей HeldItemCamera).
+        // Иначе две Base-камеры в одном кадре при Forward+ ломают кластерный свет, и
+        // LitSprite-объекты под орто-камерой TitlesCamera становятся чёрными.
+        playerMovement.playerCamera.enabled = false;
         UI.ShowTitlesScreen();
         storyObjectsContainer.TitlesAnimation.Play();
         tasksUI.ShowTask("Вы спасли свой разум!");

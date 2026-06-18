@@ -295,7 +295,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -1543050010205735719, guid: b74f229aa97401e4885d2a97d3b63dd2, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
+      value: 90.4
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: b74f229aa97401e4885d2a97d3b63dd2, type: 3}
       propertyPath: m_Name
@@ -319,7 +319,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4359421791201573152, guid: b74f229aa97401e4885d2a97d3b63dd2, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
+      value: -94.9
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -334,18 +334,21 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: b74f229aa97401e4885d2a97d3b63dd2, type: 3}
       insertIndex: -1
       addedObject: {fileID: 838185382200654812}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: b74f229aa97401e4885d2a97d3b63dd2, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5261465832191487096}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: b74f229aa97401e4885d2a97d3b63dd2, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6604092320457635741}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: b74f229aa97401e4885d2a97d3b63dd2, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3369229056601437778}
     - targetCorrespondingSourceObject: {fileID: -4238799626351605347, guid: b74f229aa97401e4885d2a97d3b63dd2, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1443771315821402493}
     - targetCorrespondingSourceObject: {fileID: 3456032965329220562, guid: b74f229aa97401e4885d2a97d3b63dd2, type: 3}
       insertIndex: -1
       addedObject: {fileID: 5035953332099694564}
-    - targetCorrespondingSourceObject: {fileID: 3456032965329220562, guid: b74f229aa97401e4885d2a97d3b63dd2, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 9152405730148194845}
-    - targetCorrespondingSourceObject: {fileID: 3456032965329220562, guid: b74f229aa97401e4885d2a97d3b63dd2, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 5991011847451396290}
   m_SourcePrefab: {fileID: 100100000, guid: b74f229aa97401e4885d2a97d3b63dd2, type: 3}
 --- !u!1 &467000553826577384 stripped
 GameObject:
@@ -364,6 +367,7 @@ Animation:
   m_Animation: {fileID: 0}
   m_Animations:
   - {fileID: 7400000, guid: 1d280f63b1d61bb47a98566ff7f7932e, type: 2}
+  - {fileID: 7400000, guid: d4b263d5cecb638429fe91da93bb7e0b, type: 2}
   m_WrapMode: 0
   m_PlayAutomatically: 0
   m_AnimatePhysics: 0
@@ -391,6 +395,79 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 4816843592556685682, guid: b74f229aa97401e4885d2a97d3b63dd2, type: 3}
+--- !u!54 &5261465832191487096
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 467000553826577384}
+  serializedVersion: 5
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!114 &6604092320457635741
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 467000553826577384}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 164dcbf52469186408828bc46022539e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::InteractiveObj
+  OnClick:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3369229056601437778}
+        m_TargetAssemblyTypeName: Openable, Assembly-CSharp
+        m_MethodName: Interact
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &3369229056601437778
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 467000553826577384}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ba42011423e36d4890317613ab0345f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Openable
+  anim: {fileID: 6068243350276922790}
+  openClip: {fileID: 7400000, guid: 1d280f63b1d61bb47a98566ff7f7932e, type: 2}
+  closeClip: {fileID: 7400000, guid: d4b263d5cecb638429fe91da93bb7e0b, type: 2}
+  changeClip: {fileID: 0}
+  states: []
+  swapAt: 0.25
+  cooldown: 0.5
 --- !u!4 &950486205757010258 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: b74f229aa97401e4885d2a97d3b63dd2, type: 3}
@@ -420,50 +497,9 @@ MeshCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 5
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 5232984378968942867, guid: b74f229aa97401e4885d2a97d3b63dd2, type: 3}
---- !u!114 &9152405730148194845
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2687590137689253227}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 164dcbf52469186408828bc46022539e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::InteractiveObj
-  OnClick:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 5991011847451396290}
-        m_TargetAssemblyTypeName: PlayAnim, Assembly-CSharp
-        m_MethodName: Play
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
---- !u!114 &5991011847451396290
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2687590137689253227}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 44976fa11d3e4556ba74650b2805d99a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayAnim
-  anim: {fileID: 6068243350276922790}
-  clip: {fileID: 7400000, guid: 1d280f63b1d61bb47a98566ff7f7932e, type: 2}
 --- !u!1 &5734970619858149156 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -4238799626351605347, guid: b74f229aa97401e4885d2a97d3b63dd2, type: 3}
@@ -488,7 +524,7 @@ MeshCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 5
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: -7286103400698200836, guid: b74f229aa97401e4885d2a97d3b63dd2, type: 3}
 --- !u!1001 &1035582993808000283

@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 7482140471649852572}
   - component: {fileID: 3858153446998912493}
   - component: {fileID: 1717218034689537403}
+  - component: {fileID: 6506133952169319867}
   m_Layer: 0
   m_Name: Feather
   m_TagString: Sneeze
@@ -136,28 +137,16 @@ MonoBehaviour:
   OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3858153446998912493}
-        m_TargetAssemblyTypeName: InteractiveObj, Assembly-CSharp
-        m_MethodName: Log
-        m_Mode: 5
+      - m_Target: {fileID: 6506133952169319867}
+        m_TargetAssemblyTypeName: Pickable, Assembly-CSharp
+        m_MethodName: PickUp
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: Feather
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 500848611132215670}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: PepperDust
+          m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!65 &1717218034689537403
@@ -181,3 +170,62 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.09500006, y: 0.27100003, z: 0.1}
   m_Center: {x: 0, y: 0.00000011920929, z: -0.000000029802322}
+--- !u!114 &6506133952169319867
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 500848611132215670}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ba11ffaa3124a35b17ca93bf7a8a3c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Pickable
+  IsPicked: 0
+  shiftRot: {x: 0, y: 0, z: 0}
+  shiftPos: {x: 0, y: 0, z: 0}
+  OnPick:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3858153446998912493}
+        m_TargetAssemblyTypeName: InteractiveObj, Assembly-CSharp
+        m_MethodName: ChangeQuest
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: "\u041F\u043E\u0449\u0435\u043A\u043E\u0447\u0438\u0442\u0435
+            \u0441\u0435\u0431\u044F! (\u041F\u041A\u041C)"
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnDrop:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 500848611132215670}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 3858153446998912493}
+        m_TargetAssemblyTypeName: InteractiveObj, Assembly-CSharp
+        m_MethodName: LogOnce
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Feather
+          m_BoolArgument: 0
+        m_CallState: 2
+  rotateSpeed: 200
