@@ -68,33 +68,23 @@ MonoBehaviour:
       - rid: 8944706395424948227
       - rid: 8944706395424948228
     m_RuntimeSettings:
-      m_List:
-      - rid: 6852985685364965378
-      - rid: 6852985685364965379
-      - rid: 6852985685364965380
-      - rid: 6852985685364965381
-      - rid: 6852985685364965384
-      - rid: 6852985685364965385
-      - rid: 6852985685364965392
-      - rid: 6852985685364965394
-      - rid: 8712630790384254976
-      - rid: 2650333794165850113
-      - rid: 2650333794165850115
-      - rid: 2650333794165850116
-      - rid: 2650333794165850119
-      - rid: 2650333794165850120
-      - rid: 8944706395424948227
+      m_List: []
   m_AssetVersion: 10
   m_ObsoleteDefaultVolumeProfile: {fileID: 0}
   m_RenderingLayerNames:
-  - Light Layer default
-  - Light Layer 1
-  - Light Layer 2
-  - Light Layer 3
-  - Light Layer 4
-  - Light Layer 5
-  - Light Layer 6
-  - Light Layer 7
+  - Default
+  - Room_Kitchen
+  - Room_Livingroom
+  - Room_Watercloset
+  - Room_Hallway
+  - Lab_Hallway
+  - Lab_MidHallway
+  - Lab_Kitchen_A
+  - Lab_Kitchen_B
+  - Lab_Livingroom_A
+  - Lab_Kitchen_C
+  - Lab_Livingroom_B
+  - Room_Mirror
   m_ValidRenderingLayers: 0
   lightLayerName0: Light Layer default
   lightLayerName1: Light Layer 1

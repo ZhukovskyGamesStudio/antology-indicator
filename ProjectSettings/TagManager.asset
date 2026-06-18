@@ -44,10 +44,15 @@ TagManager:
     locked: 0
   m_RenderingLayers:
   - Default
-  - Light Layer 1
-  - Light Layer 2
-  - Light Layer 3
-  - Light Layer 4
-  - Light Layer 5
-  - Light Layer 6
-  - Light Layer 7
+  - Room_Kitchen
+  - Room_Livingroom
+  - Room_Watercloset
+  - Room_Hallway
+  - Lab_Hallway
+  - Lab_MidHallway
+  - Lab_Kitchen_A
+  - Lab_Kitchen_B
+  - Lab_Livingroom_A
+  - Lab_Kitchen_C
+  - Lab_Livingroom_B
+  - Room_Mirror
