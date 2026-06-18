@@ -15,7 +15,7 @@ public class MonoBehLogger : MonoBehaviour {
     }
 
     public void ChangeQuest(string newQuest) {
-        StoryManager.instance.tasksUI.ShowTask(newQuest);
+        StoryManager.instance.tasksUI.ShowTaskOnce(newQuest);
     }
 
     public void React(string msg) {

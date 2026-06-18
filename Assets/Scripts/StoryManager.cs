@@ -370,27 +370,8 @@ public class StoryManager : MonoBehaviour {
     private async UniTask WinChapter() {
         playerMovement.playerCanMove = false;
         await UI.ShowFade(1, 0.5f);
-        // Под чёрным фейдом гасим рендер основной камеры (Base + оверлей HeldItemCamera).
-        // Иначе две Base-камеры в одном кадре при Forward+ ломают кластерный свет, и
-        // LitSprite-объекты под орто-камерой TitlesCamera становятся чёрными.
-        playerMovement.playerCamera.enabled = false;
         UI.ShowTitlesScreen();
         storyObjectsContainer.TitlesAnimation.Play();
-
-        // Пинок проекции: после того как анимация включила TitlesCamera, один раз
-        // переключаем её Perspective -> (1 кадр) -> Orthographic. Это заставляет URP
-        // пересобрать данные камеры (включая кластерный свет Forward+), иначе
-        // LitSprite-объекты под орто-камерой остаются чёрными. Всё происходит под
-        // чёрным фейдом, поэтому кадр в перспективе не виден.
-        await UniTask.WaitForEndOfFrame(this);      
-        Camera titlesCam = storyObjectsContainer.TitlesAnimation.GetComponentInChildren<Camera>(true);
-        if (titlesCam != null) {
-            await UniTask.WaitForEndOfFrame(this);      
-            titlesCam.orthographic = false;   // Perspective
-            await UniTask.WaitForEndOfFrame(this);           
-            titlesCam.orthographic = true;    // снова Orthographic
-        }
-
         tasksUI.ShowTask("Вы спасли свой разум!");
         await UniTask.WaitForSeconds(1f);
         await UI.ShowFade(0, 3f);

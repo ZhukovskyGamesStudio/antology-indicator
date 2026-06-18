@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
@@ -8,10 +9,20 @@ public class TasksUI : MonoBehaviour {
     public TextMeshProUGUI text;
     public RectTransform Ckeck;
     private CancellationTokenSource cts;
+    private List<string> _shownTasks = new();
 
     public void ShowTask(string taskName) {
         Ckeck.gameObject.SetActive(false);
         text.text = taskName;
+    }
+
+    public void ShowTaskOnce(string taskName) {
+        if (_shownTasks.Contains(taskName)) {
+            return;
+        }
+
+        _shownTasks.Add(taskName);
+        ShowTask(taskName);
     }
 
     public void CompleteTask() {
@@ -19,7 +30,7 @@ public class TasksUI : MonoBehaviour {
         Ckeck.gameObject.SetActive(true);
         Ckeck.transform.localScale = new Vector3(0, 1, 1);
         cts = new CancellationTokenSource();
-        Ckeck.DOScaleX(1, 0.5f).WithCancellation(cts.Token); 
+        Ckeck.DOScaleX(1, 0.5f).WithCancellation(cts.Token);
         text.text = "<s>" + text.text + "</s>";
     }
 }

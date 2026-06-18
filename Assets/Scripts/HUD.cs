@@ -74,9 +74,11 @@ public class HUD : MonoBehaviour {
 
     public void SetHammer(bool isOn) {
         HasHammer = isOn;
+        UpdateHammer();
+    }
+    public void UpdateHammer() {
         anim.SetBool(HasHammerHash, HasHammer);
     }
-
     public void ClickSound() {
         Click.Play();
     }
