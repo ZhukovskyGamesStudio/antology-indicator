@@ -10,6 +10,9 @@ public class HUD : MonoBehaviour {
     private static readonly int Death1 = Animator.StringToHash("Death");
     private static readonly int Hit1 = Animator.StringToHash("Hit");
     private static readonly int Swing1 = Animator.StringToHash("Swing");
+    private static readonly int Stick = Animator.StringToHash("Stick");
+    private static readonly int Feather = Animator.StringToHash("Feather");
+    private static readonly int Pepper = Animator.StringToHash("Pepper");
     private static readonly int HasHammerHash = Animator.StringToHash("HasHammer");
     public AudioSource Click, Swing, Hit, Sneeze, Death;
 
@@ -52,6 +55,22 @@ public class HUD : MonoBehaviour {
 
     public void TriggerDeath() {
         anim.SetTrigger(Death1);
+    }
+
+ public void TriggerFeather() {
+        anim.SetTrigger(Feather);
+    }
+
+ public void TriggerPepper() {
+        anim.SetTrigger(Pepper);
+    }
+
+ public void TriggerStick() {
+        anim.SetTrigger(Stick);
+    }
+ 
+    public void TriggerAnim(string trigger) {
+        anim.SetTrigger(trigger);
     }
 
     public void SetCursorAndHand(bool isOn) {

@@ -18,6 +18,10 @@ public class MonoBehLogger : MonoBehaviour {
         StoryManager.instance.tasksUI.ShowTaskOnce(newQuest);
     }
 
+    public void PlayHandAnim(string anim) {
+        HUD.instance.TriggerAnim(anim);
+    }
+
     public void React(string msg) {
         // Реакция fire-and-forget. TalkUI сам дедуплицирует подряд идущие
         // одинаковые реплики: если такая же фраза уже играет или стоит

@@ -317,16 +317,16 @@ public class StoryManager : MonoBehaviour {
         
         await UniTask.WaitUntil(() => EventsLogged.Count(IsSneezeItem) >= 1);
         tasksUI.CompleteTask();
-        await UniTask.WaitForSeconds(1f);
+        await UniTask.WaitForSeconds(1.5f);
         tasksUI.ShowTask("Заставьте себя чихнуть (1 из 3)");
       
         await UniTask.WaitUntil(() => EventsLogged.Count(IsSneezeItem) >= 2);
         tasksUI.CompleteTask();
-        await UniTask.WaitForSeconds(1f);
+        await UniTask.WaitForSeconds(1.5f);
         tasksUI.ShowTask("Заставьте себя чихнуть  (2 из 3)");
         await UniTask.WaitUntil(() => EventsLogged.Count(IsSneezeItem) >= 3);
         tasksUI.CompleteTask();
-        await UniTask.WaitForSeconds(1f);
+        await UniTask.WaitForSeconds(1.5f);
         tasksUI.ShowTask("Заставьте себя чихнуть  (3 из 3)");
         tasksUI.CompleteTask();
         

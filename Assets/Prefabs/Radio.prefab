@@ -978,7 +978,7 @@ Transform:
   - {fileID: 6517206452060245011}
   - {fileID: 5126757252027326814}
   m_Father: {fileID: 6689181421972356610}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -0.09160937}
 --- !u!212 &2686881619551913872
 SpriteRenderer:
   serializedVersion: 2
@@ -1309,7 +1309,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 83b7c9adac8d3cd42a5940dc0f10c37a, type: 3}
   - {fileID: 8300000, guid: e75757925c546c14f8a637225c14e154, type: 3}
   RadioMusic: 3
-  changeInteractive: {fileID: 0}
+  changeInteractive: {fileID: 500617198411003386}
 --- !u!114 &8250784713929514397
 MonoBehaviour:
   m_ObjectHideFlags: 0
