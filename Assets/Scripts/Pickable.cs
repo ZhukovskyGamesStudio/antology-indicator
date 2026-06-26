@@ -34,13 +34,21 @@ public class Pickable : MonoBehLogger {
     private bool _isMoving;
 
     private void Awake() {
+        FixStartingPos();
+        _heldLayer = LayerMask.NameToLayer(HeldLayerName);
+    }
+
+    private void FixStartingPos() {
         startingPos = transform.position;
         startingRot = transform.rotation;
-        _heldLayer = LayerMask.NameToLayer(HeldLayerName);
     }
 
     public void PickUp() {
         if (!IsPicked) {
+            if ((transform.position - startingPos).magnitude > 3f) {
+                FixStartingPos();
+            }
+
             TogglePick();
         }
     }
