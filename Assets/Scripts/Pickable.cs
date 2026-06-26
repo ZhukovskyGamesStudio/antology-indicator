@@ -152,10 +152,11 @@ public class Pickable : MonoBehLogger {
             float t = 0;
             float max = 0.5f;
             while (t <= max) {
-                t += Time.deltaTime;
-                transform.position = Vector3.Lerp(transform.position, end, t / max);
-                transform.rotation = Quaternion.Lerp(transform.rotation, endq, t / max);
+              
+                transform.position = Vector3.Slerp(transform.position, end, t / max);
+                transform.rotation = Quaternion.Slerp(transform.rotation, endq, t / max);
                 await UniTask.WaitForEndOfFrame(_cts.Token);
+                t += Time.deltaTime;
             }
         }
         finally {

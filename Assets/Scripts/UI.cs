@@ -10,6 +10,7 @@ public class UI : MonoBehaviour {
     public FirstPersonController FirstPersonController;
     public GameObject Crosshair;
     public WinPanel WinPanel;
+    public BarsPanel BarsPanel;
     private bool canMove;
     private bool canRotate;
 
@@ -38,6 +39,15 @@ public class UI : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.Escape)) {
             OnPressedEsc();
         }
+
+        if (!MadnessManager.instance.IsVolumesFixed) {
+            BarsPanel.SetClicking(MadnessManager.instance.ClickingPower/100f);
+            BarsPanel.SetHumming(MadnessManager.instance.HummingPower/100f);
+        } else {
+            BarsPanel.SetClicking(1f);
+            BarsPanel.SetHumming(1f);
+        }
+     
     }
 
     public async UniTask ShowFade(float fin, float duration) {
