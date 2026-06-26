@@ -375,11 +375,11 @@ public class StoryManager : MonoBehaviour {
         await UI.ShowFade(1, 0.5f);
         UI.ShowTitlesScreen();
         storyObjectsContainer.TitlesAnimation.Play();
-        tasksUI.ShowTask("Вы спасли свой разум!");
+        UI.WinPanel.SetText("Вы спасли свой разум!");
         await UniTask.WaitForSeconds(1f);
         await UI.ShowFade(0, 3f);
         await UniTask.WaitForSeconds(10f);
-        tasksUI.ShowTask("Вы спасли свой разум?");
+        UI.WinPanel.SetText("Вы спасли свой разум?");
     }
 
     public async UniTask Lose() {

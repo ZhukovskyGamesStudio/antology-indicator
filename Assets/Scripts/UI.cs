@@ -6,12 +6,13 @@ using UnityEngine.SceneManagement;
 
 public class UI : MonoBehaviour {
     public CanvasGroup FadePanel;
-    public GameObject WinPanel, LosePanel, EscapePanel,TaskPanel,OtherUi;
+    public GameObject LosePanel, EscapePanel, TaskPanel, OtherUi;
     public FirstPersonController FirstPersonController;
     public GameObject Crosshair;
-    bool canMove;
-    bool canRotate;
-    
+    public WinPanel WinPanel;
+    private bool canMove;
+    private bool canRotate;
+
     public void ShowLoseScreen() {
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
@@ -23,13 +24,14 @@ public class UI : MonoBehaviour {
     public void ShowTitlesScreen() {
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
-        WinPanel.SetActive(true);
+        WinPanel.gameObject.SetActive(true);
+        TaskPanel.SetActive(false);
         OtherUi.SetActive(false);
         Crosshair.gameObject.SetActive(false);
     }
 
     private void Update() {
-        if (WinPanel.activeSelf || LosePanel.activeSelf) {
+        if (WinPanel.gameObject.activeSelf || LosePanel.activeSelf) {
             return;
         }
 
@@ -61,8 +63,7 @@ public class UI : MonoBehaviour {
             FirstPersonController.playerCanMove = canMove;
             FirstPersonController.cameraCanMove = canRotate;
         }
-            
-            
+
         Time.timeScale = EscapePanel.gameObject.activeSelf ? 0 : 1;
         //AudioListener.volume = EscapePanel.gameObject.activeSelf ? 0.2f : 1;
         OtherUi.SetActive(!EscapePanel.gameObject.activeSelf);
@@ -88,4 +89,9 @@ public class UI : MonoBehaviour {
         PlayerPrefs.SetInt("Chapter", 0);
         Restart();
     }
+
+    public void ChangeLanguage(string langCode) {
+        Language.ChangeLanguage(Enum.Parse<LangCode>(langCode));
+    }
 }
+
