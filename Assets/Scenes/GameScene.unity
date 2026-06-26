@@ -4196,7 +4196,7 @@ MonoBehaviour:
   storyObjectsContainer: {fileID: 576864585}
   HUD: {fileID: 2028131268}
   isDropProgress: 1
-  StartingChapter: 2
+  StartingChapter: 0
 --- !u!4 &1199463264
 Transform:
   m_ObjectHideFlags: 0
