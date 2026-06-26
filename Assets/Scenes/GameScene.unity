@@ -1349,7 +1349,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5917908790584508672, guid: 6bacecc4f3df9584198879c73a6b6c36, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1627654526}
   m_SourcePrefab: {fileID: 100100000, guid: 6bacecc4f3df9584198879c73a6b6c36, type: 3}
 --- !u!1 &285259938
 GameObject:
@@ -6166,6 +6169,28 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1623354877}
   m_CullTransparentMesh: 1
+--- !u!1 &1627654522 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5917908790584508672, guid: 6bacecc4f3df9584198879c73a6b6c36, type: 3}
+  m_PrefabInstance: {fileID: 214193802}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1627654526
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1627654522}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c959274775ca9814c89105f342c24fa7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MatchCamera
+  source: {fileID: 1762880709}
+  matchFov: 1
+  matchProjection: 1
+  matchNearFar: 0
+  matchPhysical: 0
 --- !u!1 &1642972342
 GameObject:
   m_ObjectHideFlags: 0
@@ -6614,6 +6639,11 @@ CanvasRenderer:
 --- !u!82 &1746851605 stripped
 AudioSource:
   m_CorrespondingSourceObject: {fileID: 1889954159026740947, guid: 6bacecc4f3df9584198879c73a6b6c36, type: 3}
+  m_PrefabInstance: {fileID: 214193802}
+  m_PrefabAsset: {fileID: 0}
+--- !u!20 &1762880709 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 4459864851310106426, guid: 6bacecc4f3df9584198879c73a6b6c36, type: 3}
   m_PrefabInstance: {fileID: 214193802}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1799362960
