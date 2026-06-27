@@ -27,18 +27,21 @@ public class GallucinationManager : MonoBehaviour {
     [Header("Depth Of Field")]
     public bool IsDof = true;
 
+    [Header("Smoothing")]
+    [Tooltip("Скорость сглаживания эффектов (1/сек), кадронезависимая. 6.32 ≈ прежнее ощущение при 60 FPS; меньше — плавнее, больше — резче.")]
+    public float responseSpeed = 6.32f;
+
     private ChromaticAberration chromaticAberration;
     private ChannelMixer channelMixer;
     private DepthOfField dof;
 
-    private float lerpSpeed = 0.1f;
-    
     private void Start() {
         VolumeProfile = volume.profile;
         VolumeProfile.TryGet(out chromaticAberration);
         VolumeProfile.TryGet(out channelMixer);
         VolumeProfile.TryGet(out dof);
-        UpdateVolume(0);
+        // Мгновенно выставляем стартовые значения (безумие = 0), без сглаживания.
+        UpdateVolume(0, 1f);
     }
 
     private void Update() {
@@ -46,25 +49,32 @@ public class GallucinationManager : MonoBehaviour {
 
         float curved = gallucinationCurve.Evaluate(curGal);
 
-        UpdateVolume(curved);
+        // Экспоненциальное сглаживание, не зависящее от частоты кадров.
+        // Time.deltaTime ограничиваем, чтобы после фриза/загрузки эффекты не "прыгали".
+        float smooth = 1f - Mathf.Exp(-responseSpeed * Mathf.Min(Time.deltaTime, 0.1f));
+
+        UpdateVolume(curved, smooth);
     }
 
-    private void UpdateVolume(float curved) {
+    private void UpdateVolume(float curved, float smooth) {
         if (IsFov) {
-            firstPersonController.fov = Mathf.Lerp(firstPersonController.fov, Mathf.Lerp(MinFov, MaxFov, curved), lerpSpeed);
+            firstPersonController.fov = Mathf.Lerp(firstPersonController.fov, Mathf.Lerp(MinFov, MaxFov, curved), smooth);
         }
 
         if (IsChromaticAberration) {
-            chromaticAberration.intensity.Override( aberrationCurve.Evaluate(Mathf.Lerp(chromaticAberration.intensity.value, curved, lerpSpeed)));
+            // Сначала переводим безумие через кривую в целевую интенсивность,
+            // затем плавно ведём к ней — так же, как остальные эффекты (без петли обратной связи).
+            float target = aberrationCurve.Evaluate(curved);
+            chromaticAberration.intensity.Override(Mathf.Lerp(chromaticAberration.intensity.value, target, smooth));
         }
 
         if (IsDof) {
-            dof.focusDistance.Override( Mathf.Lerp(dof.focusDistance.value, 0.7f * (1 - curved), lerpSpeed));
+            dof.focusDistance.Override( Mathf.Lerp(dof.focusDistance.value, 0.7f * (1 - curved), smooth));
         }
 
         if (IsChannelMixer) {
-            channelMixer.blueOutBlueIn.Override( Mathf.Lerp(channelMixer.blueOutBlueIn.value, Mathf.Lerp(100, 50f, curved), lerpSpeed));
-            channelMixer.redOutBlueIn.Override( Mathf.Lerp(channelMixer.redOutBlueIn.value, Mathf.Lerp(0, 50f, curved), lerpSpeed));
+            channelMixer.blueOutBlueIn.Override( Mathf.Lerp(channelMixer.blueOutBlueIn.value, Mathf.Lerp(100, 50f, curved), smooth));
+            channelMixer.redOutBlueIn.Override( Mathf.Lerp(channelMixer.redOutBlueIn.value, Mathf.Lerp(0, 50f, curved), smooth));
         }
     }
 }
