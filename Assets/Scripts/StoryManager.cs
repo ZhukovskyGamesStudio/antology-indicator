@@ -35,6 +35,7 @@ public class StoryManager : MonoBehaviour {
     private void Start() {
         playerMovement.playerCanMove = false;
         hintUI.ShowHint("");
+        UI.TaskPanel.SetActive(false);
         tasksUI.ShowTask("");
         madnessManager.IsMadnessRaising = false;
         madnessManager.IsVolumesFixed = true;
@@ -140,6 +141,8 @@ public class StoryManager : MonoBehaviour {
 
         await TalkUI.Say("Надоели уже эти подкасты, включу ка я лоу-фай");
         storyObjectsContainer.RadioChange.enabled = true;
+        
+        UI.TaskPanel.SetActive(true);
         tasksUI.ShowTask("Найдите музыкальную волну " + (EventsLogged.Any(l => l == "BookPicked") ? "(<b>ПКМ</b> положить предмет)" : ""));
         await UniTask.WaitForSeconds(1.5f);
 
@@ -271,8 +274,12 @@ public class StoryManager : MonoBehaviour {
         tasksUI.ShowTask("Найдите способ остановить радио");
 
         foreach (BlendItem VARIABLE in FindObjectsByType<BlendItem>(FindObjectsInactive.Include, FindObjectsSortMode.None)) {
+            if(VARIABLE.CompareTag("Sneeze")) {
+                continue;
+            }
             VARIABLE.GetComponent<InteractiveObj>().enabled = true;
             VARIABLE.Blend(false);
+            
         }
 
         await UniTask.WaitUntil(() => EventsLogged.Any(l => l == "FakeHammer"));
@@ -299,7 +306,7 @@ public class StoryManager : MonoBehaviour {
 
         tasksUI.CompleteTask();
         await UniTask.WaitForSeconds(2.5f);
-        await TalkUI.Say("АААААААА, неееееет. *звуки отчаяния*");
+        await TalkUI.Say("АААААААА, неееееет.");
         await UniTask.WaitForSeconds(2f);
     }
 
@@ -316,6 +323,8 @@ public class StoryManager : MonoBehaviour {
         foreach (InteractiveObj dust in storyObjectsContainer.SneezeObjects) {
             dust.enabled = true;
         }
+
+        Openable.IsChangeAllowed = true;
         
         await UniTask.WaitUntil(() => EventsLogged.Count(IsSneezeItem) >= 1);
         tasksUI.CompleteTask();

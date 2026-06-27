@@ -50,6 +50,8 @@ public class Openable : MonoBehaviour {
     private int _currentState;
     private bool _isChanging;
 
+    public static bool IsChangeAllowed = false;
+
     /// <summary>Виден ли предмет хоть одной камере прямо сейчас.</summary>
     public bool IsVisible {
         get {
@@ -142,6 +144,9 @@ public class Openable : MonoBehaviour {
 
     /// <summary>Щелчок пальцем: меняем содержимое у всех закрытых предметов, что сейчас в кадре.</summary>
     public static void SnapAllVisible() {
+        if (!IsChangeAllowed) {
+            return;
+        }
         // Идём с конца — на случай если TrySnap что-то выключит и изменит список.
         for (int i = All.Count - 1; i >= 0; i--) {
             All[i].TrySnap();

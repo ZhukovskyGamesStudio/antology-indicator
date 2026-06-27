@@ -782,6 +782,34 @@ PrefabInstance:
       propertyPath: OnPick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 3742115502043317211, guid: f3ca7d4e75cb2ad4cb73784be3637abe, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.65252686
+      objectReference: {fileID: 0}
+    - target: {fileID: 3742115502043317211, guid: f3ca7d4e75cb2ad4cb73784be3637abe, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.27241287
+      objectReference: {fileID: 0}
+    - target: {fileID: 3742115502043317211, guid: f3ca7d4e75cb2ad4cb73784be3637abe, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.27241278
+      objectReference: {fileID: 0}
+    - target: {fileID: 3742115502043317211, guid: f3ca7d4e75cb2ad4cb73784be3637abe, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.65252686
+      objectReference: {fileID: 0}
+    - target: {fileID: 3742115502043317211, guid: f3ca7d4e75cb2ad4cb73784be3637abe, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 45.319
+      objectReference: {fileID: 0}
+    - target: {fileID: 3742115502043317211, guid: f3ca7d4e75cb2ad4cb73784be3637abe, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3742115502043317211, guid: f3ca7d4e75cb2ad4cb73784be3637abe, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 90
+      objectReference: {fileID: 0}
     - target: {fileID: 3863369066034906287, guid: f3ca7d4e75cb2ad4cb73784be3637abe, type: 3}
       propertyPath: m_IsActive
       value: 0

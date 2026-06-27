@@ -1,9 +1,19 @@
 fileFormatVersion: 2
-guid: c5036626920c49647972425de2b3fa6e
+guid: eed366f7cbd383747937e22986625742
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: pipe
+    second: {fileID: 2800000, guid: ae1f11147334b924d91922863e4385ed, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: radiator Base Color
+    second: {fileID: 2800000, guid: 115400a3c9e4e05498476530e80ab7ef, type: 3}
   materials:
     materialImportMode: 2
     materialName: 0
