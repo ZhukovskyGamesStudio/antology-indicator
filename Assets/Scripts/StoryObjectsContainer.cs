@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class StoryObjectsContainer : MonoBehaviour {
@@ -17,7 +18,7 @@ public class StoryObjectsContainer : MonoBehaviour {
     public PlayAnim WardrobeAnim;
     public GameObject NormalRooms, LabirintRooms;
     public GameObject Radio, FirstRadioPoint, NextRadioPoint;
-    public GameObject[] SneezeObjects => GameObject.FindGameObjectsWithTag("Sneeze");
+    public InteractiveObj[] SneezeObjects => FindObjectsByType<InteractiveObj>(FindObjectsInactive.Include, FindObjectsSortMode.None).Where(o=>o.CompareTag("Sneeze")).ToArray();
 
     
     public Pickable ChipOnTable, BookMoved, BookUnmoved;

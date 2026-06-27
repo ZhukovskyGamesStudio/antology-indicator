@@ -50,6 +50,11 @@ public class TalkUI : MonoBehaviour {
 
     private readonly Queue<Entry> _queue = new Queue<Entry>();
     private bool _isPlaying;
+    // Латч для скипа: пока true, удержание клавиши уже «съедено» и не считается
+    // новым нажатием, пока её не отпустят. Без него одно нажатие за один кадр
+    // каскадно проматывало бы всю очередь реплик (GetKeyDown держится весь кадр,
+    // а проматывание/закрытие реплики происходит синхронно без ожидания кадра).
+    private bool _skipLatched;
     // Фраза и tcs текущей проигрываемой реплики — нужны для дедупа
     // подряд идущих одинаковых вставок.
     private string _currentPhrase;
@@ -169,7 +174,7 @@ public class TalkUI : MonoBehaviour {
         bool fastForwarded = false;
 
         for (int i = 1; i <= total; i++) {
-            if (!fastForwarded && WasSkipPressed()) {
+            if (!fastForwarded && ConsumeSkip()) {
                 fastForwarded = true;
                 text.maxVisibleCharacters = total;
                 break;
@@ -208,7 +213,7 @@ public class TalkUI : MonoBehaviour {
     private async UniTask<bool> WaitOrSkip(float seconds) {
         float remaining = seconds;
         while (remaining > 0f) {
-            if (WasSkipPressed()) {
+            if (ConsumeSkip()) {
                 return true;
             }
             await UniTask.Yield();
@@ -218,16 +223,29 @@ public class TalkUI : MonoBehaviour {
         return false;
     }
 
-    private bool WasSkipPressed() {
-       /* if (skipOnLeftClick && Input.GetMouseButtonDown(0)) {
-            return true;
-        }*/
+    /// <summary>
+    /// Edge-детект скипа с латчем: возвращает true ровно один раз на физическое
+    /// нажатие. Пока клавишу держат, повторные вызовы (в т.ч. в том же кадре)
+    /// возвращают false до отпускания. Это не даёт одному нажатию проскочить
+    /// сразу несколько реплик — за нажатие проматывается максимум один шаг.
+    /// </summary>
+    private bool ConsumeSkip() {
+        // ЛКМ отключена намеренно — она занята игровым взаимодействием/ударом.
+        // bool down = (skipOnLeftClick && Input.GetMouseButton(0)) ||
+        //             (skipKey != KeyCode.None && Input.GetKey(skipKey));
+        bool down = skipKey != KeyCode.None && Input.GetKey(skipKey);
 
-        if (skipKey != KeyCode.None && Input.GetKeyDown(skipKey)) {
-            return true;
+        if (!down) {
+            _skipLatched = false;
+            return false;
         }
 
-        return false;
+        if (_skipLatched) {
+            return false;
+        }
+
+        _skipLatched = true;
+        return true;
     }
 
     private float GetDelayMultiplier(char c) {

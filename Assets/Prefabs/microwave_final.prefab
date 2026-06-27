@@ -444,11 +444,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4115723085087728183, guid: a3667c2371352de40ba2e4dc5c7739f2, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7722162199038934337, guid: a3667c2371352de40ba2e4dc5c7739f2, type: 3}
       propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7722162199038934337, guid: a3667c2371352de40ba2e4dc5c7739f2, type: 3}
+      propertyPath: shiftPos.y
+      value: -0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7722162199038934337, guid: a3667c2371352de40ba2e4dc5c7739f2, type: 3}
+      propertyPath: shiftPos.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7722162199038934337, guid: a3667c2371352de40ba2e4dc5c7739f2, type: 3}
+      propertyPath: shiftRot.x
+      value: 50
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

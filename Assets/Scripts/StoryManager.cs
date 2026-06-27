@@ -55,8 +55,8 @@ public class StoryManager : MonoBehaviour {
             blendItem.Blend(true);
         }
 
-        foreach (GameObject dust in storyObjectsContainer.SneezeObjects) {
-            dust.GetComponent<InteractiveObj>().enabled = false;
+        foreach (InteractiveObj dust in storyObjectsContainer.SneezeObjects) {
+            dust.enabled = false;
         }
 
         FirstPersonController.isHolding = false;
@@ -313,8 +313,8 @@ public class StoryManager : MonoBehaviour {
         await UniTask.WaitForSeconds(1.5f);
         tasksUI.ShowTask("Найдите как избавится от чипа.");
         
-        foreach (GameObject dust in storyObjectsContainer.SneezeObjects) {
-            dust.GetComponent<InteractiveObj>().enabled = true;
+        foreach (InteractiveObj dust in storyObjectsContainer.SneezeObjects) {
+            dust.enabled = true;
         }
         
         await UniTask.WaitUntil(() => EventsLogged.Count(IsSneezeItem) >= 1);

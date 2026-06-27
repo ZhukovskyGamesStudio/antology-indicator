@@ -1,9 +1,14 @@
 fileFormatVersion: 2
-guid: 498701845cfa86f409a574e288441bda
+guid: 4b2366eb42b235842a51d9762b47abae
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: wire_plug_color
+    second: {fileID: 2800000, guid: ad87facd527afda418476393306a3370, type: 3}
   materials:
     materialImportMode: 2
     materialName: 0
