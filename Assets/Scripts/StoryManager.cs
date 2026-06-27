@@ -134,9 +134,9 @@ public class StoryManager : MonoBehaviour {
 
         //поработать над анимацией вступления
         await UniTask.WaitForSeconds(4f);
-        await TalkUI.Say("\"В мемах есть гипнотическое послание...\"\nХах, ну и бред. Кто вообще верит в такое?");
+        await TalkUI.Say("\"Феномен меметического гипноза...\"\nХах, ну и бред. Кто вообще верит в такое?");
         await TalkUI.Say("\"Такое только мой дядька и читает.\n  Атлантида!.. Планета нибиру...");
-        await TalkUI.Say("\"Сам то в больницу уехал - как на похороны, жутко ему от врачей..\n А я после перелома как новенький!");
+        await TalkUI.Say("\"Сам-то в больницу уехал - как на похороны, жутко ему от врачей..\n А я после перелома как новенький!");
         await TalkUI.Say("\"Поразвлекаюсь пока с его книжками, всё равно он нескоро вернётся.");
 
         await TalkUI.Say("Надоели уже эти подкасты, включу ка я лоу-фай");
@@ -202,7 +202,7 @@ public class StoryManager : MonoBehaviour {
         madnessManager.TmpMaxMadness = 55;
         madnessManager.IsMadnessRaising = false;
 
-        await TalkUI.Say("Голова начинает кружится, надо отвлечься");
+        await TalkUI.Say("Голова начинает кружиться, надо отвлечься");
 
         tasksUI.ShowTask("Отвлекитеcь от шума (<b>Q</b>) или (<b>E</b>)");
         await UniTask.WaitUntil(() => madnessManager.Madness < 10);
