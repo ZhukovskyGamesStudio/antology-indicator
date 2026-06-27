@@ -38,6 +38,7 @@ public class StoryManager : MonoBehaviour {
         tasksUI.ShowTask("");
         madnessManager.IsMadnessRaising = false;
         madnessManager.IsVolumesFixed = true;
+        storyObjectsContainer.WardrobeAnim.GetComponent<InteractiveObj>().enabled = false;
 
         storyObjectsContainer.FakeRadioWire.SetActive(true);
         storyObjectsContainer.KitchenWire.SetActive(false);
@@ -276,6 +277,7 @@ public class StoryManager : MonoBehaviour {
 
         await UniTask.WaitUntil(() => EventsLogged.Any(l => l == "FakeHammer"));
         storyObjectsContainer.WardrobeAnim.Play();
+        storyObjectsContainer.WardrobeAnim.GetComponent<InteractiveObj>().enabled = true;
         await UniTask.WaitForSeconds(0.5f);
         await TalkUI.Say("Померещилось, но кажется молоток был в прихожей");
 

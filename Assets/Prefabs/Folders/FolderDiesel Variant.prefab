@@ -10,15 +10,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3250950581031817377, guid: faf2cebfb3916794daf698b2eb9485ae, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 849.8334
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3250950581031817377, guid: faf2cebfb3916794daf698b2eb9485ae, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3250950581031817377, guid: faf2cebfb3916794daf698b2eb9485ae, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -859.12683
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3250950581031817377, guid: faf2cebfb3916794daf698b2eb9485ae, type: 3}
       propertyPath: m_LocalRotation.w
@@ -123,10 +123,10 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 4508010c42b2d4b4080af6f20f70b49c, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 317759051362328977}
+      addedObject: {fileID: 1232272308453871510}
     - targetCorrespondingSourceObject: {fileID: -6993191356643444013, guid: 4508010c42b2d4b4080af6f20f70b49c, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 4948057679524887679}
+      addedObject: {fileID: 1056623160786197862}
   m_SourcePrefab: {fileID: 100100000, guid: 4508010c42b2d4b4080af6f20f70b49c, type: 3}
 --- !u!4 &7116217401675464148 stripped
 Transform:
@@ -138,7 +138,7 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 4508010c42b2d4b4080af6f20f70b49c, type: 3}
   m_PrefabInstance: {fileID: 7299028207035800127}
   m_PrefabAsset: {fileID: 0}
---- !u!65 &317759051362328977
+--- !u!65 &1232272308453871510
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -164,7 +164,7 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: -6993191356643444013, guid: 4508010c42b2d4b4080af6f20f70b49c, type: 3}
   m_PrefabInstance: {fileID: 7299028207035800127}
   m_PrefabAsset: {fileID: 0}
---- !u!65 &4948057679524887679
+--- !u!65 &1056623160786197862
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -183,5 +183,5 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.9999999, y: 2, z: 2}
-  m_Center: {x: -0.99999994, y: -0.0000019073486, z: 1}
+  m_Size: {x: 0.0055555752, y: 0.47185835, z: 0.6385274}
+  m_Center: {x: 0.0030030797, y: 0.23592876, z: -0.00000013411045}
