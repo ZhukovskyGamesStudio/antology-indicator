@@ -10,10 +10,27 @@ public class TasksUI : MonoBehaviour {
     public RectTransform Ckeck;
     private CancellationTokenSource cts;
     private List<string> _shownTasks = new();
+    // Русский ключ текущей задачи — для перерисовки при смене языка.
+    private string _currentTaskSource;
+
+    private void OnEnable() {
+        Language.OnLanguageChanged += OnLanguageChanged;
+    }
+
+    private void OnDisable() {
+        Language.OnLanguageChanged -= OnLanguageChanged;
+    }
+
+    private void OnLanguageChanged() {
+        if (_currentTaskSource != null && text != null) {
+            text.text = Language.Get(_currentTaskSource);
+        }
+    }
 
     public void ShowTask(string taskName) {
+        _currentTaskSource = taskName;
         Ckeck.gameObject.SetActive(false);
-        text.text = taskName;
+        text.text = Language.Get(taskName);
     }
 
     public void ShowTaskOnce(string taskName) {

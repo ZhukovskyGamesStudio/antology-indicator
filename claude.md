@@ -140,6 +140,18 @@
 - [HintUI](Assets/Scripts/HintUI.cs) / [TalkUI](Assets/Scripts/TalkUI.cs) / [TasksUI](Assets/Scripts/TasksUI.cs) — TMP-текстовые UI: подсказки, реплики персонажа (5 сек таймер с CancellationToken), активные задачи со зачёркиванием `<s>` и анимированной галочкой через `DOScaleX`.
 - [PlayAnim](Assets/Scripts/PlayAnim.cs) / [ToggleEmission](Assets/Scripts/ToggleEmission.cs) / [ToggleOnOff](Assets/Scripts/ToggleOnOff.cs) / [FaceCamera](Assets/Scripts/FaceCamera.cs) — тонкие обёртки для вызова из `UnityEvent` в инспекторе.
 
+## Локализация (RU/EN)
+
+Двуязычная система (RU/EN), переключение в любой момент в меню или в паузе; весь текст и переводимые текстуры меняются мгновенно. Выбор хранится в `PlayerPrefs["Language"]`. Подробности — [Assets/Scripts/Localization/README.md](Assets/Scripts/Localization/README.md).
+
+- **Принцип «русский исходник = ключ».** Реплики пишутся по-русски как обычно (в коде или в `React`/`ChangeQuest` префабов), а при показе прогоняются через [`Language.Get(ru)`](Assets/Scripts/Language.cs). Нет перевода — остаётся русский.
+- [Language.cs](Assets/Scripts/Language.cs) — статический движок: `Get`, `ChangeLanguage(LangCode)`, событие `OnLanguageChanged`, ленивая инициализация из PlayerPrefs.
+- [LocalizationData.cs](Assets/Scripts/LocalizationData.cs) — таблица переводов `RU → EN` (массив пар). **Чтобы добавить перевод — одна строка сюда.** Все существующие реплики/задачи/реакции/UI уже переведены (62 пары).
+- **Sinks локализуются сами:** `TalkUI.Say`, `TasksUI.ShowTask`, `HintUI.ShowHint`, `WinPanel.SetText` переводят на показе и перерисовываются при смене языка (хранят русский ключ). Дедуп реплик/задач идёт по русскому ключу — независим от языка.
+- **Компоненты:** [LocalizedText](Assets/Scripts/Localization/LocalizedText.cs) — статичные TMP-подписи (кнопки меню, заголовки; ключ берётся из текста подписи). [LocalizedTexture](Assets/Scripts/Localization/LocalizedTexture.cs) — текстура на материале 3D-меша через `MaterialPropertyBlock`. [LocalizedSprite](Assets/Scripts/Localization/LocalizedSprite.cs) — спрайт в UI/2D. [LanguageToggle](Assets/Scripts/Localization/LanguageToggle.cs) — подсветка кнопок RU/EN.
+- **Переводимые текстуры:** пары `*_ru`/`*_en` в `Assets/Models/TranslatableModels/` (`note`, `newspaper`, `table_book`); `LocalizedTexture` навешан на эти меши в `NormalRooms` и `LabirintRooms`.
+- **Шрифт:** игровой `Old-Soviet` статичный и без латинского апострофа/кавычек, поэтому к нему добавлен fallback `LiberationSans SDF` — английский с сокращениями (`I'll`, `won't`) рендерится корректно. При замене шрифта сохранить fallback.
+
 ## Ассеты
 
 - **Префабы:** Book, Broshure, Carpet, FakeHammer, FakeUmbrella, Frog, Hallway/LabirintRooms/NormalRooms, Lamp, Lock, NewsPaper, Note, Pepper, Radio + комнаты в `Prefabs/Rooms/` (kitchen, livingroom, hallway, midhallway, watercloset) и предметы мебели (chandelier, fridge, microwave, table, watertap, провода).

@@ -1,0 +1,153 @@
+/// <summary>
+/// Таблица переводов: русский исходник -&gt; английский.
+///
+/// КАК ДОБАВИТЬ ПЕРЕВОД НОВОЙ РЕПЛИКИ / ЗАДАЧИ / РЕАКЦИИ:
+///   1) В коде или префабе пишите русскую строку как обычно
+///      (TalkUI.Say("..."), tasksUI.ShowTask("..."), React("..."), и т.п.).
+///   2) Добавьте сюда строку  {"та же самая русская строка", "English version"}.
+/// Если перевода нет — в EN-режиме просто покажется русский, ничего не сломается.
+///
+/// ВАЖНО: ключ (левая колонка) должен ПОБУКВЕННО совпадать с тем, что передаётся
+/// в показ — включая теги &lt;b&gt;...&lt;/b&gt;, переносы строк \n, пробелы и скобки.
+/// </summary>
+public static class LocalizationData {
+    public static readonly (string ru, string en)[] Pairs = {
+        // ───────────────────────── Глава 1: Стол / Радио (StoryManager) ─────────────────────────
+        ("\"Феномен меметического гипноза...\"\nХах, ну и бред. Кто вообще верит в такое?",
+            "\"The phenomenon of memetic hypnosis...\"\nHah, what nonsense. Who even believes this stuff?"),
+        ("\"Такое только мой дядька и читает.\n  Атлантида!.. Планета нибиру...",
+            "\"Only my uncle reads stuff like this.\n  Atlantis!.. Planet Nibiru..."),
+        ("\"Сам-то в больницу уехал - как на похороны, жутко ему от врачей..\n А я после перелома как новенький!",
+            "\"Off to the hospital he went - like to a funeral, the doctors terrify him..\n And me, after a fracture, good as new!"),
+        ("\"Поразвлекаюсь пока с его книжками, всё равно он нескоро вернётся.",
+            "\"I'll amuse myself with his little books for now, he won't be back for a while anyway."),
+        ("Надоели уже эти подкасты, включу ка я лоу-фай",
+            "Sick of these podcasts, let me put on some lo-fi"),
+        ("Найдите музыкальную волну",
+            "Find a music station"),
+        ("Найдите музыкальную волну (<b>ПКМ</b> положить предмет)",
+            "Find a music station (<b>RMB</b> to put item down)"),
+        ("Подпевайте радиостанции (<b>E</b>)",
+            "Sing along with the station (<b>E</b>)"),
+        ("Щёлкайте в ритм радиостанции (<b>Q</b>)",
+            "Snap along to the station's beat (<b>Q</b>)"),
+        ("Найду лучше что-то нейтральное",
+            "Better find something more neutral"),
+        ("Найдите расслабляющую волну",
+            "Find a relaxing station"),
+        ("То что нужно",
+            "Just what I needed"),
+        ("Продолжите читать",
+            "Keep reading"),
+        ("Старое барахло, постоянно ломается",
+            "Old junk, always breaking down"),
+        ("Восстановите волну",
+            "Restore the station"),
+        ("Хм, странно",
+            "Hm, strange"),
+        ("Ладно, почитаю в тишине",
+            "Fine, I'll read in silence"),
+        ("Выключите радио",
+            "Turn off the radio"),
+        ("Что?! Почему оно работает?",
+            "What?! Why is it still on?"),
+        ("Голова начинает кружиться, надо отвлечься",
+            "My head's starting to spin, I need to distract myself"),
+        ("Отвлекитесь от шума (<b>Q</b>) или (<b>E</b>)",
+            "Take your mind off the noise (<b>Q</b>) or (<b>E</b>)"),
+
+        // ───────────────────────── Глава 2: Электричество / Кухня ─────────────────────────
+        ("Может кнопка выключения сломалась?",
+            "Maybe the power button's broken?"),
+        ("Отключите радио от питания (WASD)",
+            "Unplug the radio from the power (WASD)"),
+        ("Хм, я же точно видел, это радио-провод...",
+            "Hm, I could've sworn this was the radio's cord..."),
+        ("Отключите РАДИО от питания",
+            "Unplug the RADIO from the power"),
+        ("Избавьтесь от шума",
+            "Get rid of the noise"),
+        ("Избавьтесь от шума (1 из 3)",
+            "Get rid of the noise (1 of 3)"),
+        ("Избавьтесь от шума (2 из 3)",
+            "Get rid of the noise (2 of 3)"),
+        ("Избавьтесь от шума (3 из 3)",
+            "Get rid of the noise (3 of 3)"),
+
+        // ───────────────────────── Глава 3: Разбить радио ─────────────────────────
+        ("Снова оно... Как же раскалывается головааа...",
+            "It's back... My heaaad is splitting..."),
+        ("Найдите способ остановить радио",
+            "Find a way to stop the radio"),
+        ("Померещилось, но кажется молоток был в прихожей",
+            "Must've imagined it, but I think the hammer was in the hallway"),
+        ("Пора с ним кончать",
+            "Time to finish it off"),
+        ("Заткнись",
+            "Shut up"),
+        ("Заткнись, заткнись, заткнись",
+            "Shut up, shut up, shut up"),
+        ("АААААААА, неееееет.",
+            "AAAAAAAA, noooooo."),
+
+        // ───────────────────────── Глава 4: Чип / Чихание ─────────────────────────
+        ("Прочитайте записку.",
+            "Read the note."),
+        ("Найдите как избавится от чипа.",
+            "Find a way to get rid of the chip."),
+        ("Заставьте себя чихнуть (1 из 3)",
+            "Force yourself to sneeze (1 of 3)"),
+        ("Заставьте себя чихнуть (2 из 3)",
+            "Force yourself to sneeze (2 of 3)"),
+        ("Заставьте себя чихнуть (3 из 3)",
+            "Force yourself to sneeze (3 of 3)"),
+
+        // ───────────────────────── Финал ─────────────────────────
+        ("Теперь они меня не отследят",
+            "Now they won't track me"),
+        ("Отправьтесь к дяде.",
+            "Head to your uncle's."),
+        ("надо добраться до дяди, и поскорее",
+            "I need to get to my uncle, and fast"),
+        ("Вы спасли свой разум!",
+            "You saved your mind!"),
+        ("Вы спасли свой разум?",
+            "You saved your mind?"),
+
+        // ───────────────────────── Реакции на предметы (префабы, React/ChangeQuest) ─────────────────────────
+        ("Транзисторы... Лучше напишите, как вырубить чёртово радио!",
+            "Transistors... Better off telling me how to kill that damn radio!"),
+        ("Засуньте её поглубже! (ПКМ)",
+            "Shove it in deeper! (RMB)"),
+        ("Пощекочите себя! (ПКМ)",
+            "Tickle yourself! (RMB)"),
+        ("Это почерк дяди! Что за?.. Микрочипы? Чихание?",
+            "That's my uncle's handwriting! What the?.. Microchips? Sneezing?"),
+        ("Хорошая была подушка...",
+            "It was a good pillow..."),
+        ("У меня аллергия на перец...",
+            "I'm allergic to pepper..."),
+        ("Вдохните перец! (ПКМ)",
+            "Inhale the pepper! (RMB)"),
+        ("Чёрт, зря сломал солонку",
+            "Damn, broke the salt shaker for nothing"),
+        ("Вот откуда дядя набрался страшилок про больницы...",
+            "So that's where my uncle got his hospital horror stories..."),
+
+        // ───────────────────────── Статичный UI (меню / паузы / экраны) ─────────────────────────
+        ("Начать игру",
+            "Start Game"),
+        ("Выйти из игры",
+            "Quit Game"),
+        ("Выйти",
+            "Quit"),
+        ("Продолжить",
+            "Resume"),
+        ("Пауза",
+            "Paused"),
+        ("Играть снова",
+            "Play Again"),
+        ("Радиоволна\nзахватила ваш разум",
+            "The radio wave\nseized your mind"),
+    };
+}

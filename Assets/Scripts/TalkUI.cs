@@ -59,12 +59,35 @@ public class TalkUI : MonoBehaviour {
     // подряд идущих одинаковых вставок.
     private string _currentPhrase;
     private UniTaskCompletionSource _currentTcs;
+    // Русский ключ реплики, которая сейчас на экране — чтобы перерисовать её
+    // при смене языка "на лету". null — на экране ничего нет.
+    private string _onScreenSource;
 
     /// <summary>Есть ли что-то в очереди или активно проигрывается.</summary>
     public bool IsBusy => _isPlaying || _queue.Count > 0;
 
     private void Awake() {
         instance = this;
+    }
+
+    private void OnEnable() {
+        Language.OnLanguageChanged += OnLanguageChanged;
+    }
+
+    private void OnDisable() {
+        Language.OnLanguageChanged -= OnLanguageChanged;
+    }
+
+    // Смена языка во время показа реплики: мгновенно перерисовываем её целиком
+    // на нужном языке (без повторного эффекта печати).
+    private void OnLanguageChanged() {
+        if (_onScreenSource == null || text == null) {
+            return;
+        }
+
+        text.text = Language.Get(_onScreenSource);
+        text.ForceMeshUpdate();
+        text.maxVisibleCharacters = text.textInfo.characterCount;
     }
 
     /// <summary>
@@ -163,7 +186,8 @@ public class TalkUI : MonoBehaviour {
             back.gameObject.SetActive(true);
         }
 
-        text.text = phrase;
+        _onScreenSource = phrase;
+        text.text = Language.Get(phrase);
         text.maxVisibleCharacters = 0;
         // TMP сам разделит rich-text-теги от видимых символов после ForceMeshUpdate.
         text.ForceMeshUpdate();
@@ -199,6 +223,7 @@ public class TalkUI : MonoBehaviour {
             await WaitOrSkip(hold);
         }
 
+        _onScreenSource = null;
         text.text = "";
         text.maxVisibleCharacters = 0;
         if (back != null) {

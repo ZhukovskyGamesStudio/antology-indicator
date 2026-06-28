@@ -143,7 +143,9 @@ public class StoryManager : MonoBehaviour {
         storyObjectsContainer.RadioChange.enabled = true;
         
         UI.TaskPanel.SetActive(true);
-        tasksUI.ShowTask("Найдите музыкальную волну " + (EventsLogged.Any(l => l == "BookPicked") ? "(<b>ПКМ</b> положить предмет)" : ""));
+        tasksUI.ShowTask(EventsLogged.Any(l => l == "BookPicked")
+            ? "Найдите музыкальную волну (<b>ПКМ</b> положить предмет)"
+            : "Найдите музыкальную волну");
         await UniTask.WaitForSeconds(1.5f);
 
         await UniTask.WaitUntil(() => EventsLogged.All(l => l != "BookPicked"));
@@ -204,7 +206,7 @@ public class StoryManager : MonoBehaviour {
 
         await TalkUI.Say("Голова начинает кружиться, надо отвлечься");
 
-        tasksUI.ShowTask("Отвлекитеcь от шума (<b>Q</b>) или (<b>E</b>)");
+        tasksUI.ShowTask("Отвлекитесь от шума (<b>Q</b>) или (<b>E</b>)");
         await UniTask.WaitUntil(() => madnessManager.Madness < 10);
         madnessManager.IsMadnessRaising = true;
         tasksUI.CompleteTask();
@@ -334,11 +336,11 @@ public class StoryManager : MonoBehaviour {
         await UniTask.WaitUntil(() => EventsLogged.Count(IsSneezeItem) >= 2);
         tasksUI.CompleteTask();
         await UniTask.WaitForSeconds(1.5f);
-        tasksUI.ShowTask("Заставьте себя чихнуть  (2 из 3)");
+        tasksUI.ShowTask("Заставьте себя чихнуть (2 из 3)");
         await UniTask.WaitUntil(() => EventsLogged.Count(IsSneezeItem) >= 3);
         tasksUI.CompleteTask();
         await UniTask.WaitForSeconds(1.5f);
-        tasksUI.ShowTask("Заставьте себя чихнуть  (3 из 3)");
+        tasksUI.ShowTask("Заставьте себя чихнуть (3 из 3)");
         tasksUI.CompleteTask();
         
         playerMovement.playerCanMove = false;

@@ -679,6 +679,23 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 362479575}
   m_CullTransparentMesh: 1
+--- !u!114 &366753636
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1544532117}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1da32016d18b098409190e040784050e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LocalizedTexture
+  target: {fileID: 1544532118}
+  ru: {fileID: 2800000, guid: 3839ad544174a0742bb202d315b1270d, type: 3}
+  en: {fileID: 2800000, guid: 62a269115a1e9284eb8f46a5e1abc9bb, type: 3}
+  textureProperty: _BaseMap
+  materialIndex: 0
 --- !u!1 &387151035
 GameObject:
   m_ObjectHideFlags: 0
@@ -907,6 +924,7 @@ GameObject:
   m_Component:
   - component: {fileID: 614518089}
   - component: {fileID: 614518090}
+  - component: {fileID: 614518091}
   m_Layer: 0
   m_Name: ENToggle
   m_TagString: Untagged
@@ -995,6 +1013,19 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   m_IsOn: 0
+--- !u!114 &614518091
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 614518088}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 022001ffe690f144cbb2e9bd51cf94b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LanguageToggle
+  lang: 1
 --- !u!1001 &614958760
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2466,13 +2497,116 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 2326798003565137819, guid: 4f4e7c962f838d64f98702de9983c3b2, type: 3}
       insertIndex: 8
       addedObject: {fileID: 1640146356}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7621905236048337414, guid: 4f4e7c962f838d64f98702de9983c3b2, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1544532127}
+    - targetCorrespondingSourceObject: {fileID: 8777755490070347288, guid: 4f4e7c962f838d64f98702de9983c3b2, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1544532126}
+    - targetCorrespondingSourceObject: {fileID: 6327941606510420318, guid: 4f4e7c962f838d64f98702de9983c3b2, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1544532125}
+    - targetCorrespondingSourceObject: {fileID: 7139606189470969531, guid: 4f4e7c962f838d64f98702de9983c3b2, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 366753636}
   m_SourcePrefab: {fileID: 100100000, guid: 4f4e7c962f838d64f98702de9983c3b2, type: 3}
 --- !u!4 &1544532116 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2326798003565137819, guid: 4f4e7c962f838d64f98702de9983c3b2, type: 3}
   m_PrefabInstance: {fileID: 1544532115}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1544532117 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7139606189470969531, guid: 4f4e7c962f838d64f98702de9983c3b2, type: 3}
+  m_PrefabInstance: {fileID: 1544532115}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &1544532118 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 8652547865164861294, guid: 4f4e7c962f838d64f98702de9983c3b2, type: 3}
+  m_PrefabInstance: {fileID: 1544532115}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1544532119 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6327941606510420318, guid: 4f4e7c962f838d64f98702de9983c3b2, type: 3}
+  m_PrefabInstance: {fileID: 1544532115}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &1544532120 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 5535382631825817739, guid: 4f4e7c962f838d64f98702de9983c3b2, type: 3}
+  m_PrefabInstance: {fileID: 1544532115}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1544532121 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8777755490070347288, guid: 4f4e7c962f838d64f98702de9983c3b2, type: 3}
+  m_PrefabInstance: {fileID: 1544532115}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &1544532122 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 7120233258860617677, guid: 4f4e7c962f838d64f98702de9983c3b2, type: 3}
+  m_PrefabInstance: {fileID: 1544532115}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1544532123 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7621905236048337414, guid: 4f4e7c962f838d64f98702de9983c3b2, type: 3}
+  m_PrefabInstance: {fileID: 1544532115}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &1544532124 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 8270454024356395987, guid: 4f4e7c962f838d64f98702de9983c3b2, type: 3}
+  m_PrefabInstance: {fileID: 1544532115}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1544532125
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1544532119}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1da32016d18b098409190e040784050e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LocalizedTexture
+  target: {fileID: 1544532120}
+  ru: {fileID: 2800000, guid: f120e3c156d6a604fbb15cb3d1889661, type: 3}
+  en: {fileID: 2800000, guid: d1e300456d5fc9e47970365bc810fa4d, type: 3}
+  textureProperty: _BaseMap
+  materialIndex: 0
+--- !u!114 &1544532126
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1544532121}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1da32016d18b098409190e040784050e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LocalizedTexture
+  target: {fileID: 1544532122}
+  ru: {fileID: 2800000, guid: f120e3c156d6a604fbb15cb3d1889661, type: 3}
+  en: {fileID: 2800000, guid: d1e300456d5fc9e47970365bc810fa4d, type: 3}
+  textureProperty: _BaseMap
+  materialIndex: 0
+--- !u!114 &1544532127
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1544532123}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1da32016d18b098409190e040784050e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LocalizedTexture
+  target: {fileID: 1544532124}
+  ru: {fileID: 2800000, guid: 9b7b51e27dc1cc5448df639ad6a84554, type: 3}
+  en: {fileID: 2800000, guid: b09a48e79330ad8448a8c3d3660bdd79, type: 3}
+  textureProperty: _BaseMap
+  materialIndex: 0
 --- !u!1 &1582145275
 GameObject:
   m_ObjectHideFlags: 0
@@ -3044,6 +3178,7 @@ GameObject:
   - component: {fileID: 1978817959}
   - component: {fileID: 1978817961}
   - component: {fileID: 1978817960}
+  - component: {fileID: 1978817962}
   m_Layer: 0
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -3170,6 +3305,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1978817958}
   m_CullTransparentMesh: 1
+--- !u!114 &1978817962
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1978817958}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04b45aeebd6f4a544bbd28cbbc335e25, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LocalizedText
+  target: {fileID: 1978817960}
+  sourceOverride: 
 --- !u!1 &2072884083
 GameObject:
   m_ObjectHideFlags: 0
@@ -3181,6 +3330,7 @@ GameObject:
   - component: {fileID: 2072884084}
   - component: {fileID: 2072884086}
   - component: {fileID: 2072884085}
+  - component: {fileID: 2072884087}
   m_Layer: 0
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -3307,6 +3457,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2072884083}
   m_CullTransparentMesh: 1
+--- !u!114 &2072884087
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2072884083}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04b45aeebd6f4a544bbd28cbbc335e25, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LocalizedText
+  target: {fileID: 2072884085}
+  sourceOverride: 
 --- !u!1 &2082849527
 GameObject:
   m_ObjectHideFlags: 0
@@ -3317,6 +3481,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2082849528}
   - component: {fileID: 2082849529}
+  - component: {fileID: 2082849530}
   m_Layer: 0
   m_Name: RUToggle
   m_TagString: Untagged
@@ -3405,6 +3570,19 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   m_IsOn: 1
+--- !u!114 &2082849530
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2082849527}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 022001ffe690f144cbb2e9bd51cf94b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LanguageToggle
+  lang: 0
 --- !u!1 &2085150554
 GameObject:
   m_ObjectHideFlags: 0
