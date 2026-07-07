@@ -2496,6 +2496,9 @@ MonoBehaviour:
   Radio: {fileID: 1277255082}
   FirstRadioPoint: {fileID: 883366392}
   NextRadioPoint: {fileID: 3494163924984855798}
+  Puddles:
+  - {fileID: 598548321}
+  - {fileID: 1776545320}
   ChipOnTable: {fileID: 6158664057079064047}
   BookMoved: {fileID: 1685460188}
   BookUnmoved: {fileID: 1089665493226079257}
@@ -2505,6 +2508,11 @@ MonoBehaviour:
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2053733042368386308, guid: 4f4e7c962f838d64f98702de9983c3b2, type: 3}
   m_PrefabInstance: {fileID: 8399756536862886682}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &598548321 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4530109885141021293, guid: 3ef1a105f3fe0494383e375d6e0a0082, type: 3}
+  m_PrefabInstance: {fileID: 3494163924984855797}
   m_PrefabAsset: {fileID: 0}
 --- !u!114 &621008721 stripped
 MonoBehaviour:
@@ -6919,6 +6927,11 @@ AudioSource:
 Camera:
   m_CorrespondingSourceObject: {fileID: 4459864851310106426, guid: 6bacecc4f3df9584198879c73a6b6c36, type: 3}
   m_PrefabInstance: {fileID: 214193802}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1776545320 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1774064698195068302, guid: 3ef1a105f3fe0494383e375d6e0a0082, type: 3}
+  m_PrefabInstance: {fileID: 3494163924984855797}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1799362960
 GameObject:

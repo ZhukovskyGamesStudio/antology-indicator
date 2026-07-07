@@ -19,7 +19,8 @@ public class StoryObjectsContainer : MonoBehaviour {
     public GameObject NormalRooms, LabirintRooms;
     public GameObject Radio, FirstRadioPoint, NextRadioPoint;
     public InteractiveObj[] SneezeObjects => FindObjectsByType<InteractiveObj>(FindObjectsInactive.Include, FindObjectsSortMode.None).Where(o=>o.CompareTag("Sneeze")).ToArray();
-    
+
+    public GameObject[] Puddles;
     public Pickable ChipOnTable, BookMoved, BookUnmoved;
     public InteractiveObj ApartmentsExit;
     public PlayAnim TitlesAnimation;

@@ -36,6 +36,7 @@ public class StoryManager : MonoBehaviour {
         playerMovement.playerCanMove = false;
         hintUI.ShowHint("");
         UI.TaskPanel.SetActive(false);
+      
         tasksUI.ShowTask("");
         madnessManager.IsMadnessRaising = false;
         madnessManager.IsVolumesFixed = true;
@@ -59,6 +60,7 @@ public class StoryManager : MonoBehaviour {
         foreach (InteractiveObj dust in storyObjectsContainer.SneezeObjects) {
             dust.enabled = false;
         }
+        SetPuddles(false);
 
         FirstPersonController.isHolding = false;
 
@@ -327,6 +329,7 @@ public class StoryManager : MonoBehaviour {
         }
 
         Openable.IsChangeAllowed = true;
+        SetPuddles(true);
         
         await UniTask.WaitUntil(() => EventsLogged.Count(IsSneezeItem) >= 1);
         tasksUI.CompleteTask();
@@ -354,6 +357,11 @@ public class StoryManager : MonoBehaviour {
         await UniTask.WaitForSeconds(6f);
     }
 
+    private void SetPuddles(bool isActive) {
+        foreach (GameObject puddle in storyObjectsContainer.Puddles) {
+            puddle.SetActive(isActive);
+        }
+    }
 
     private bool IsSneezeItem(string l) {
         return l.Contains("PepperDust") || l.Contains("Earstick") || l.Contains("Feather");
