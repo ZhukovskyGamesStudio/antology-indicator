@@ -1181,6 +1181,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1642972343}
+  - {fileID: 2086304241}
   - {fileID: 702647157}
   - {fileID: 2048536540}
   - {fileID: 1082513524}
@@ -1211,6 +1212,7 @@ MonoBehaviour:
   EscapePanel: {fileID: 2048536539}
   TaskPanel: {fileID: 702647156}
   OtherUi: {fileID: 1642972342}
+  TalkUi: {fileID: 2086304240}
   FirstPersonController: {fileID: 621381966}
   Crosshair: {fileID: 1070606052}
   WinPanel: {fileID: 1082513527}
@@ -4401,7 +4403,7 @@ MonoBehaviour:
   storyObjectsContainer: {fileID: 576864585}
   HUD: {fileID: 2028131268}
   isDropProgress: 1
-  StartingChapter: 2
+  StartingChapter: 4
 --- !u!4 &1199463264
 Transform:
   m_ObjectHideFlags: 0
@@ -6488,7 +6490,6 @@ RectTransform:
   - {fileID: 2028131264}
   - {fileID: 1411145871}
   - {fileID: 1483599303}
-  - {fileID: 2086304241}
   - {fileID: 1559451036}
   m_Father: {fileID: 202284529}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -8472,7 +8473,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 169876195}
-  m_Father: {fileID: 1642972343}
+  m_Father: {fileID: 202284529}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}

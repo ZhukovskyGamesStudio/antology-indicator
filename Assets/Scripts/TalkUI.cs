@@ -8,6 +8,12 @@ public class TalkUI : MonoBehaviour {
     public TextMeshProUGUI text;
     public Image back;
 
+    [Header("Speakers")]
+    [Tooltip("Цвет реплик дяди. Реплики ГГ показываются цветом самого TMP по умолчанию.\n" +
+             "Спикер задаётся префиксом в начале строки: \"Дядя: ...\" или \"ГГ: ...\" — " +
+             "префикс убирается при показе, а реплики дяди перекрашиваются в этот цвет.")]
+    public Color uncleColor = new Color(0.45f, 0.76f, 0.70f);
+
     [Header("Typing")]
     [Tooltip("Скорость набора символов в секунду.")]
     public float charsPerSecond = 35f;
@@ -85,9 +91,46 @@ public class TalkUI : MonoBehaviour {
             return;
         }
 
-        text.text = Language.Get(_onScreenSource);
+        text.text = BuildDisplay(_onScreenSource);
         text.ForceMeshUpdate();
         text.maxVisibleCharacters = text.textInfo.characterCount;
+    }
+
+    private const string UnclePrefix = "Дядя:";
+    private const string HeroPrefix = "ГГ:";
+
+    /// <summary>
+    /// Из «сырой» реплики достаёт чистый текст (ключ для перевода) и спикера.
+    /// Префикс "Дядя:"/"ГГ:" в начале строки убирается; "Дядя:" помечает реплику
+    /// дяди. Без префикса — реплика ГГ (спикер по умолчанию).
+    /// </summary>
+    private static void ParseSpeaker(string raw, out string clean, out bool isUncle) {
+        isUncle = false;
+        clean = raw;
+        if (string.IsNullOrEmpty(raw)) {
+            return;
+        }
+
+        if (raw.StartsWith(UnclePrefix, System.StringComparison.Ordinal)) {
+            isUncle = true;
+            clean = raw.Substring(UnclePrefix.Length).Trim();
+        } else if (raw.StartsWith(HeroPrefix, System.StringComparison.Ordinal)) {
+            clean = raw.Substring(HeroPrefix.Length).Trim();
+        }
+    }
+
+    /// <summary>
+    /// Готовит финальный текст для показа: убирает префикс спикера, переводит
+    /// на текущий язык и, если говорит дядя, заворачивает в тег цвета.
+    /// </summary>
+    private string BuildDisplay(string rawSource) {
+        ParseSpeaker(rawSource, out string clean, out bool isUncle);
+        string translated = Language.Get(clean);
+        if (isUncle) {
+            return "<color=#" + ColorUtility.ToHtmlStringRGB(uncleColor) + ">" + translated + "</color>";
+        }
+
+        return translated;
     }
 
     /// <summary>
@@ -187,7 +230,7 @@ public class TalkUI : MonoBehaviour {
         }
 
         _onScreenSource = phrase;
-        text.text = Language.Get(phrase);
+        text.text = BuildDisplay(phrase);
         text.maxVisibleCharacters = 0;
         // TMP сам разделит rich-text-теги от видимых символов после ForceMeshUpdate.
         text.ForceMeshUpdate();

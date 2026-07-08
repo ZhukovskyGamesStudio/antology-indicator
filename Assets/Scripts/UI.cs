@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class UI : MonoBehaviour {
     public CanvasGroup FadePanel;
-    public GameObject LosePanel, EscapePanel, TaskPanel, OtherUi;
+    public GameObject LosePanel, EscapePanel, TaskPanel, OtherUi, TalkUi;
     public FirstPersonController FirstPersonController;
     public GameObject Crosshair;
     public WinPanel WinPanel;
@@ -19,6 +19,7 @@ public class UI : MonoBehaviour {
         Cursor.lockState = CursorLockMode.None;
         LosePanel.SetActive(true);
         OtherUi.SetActive(false);
+        TalkUi.SetActive(false);
         TaskPanel.SetActive(false);
     }
 
@@ -77,6 +78,7 @@ public class UI : MonoBehaviour {
         Time.timeScale = EscapePanel.gameObject.activeSelf ? 0 : 1;
         //AudioListener.volume = EscapePanel.gameObject.activeSelf ? 0.2f : 1;
         OtherUi.SetActive(!EscapePanel.gameObject.activeSelf);
+        TalkUi.SetActive(!EscapePanel.gameObject.activeSelf);
         TaskPanel.SetActive(!EscapePanel.gameObject.activeSelf);
         HUD.instance.UpdateHammer();
         Cursor.visible = EscapePanel.gameObject.activeSelf;
