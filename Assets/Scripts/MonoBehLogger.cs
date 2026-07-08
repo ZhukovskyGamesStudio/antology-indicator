@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
@@ -26,6 +27,15 @@ public class MonoBehLogger : MonoBehaviour {
         // Реакция fire-and-forget. TalkUI сам дедуплицирует подряд идущие
         // одинаковые реплики: если такая же фраза уже играет или стоит
         // в очереди — новая Say-вставка игнорируется.
+        TalkUI.instance.Say(msg).Forget();
+    }
+    
+    private static readonly List<string> _reactedMessages = new();
+    public void ReactOnce(string msg) {
+        if (_reactedMessages.Contains(msg)) {
+            return;
+        }
+        _reactedMessages.Add(msg);
         TalkUI.instance.Say(msg).Forget();
     }
 }

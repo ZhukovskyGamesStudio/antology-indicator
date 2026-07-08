@@ -2996,6 +2996,44 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: 51b0c6afbd2834149bf5657c076fee0b, type: 3}
+    - target: {fileID: 2992880769791770112, guid: e62954a61976c404daa97cd4e550761f, type: 3}
+      propertyPath: OnDeath.m_PersistentCalls.m_Calls.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2992880769791770112, guid: e62954a61976c404daa97cd4e550761f, type: 3}
+      propertyPath: OnDeath.m_PersistentCalls.m_Calls.Array.data[4].m_Mode
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2992880769791770112, guid: e62954a61976c404daa97cd4e550761f, type: 3}
+      propertyPath: OnDeath.m_PersistentCalls.m_Calls.Array.data[4].m_Target
+      value: 
+      objectReference: {fileID: 4420841771887442430}
+    - target: {fileID: 2992880769791770112, guid: e62954a61976c404daa97cd4e550761f, type: 3}
+      propertyPath: OnDeath.m_PersistentCalls.m_Calls.Array.data[4].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2992880769791770112, guid: e62954a61976c404daa97cd4e550761f, type: 3}
+      propertyPath: OnDeath.m_PersistentCalls.m_Calls.Array.data[4].m_MethodName
+      value: React
+      objectReference: {fileID: 0}
+    - target: {fileID: 2992880769791770112, guid: e62954a61976c404daa97cd4e550761f, type: 3}
+      propertyPath: OnDeath.m_PersistentCalls.m_Calls.Array.data[4].m_TargetAssemblyTypeName
+      value: HittableObj, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2992880769791770112, guid: e62954a61976c404daa97cd4e550761f, type: 3}
+      propertyPath: OnDeath.m_PersistentCalls.m_Calls.Array.data[4].m_Arguments.m_BoolArgument
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2992880769791770112, guid: e62954a61976c404daa97cd4e550761f, type: 3}
+      propertyPath: OnDeath.m_PersistentCalls.m_Calls.Array.data[4].m_Arguments.m_StringArgument
+      value: "\u0414\u0430 \u043F\u043E\u0447\u0435\u043C\u0443 \u0437\u0434\u0435\u0441\u044C
+        \u0432\u043E\u043E\u0431\u0449\u0435 \u0441\u0442\u043E\u043B\u044C\u043A\u043E
+        \u0436\u0430\u0431?!"
+      objectReference: {fileID: 0}
+    - target: {fileID: 2992880769791770112, guid: e62954a61976c404daa97cd4e550761f, type: 3}
+      propertyPath: OnDeath.m_PersistentCalls.m_Calls.Array.data[4].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 3997069674623532192, guid: e62954a61976c404daa97cd4e550761f, type: 3}
       propertyPath: m_LocalScale.x
       value: 1
@@ -3110,6 +3148,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3997069674623532192, guid: e62954a61976c404daa97cd4e550761f, type: 3}
   m_PrefabInstance: {fileID: 1500020967022659582}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &4420841771887442430 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2992880769791770112, guid: e62954a61976c404daa97cd4e550761f, type: 3}
+  m_PrefabInstance: {fileID: 1500020967022659582}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad5221c58a604d709d26bad21a29d65a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HittableObj
 --- !u!114 &4875350071569423946 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6303240746226162100, guid: e62954a61976c404daa97cd4e550761f, type: 3}
@@ -3671,6 +3720,42 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: 06dd2cdf51bd4b9429ab9da90bef969e, type: 3}
+    - target: {fileID: 2992880769791770112, guid: e62954a61976c404daa97cd4e550761f, type: 3}
+      propertyPath: OnDeath.m_PersistentCalls.m_Calls.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2992880769791770112, guid: e62954a61976c404daa97cd4e550761f, type: 3}
+      propertyPath: OnDeath.m_PersistentCalls.m_Calls.Array.data[4].m_Mode
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2992880769791770112, guid: e62954a61976c404daa97cd4e550761f, type: 3}
+      propertyPath: OnDeath.m_PersistentCalls.m_Calls.Array.data[4].m_Target
+      value: 
+      objectReference: {fileID: 3487161802026049734}
+    - target: {fileID: 2992880769791770112, guid: e62954a61976c404daa97cd4e550761f, type: 3}
+      propertyPath: OnDeath.m_PersistentCalls.m_Calls.Array.data[4].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2992880769791770112, guid: e62954a61976c404daa97cd4e550761f, type: 3}
+      propertyPath: OnDeath.m_PersistentCalls.m_Calls.Array.data[4].m_MethodName
+      value: ReactOnce
+      objectReference: {fileID: 0}
+    - target: {fileID: 2992880769791770112, guid: e62954a61976c404daa97cd4e550761f, type: 3}
+      propertyPath: OnDeath.m_PersistentCalls.m_Calls.Array.data[4].m_TargetAssemblyTypeName
+      value: HittableObj, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2992880769791770112, guid: e62954a61976c404daa97cd4e550761f, type: 3}
+      propertyPath: OnDeath.m_PersistentCalls.m_Calls.Array.data[4].m_Arguments.m_BoolArgument
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2992880769791770112, guid: e62954a61976c404daa97cd4e550761f, type: 3}
+      propertyPath: OnDeath.m_PersistentCalls.m_Calls.Array.data[4].m_Arguments.m_StringArgument
+      value: "\u0421\u0435\u0440\u044C\u0451\u0437\u043D\u043E?"
+      objectReference: {fileID: 0}
+    - target: {fileID: 2992880769791770112, guid: e62954a61976c404daa97cd4e550761f, type: 3}
+      propertyPath: OnDeath.m_PersistentCalls.m_Calls.Array.data[4].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 3997069674623532192, guid: e62954a61976c404daa97cd4e550761f, type: 3}
       propertyPath: m_LocalPosition.x
       value: -2.942
@@ -3773,6 +3858,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3997069674623532192, guid: e62954a61976c404daa97cd4e550761f, type: 3}
   m_PrefabInstance: {fileID: 1867931832664448710}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &3487161802026049734 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2992880769791770112, guid: e62954a61976c404daa97cd4e550761f, type: 3}
+  m_PrefabInstance: {fileID: 1867931832664448710}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad5221c58a604d709d26bad21a29d65a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HittableObj
 --- !u!114 &5662614672295053170 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6303240746226162100, guid: e62954a61976c404daa97cd4e550761f, type: 3}
@@ -5354,6 +5450,45 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: 5105aac53c3dbe443820c2e735fa3e9f, type: 3}
+    - target: {fileID: 2992880769791770112, guid: e62954a61976c404daa97cd4e550761f, type: 3}
+      propertyPath: OnDeath.m_PersistentCalls.m_Calls.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2992880769791770112, guid: e62954a61976c404daa97cd4e550761f, type: 3}
+      propertyPath: OnDeath.m_PersistentCalls.m_Calls.Array.data[4].m_Mode
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2992880769791770112, guid: e62954a61976c404daa97cd4e550761f, type: 3}
+      propertyPath: OnDeath.m_PersistentCalls.m_Calls.Array.data[4].m_Target
+      value: 
+      objectReference: {fileID: 1553281105499994346}
+    - target: {fileID: 2992880769791770112, guid: e62954a61976c404daa97cd4e550761f, type: 3}
+      propertyPath: OnDeath.m_PersistentCalls.m_Calls.Array.data[4].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2992880769791770112, guid: e62954a61976c404daa97cd4e550761f, type: 3}
+      propertyPath: OnDeath.m_PersistentCalls.m_Calls.Array.data[4].m_MethodName
+      value: ReactOnce
+      objectReference: {fileID: 0}
+    - target: {fileID: 2992880769791770112, guid: e62954a61976c404daa97cd4e550761f, type: 3}
+      propertyPath: OnDeath.m_PersistentCalls.m_Calls.Array.data[4].m_TargetAssemblyTypeName
+      value: HittableObj, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2992880769791770112, guid: e62954a61976c404daa97cd4e550761f, type: 3}
+      propertyPath: OnDeath.m_PersistentCalls.m_Calls.Array.data[4].m_Arguments.m_BoolArgument
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2992880769791770112, guid: e62954a61976c404daa97cd4e550761f, type: 3}
+      propertyPath: OnDeath.m_PersistentCalls.m_Calls.Array.data[4].m_Arguments.m_StringArgument
+      value: " \u041A\u0430\u0440\u0430\u043D\u0434\u0430\u0448\u0438?! \u0414\u0430
+        \u0434\u043E\u043B\u0436\u043D\u044B \u0436\u0435 \u0433\u0434\u0435-\u0442\u043E
+        \u0431\u044B\u0442\u044C \u043D\u043E\u0440\u043C\u0430\u043B\u044C\u043D\u044B\u0435
+        \u043F\u043E\u0434\u0443\u0448\u043A\u0438!"
+      objectReference: {fileID: 0}
+    - target: {fileID: 2992880769791770112, guid: e62954a61976c404daa97cd4e550761f, type: 3}
+      propertyPath: OnDeath.m_PersistentCalls.m_Calls.Array.data[4].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 3997069674623532192, guid: e62954a61976c404daa97cd4e550761f, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.6011906
@@ -5472,6 +5607,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3997069674623532192, guid: e62954a61976c404daa97cd4e550761f, type: 3}
   m_PrefabInstance: {fileID: 4325291670249539306}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1553281105499994346 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2992880769791770112, guid: e62954a61976c404daa97cd4e550761f, type: 3}
+  m_PrefabInstance: {fileID: 4325291670249539306}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad5221c58a604d709d26bad21a29d65a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HittableObj
 --- !u!1 &7257144589029427833 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6390620336635858067, guid: e62954a61976c404daa97cd4e550761f, type: 3}
@@ -7484,6 +7630,42 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3638847656455357755}
     m_Modifications:
+    - target: {fileID: 2992880769791770112, guid: e62954a61976c404daa97cd4e550761f, type: 3}
+      propertyPath: OnDeath.m_PersistentCalls.m_Calls.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2992880769791770112, guid: e62954a61976c404daa97cd4e550761f, type: 3}
+      propertyPath: OnDeath.m_PersistentCalls.m_Calls.Array.data[4].m_Mode
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2992880769791770112, guid: e62954a61976c404daa97cd4e550761f, type: 3}
+      propertyPath: OnDeath.m_PersistentCalls.m_Calls.Array.data[4].m_Target
+      value: 
+      objectReference: {fileID: 8174417686635457970}
+    - target: {fileID: 2992880769791770112, guid: e62954a61976c404daa97cd4e550761f, type: 3}
+      propertyPath: OnDeath.m_PersistentCalls.m_Calls.Array.data[4].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2992880769791770112, guid: e62954a61976c404daa97cd4e550761f, type: 3}
+      propertyPath: OnDeath.m_PersistentCalls.m_Calls.Array.data[4].m_MethodName
+      value: ReactOnce
+      objectReference: {fileID: 0}
+    - target: {fileID: 2992880769791770112, guid: e62954a61976c404daa97cd4e550761f, type: 3}
+      propertyPath: OnDeath.m_PersistentCalls.m_Calls.Array.data[4].m_TargetAssemblyTypeName
+      value: HittableObj, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2992880769791770112, guid: e62954a61976c404daa97cd4e550761f, type: 3}
+      propertyPath: OnDeath.m_PersistentCalls.m_Calls.Array.data[4].m_Arguments.m_BoolArgument
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2992880769791770112, guid: e62954a61976c404daa97cd4e550761f, type: 3}
+      propertyPath: OnDeath.m_PersistentCalls.m_Calls.Array.data[4].m_Arguments.m_StringArgument
+      value: "\u0412\u043E\u0442 \u0436\u0435 \u043E\u043D\u043E!"
+      objectReference: {fileID: 0}
+    - target: {fileID: 2992880769791770112, guid: e62954a61976c404daa97cd4e550761f, type: 3}
+      propertyPath: OnDeath.m_PersistentCalls.m_Calls.Array.data[4].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 3997069674623532192, guid: e62954a61976c404daa97cd4e550761f, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.6011906
@@ -7571,6 +7753,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3997069674623532192, guid: e62954a61976c404daa97cd4e550761f, type: 3}
   m_PrefabInstance: {fileID: 6411301399398355890}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &8174417686635457970 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2992880769791770112, guid: e62954a61976c404daa97cd4e550761f, type: 3}
+  m_PrefabInstance: {fileID: 6411301399398355890}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad5221c58a604d709d26bad21a29d65a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HittableObj
 --- !u!1001 &6424369183122397987
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7895,6 +8088,42 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5403273514052838590}
     m_Modifications:
+    - target: {fileID: 2992880769791770112, guid: e62954a61976c404daa97cd4e550761f, type: 3}
+      propertyPath: OnDeath.m_PersistentCalls.m_Calls.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2992880769791770112, guid: e62954a61976c404daa97cd4e550761f, type: 3}
+      propertyPath: OnDeath.m_PersistentCalls.m_Calls.Array.data[4].m_Mode
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2992880769791770112, guid: e62954a61976c404daa97cd4e550761f, type: 3}
+      propertyPath: OnDeath.m_PersistentCalls.m_Calls.Array.data[4].m_Target
+      value: 
+      objectReference: {fileID: 8575662037377529153}
+    - target: {fileID: 2992880769791770112, guid: e62954a61976c404daa97cd4e550761f, type: 3}
+      propertyPath: OnDeath.m_PersistentCalls.m_Calls.Array.data[4].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2992880769791770112, guid: e62954a61976c404daa97cd4e550761f, type: 3}
+      propertyPath: OnDeath.m_PersistentCalls.m_Calls.Array.data[4].m_MethodName
+      value: ReactOnce
+      objectReference: {fileID: 0}
+    - target: {fileID: 2992880769791770112, guid: e62954a61976c404daa97cd4e550761f, type: 3}
+      propertyPath: OnDeath.m_PersistentCalls.m_Calls.Array.data[4].m_TargetAssemblyTypeName
+      value: HittableObj, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2992880769791770112, guid: e62954a61976c404daa97cd4e550761f, type: 3}
+      propertyPath: OnDeath.m_PersistentCalls.m_Calls.Array.data[4].m_Arguments.m_BoolArgument
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2992880769791770112, guid: e62954a61976c404daa97cd4e550761f, type: 3}
+      propertyPath: OnDeath.m_PersistentCalls.m_Calls.Array.data[4].m_Arguments.m_StringArgument
+      value: "\u0412\u043E\u0442 \u0436\u0435 \u043E\u043D\u043E!"
+      objectReference: {fileID: 0}
+    - target: {fileID: 2992880769791770112, guid: e62954a61976c404daa97cd4e550761f, type: 3}
+      propertyPath: OnDeath.m_PersistentCalls.m_Calls.Array.data[4].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 3997069674623532192, guid: e62954a61976c404daa97cd4e550761f, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.6011906
@@ -7982,6 +8211,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3997069674623532192, guid: e62954a61976c404daa97cd4e550761f, type: 3}
   m_PrefabInstance: {fileID: 6812264103298042689}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &8575662037377529153 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2992880769791770112, guid: e62954a61976c404daa97cd4e550761f, type: 3}
+  m_PrefabInstance: {fileID: 6812264103298042689}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad5221c58a604d709d26bad21a29d65a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HittableObj
 --- !u!1001 &6815364083154633052
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -997,6 +997,42 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8470640090390999764}
     m_Modifications:
+    - target: {fileID: 334673205880666197, guid: dc83c60015af0b44fa3440a1171b3cd9, type: 3}
+      propertyPath: OnPick.m_PersistentCalls.m_Calls.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 334673205880666197, guid: dc83c60015af0b44fa3440a1171b3cd9, type: 3}
+      propertyPath: OnPick.m_PersistentCalls.m_Calls.Array.data[2].m_Mode
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 334673205880666197, guid: dc83c60015af0b44fa3440a1171b3cd9, type: 3}
+      propertyPath: OnPick.m_PersistentCalls.m_Calls.Array.data[2].m_Target
+      value: 
+      objectReference: {fileID: 4906805807122972499}
+    - target: {fileID: 334673205880666197, guid: dc83c60015af0b44fa3440a1171b3cd9, type: 3}
+      propertyPath: OnPick.m_PersistentCalls.m_Calls.Array.data[2].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 334673205880666197, guid: dc83c60015af0b44fa3440a1171b3cd9, type: 3}
+      propertyPath: OnPick.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
+      value: ReactOnce
+      objectReference: {fileID: 0}
+    - target: {fileID: 334673205880666197, guid: dc83c60015af0b44fa3440a1171b3cd9, type: 3}
+      propertyPath: OnPick.m_PersistentCalls.m_Calls.Array.data[2].m_TargetAssemblyTypeName
+      value: Pickable, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 334673205880666197, guid: dc83c60015af0b44fa3440a1171b3cd9, type: 3}
+      propertyPath: OnPick.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_BoolArgument
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 334673205880666197, guid: dc83c60015af0b44fa3440a1171b3cd9, type: 3}
+      propertyPath: OnPick.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_StringArgument
+      value: "\u0412\u043E\u0442 \u0442\u044B \u0433\u0434\u0435! \u041F\u043E\u043F\u0430\u043B\u0430\u0441\u044C!"
+      objectReference: {fileID: 0}
+    - target: {fileID: 334673205880666197, guid: dc83c60015af0b44fa3440a1171b3cd9, type: 3}
+      propertyPath: OnPick.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 2458055379634751043, guid: dc83c60015af0b44fa3440a1171b3cd9, type: 3}
       propertyPath: m_Name
       value: Earstick
@@ -1051,6 +1087,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5217674655832905522, guid: dc83c60015af0b44fa3440a1171b3cd9, type: 3}
   m_PrefabInstance: {fileID: 4664751076681500422}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &4906805807122972499 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 334673205880666197, guid: dc83c60015af0b44fa3440a1171b3cd9, type: 3}
+  m_PrefabInstance: {fileID: 4664751076681500422}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ba11ffaa3124a35b17ca93bf7a8a3c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Pickable
 --- !u!1001 &5005409148033303848
 PrefabInstance:
   m_ObjectHideFlags: 0

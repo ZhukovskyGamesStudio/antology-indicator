@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 2570032279524656487}
   - component: {fileID: 5157793024174432630}
   - component: {fileID: 2585615554349983256}
+  - component: {fileID: 5377683893014448377}
   m_Layer: 0
   m_Name: Lock
   m_TagString: Untagged
@@ -77,6 +78,18 @@ MonoBehaviour:
           m_StringArgument: PepperFound
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 5377683893014448377}
+        m_TargetAssemblyTypeName: InteractiveObj, Assembly-CSharp
+        m_MethodName: React
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: "\u0410 \u0432\u0430\u043D\u043D\u0430\u044F \u0433\u0434\u0435..?"
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!54 &2585615554349983256
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -104,6 +117,34 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &5377683893014448377
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6175804315640361896}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 164dcbf52469186408828bc46022539e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::InteractiveObj
+  OnClick:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5377683893014448377}
+        m_TargetAssemblyTypeName: InteractiveObj, Assembly-CSharp
+        m_MethodName: ReactOnce
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: "\u0418 \u0434\u0430\u0432\u043D\u043E \u043D\u0430 \u0432\u0430\u043D\u043D\u043E\u0439
+            \u0437\u0430\u043C\u043E\u043A?"
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1001 &7010444467871087989
 PrefabInstance:
   m_ObjectHideFlags: 0
