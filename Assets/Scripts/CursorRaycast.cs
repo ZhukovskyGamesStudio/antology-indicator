@@ -15,6 +15,13 @@ public class CursorRaycast : MonoBehaviour {
     }
 
     private void LateUpdate() {
+        // Держим предмет — мир недоступен, прицел не должен подсвечивать
+        // «можно взаимодействовать/ударить».
+        if (FirstPersonController.isHolding) {
+            cursor.sprite = defaultSprite;
+            return;
+        }
+
         if (Raycast(out RaycastHit hit)) {
             if (CanHit(hit, out HittableObj toHit)) {
                 cursor.sprite = canHit;

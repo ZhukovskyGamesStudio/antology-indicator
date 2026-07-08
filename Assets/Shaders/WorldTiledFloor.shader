@@ -97,9 +97,17 @@ Shader "Custom/WorldTiledFloor"
 
             half4 frag(Varyings IN) : SV_Target
             {
-                // World-space planar UVs on the XZ plane: tile size is constant in world units,
-                // so stretching the floor adds more tiles instead of stretching the texture.
-                float2 uv = IN.positionWS.xz * _TilesPerUnit;
+                // Object-anchored planar UVs projected onto the mesh's own horizontal
+                // (local X / Z) axes, taken from the model matrix and normalized so the
+                // tile size stays constant in world units (stretching the floor still adds
+                // tiles instead of stretching the texture). Because the axes come from the
+                // object's rotation and the grid is anchored at the object's pivot, rotating
+                // or moving the mesh now rotates/moves the texture with it.
+                float3 objOriginWS = float3(unity_ObjectToWorld._m03, unity_ObjectToWorld._m13, unity_ObjectToWorld._m23);
+                float3 axisXWS = normalize(float3(unity_ObjectToWorld._m00, unity_ObjectToWorld._m10, unity_ObjectToWorld._m20));
+                float3 axisZWS = normalize(float3(unity_ObjectToWorld._m02, unity_ObjectToWorld._m12, unity_ObjectToWorld._m22));
+                float3 relWS = IN.positionWS - objOriginWS;
+                float2 uv = float2(dot(relWS, axisXWS), dot(relWS, axisZWS)) * _TilesPerUnit;
                 uv = TRANSFORM_TEX(uv, _BaseMap);
 
                 half4 albedo = SAMPLE_TEXTURE2D(_BaseMap, sampler_BaseMap, uv) * _BaseColor;

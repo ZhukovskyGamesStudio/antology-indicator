@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8216008005661447870}
   - component: {fileID: 1566239070146959961}
+  - component: {fileID: 4453266993281884027}
   m_Layer: 0
   m_Name: PillowBroken
   m_TagString: Untagged
@@ -91,6 +92,20 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!114 &4453266993281884027
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1920433580386497592}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 44976fa11d3e4556ba74650b2805d99a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayAnim
+  anim: {fileID: 1141314786093508370}
+  clip: {fileID: 7400000, guid: c125423c444f8d84cb6bbfa2fba4a792, type: 2}
 --- !u!1 &3257334486122186700
 GameObject:
   m_ObjectHideFlags: 0
@@ -104,6 +119,7 @@ GameObject:
   - component: {fileID: 5997474974670110010}
   - component: {fileID: 2992880769791770112}
   - component: {fileID: 2085219416466527777}
+  - component: {fileID: 4888051022311206428}
   m_Layer: 0
   m_Name: Pillow
   m_TagString: Untagged
@@ -227,7 +243,19 @@ MonoBehaviour:
   Hp: 3
   OnHit:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 4888051022311206428}
+        m_TargetAssemblyTypeName: PlayAnim, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   OnDeath:
     m_PersistentCalls:
       m_Calls:
@@ -242,42 +270,6 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: PillowFound
           m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 3257334486122186700}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: PepperFound
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1920433580386497592}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: PepperFound
-          m_BoolArgument: 1
-        m_CallState: 2
-      - m_Target: {fileID: 7205804650955351343}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: PepperBroken
-          m_BoolArgument: 1
         m_CallState: 2
       - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: InteractiveObj, Assembly-CSharp
@@ -296,6 +288,18 @@ MonoBehaviour:
         m_TargetAssemblyTypeName: HittableObj, Assembly-CSharp
         m_MethodName: Log
         m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: PillowBroken
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 4453266993281884027}
+        m_TargetAssemblyTypeName: PlayAnim, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -325,6 +329,20 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.9779999, y: 0.661, z: 0.1}
   m_Center: {x: 0.000000059604645, y: 0, z: -0.00000023841858}
+--- !u!114 &4888051022311206428
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3257334486122186700}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 44976fa11d3e4556ba74650b2805d99a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayAnim
+  anim: {fileID: 1141314786093508370}
+  clip: {fileID: 7400000, guid: a9c0b37fac73f814ba3ebb5f82bd8334, type: 2}
 --- !u!1 &6390620336635858067
 GameObject:
   m_ObjectHideFlags: 0
@@ -334,6 +352,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3997069674623532192}
+  - component: {fileID: 1141314786093508370}
   m_Layer: 0
   m_Name: Pillow
   m_TagString: Untagged
@@ -359,6 +378,24 @@ Transform:
   - {fileID: 8276295888877051197}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 41.812, y: -26.66, z: -0.108}
+--- !u!111 &1141314786093508370
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6390620336635858067}
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Animation: {fileID: 0}
+  m_Animations:
+  - {fileID: 7400000, guid: a9c0b37fac73f814ba3ebb5f82bd8334, type: 2}
+  - {fileID: 7400000, guid: c125423c444f8d84cb6bbfa2fba4a792, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 1
+  m_AnimatePhysics: 0
+  m_UpdateMode: 0
+  m_CullingType: 0
 --- !u!1001 &7130172439400920153
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -417,26 +454,25 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1164243504626362724, guid: 963b2ef059a90e944ad4291e8968eb96, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: -35.732
+      value: -31.86406
       objectReference: {fileID: 0}
     - target: {fileID: 1164243504626362724, guid: 963b2ef059a90e944ad4291e8968eb96, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: -184.661
+      value: -185.5253
       objectReference: {fileID: 0}
     - target: {fileID: 1164243504626362724, guid: 963b2ef059a90e944ad4291e8968eb96, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 59.992
+      value: 57.80007
+      objectReference: {fileID: 0}
+    - target: {fileID: 7482140471649852572, guid: 963b2ef059a90e944ad4291e8968eb96, type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 963b2ef059a90e944ad4291e8968eb96, type: 3}
---- !u!1 &7205804650955351343 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 500848611132215670, guid: 963b2ef059a90e944ad4291e8968eb96, type: 3}
-  m_PrefabInstance: {fileID: 7130172439400920153}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8276295888877051197 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1164243504626362724, guid: 963b2ef059a90e944ad4291e8968eb96, type: 3}
