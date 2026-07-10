@@ -122,6 +122,19 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+      - m_Target: {fileID: 2681612123810274210}
+        m_TargetAssemblyTypeName: MonoBehLogger, Assembly-CSharp
+        m_MethodName: ReactOnce
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: "\u0427\u0442\u043E-\u0442\u043E \u0443 \u043C\u0435\u043D\u044F
+            \u0441 \u0433\u043B\u0430\u0437\u0430\u043C\u0438\u2026"
+          m_BoolArgument: 0
+        m_CallState: 2
   OnDrop:
     m_PersistentCalls:
       m_Calls:
@@ -149,6 +162,12 @@ MonoBehaviour:
           m_StringArgument: FakeUmbrella
           m_BoolArgument: 0
         m_CallState: 2
+  pickClips:
+  - {fileID: 8300000, guid: 20f81da7e66261242ad84f5f655c4c78, type: 3}
+  dropClips:
+  - {fileID: 8300000, guid: 250eb109a8f58104bba30faafdcabbc2, type: 3}
+  - {fileID: 8300000, guid: d40a3a47e224e2d4a91e396404ea7cec, type: 3}
+  - {fileID: 8300000, guid: e6fee91aa6701a7488970d63d052cec2, type: 3}
   rotateSpeed: 100
 --- !u!114 &6645352345916385145
 MonoBehaviour:
@@ -254,15 +273,15 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 7070003333813674514, guid: 329464837f557e9448fe6a1212926975, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 7142459145991777438}
+      addedObject: {fileID: 4989904852782059135}
   m_SourcePrefab: {fileID: 100100000, guid: 329464837f557e9448fe6a1212926975, type: 3}
 --- !u!1 &3361285774543169529 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7070003333813674514, guid: 329464837f557e9448fe6a1212926975, type: 3}
   m_PrefabInstance: {fileID: 5528200465964238315}
   m_PrefabAsset: {fileID: 0}
---- !u!65 &7142459145991777438
-BoxCollider:
+--- !u!136 &4989904852782059135
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -279,8 +298,10 @@ BoxCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1.9610006, y: 0.39600086, z: 0.20000021}
+  serializedVersion: 2
+  m_Radius: 0.19800043
+  m_Height: 1.9610006
+  m_Direction: 0
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!212 &6525979909316375633 stripped
 SpriteRenderer:
@@ -364,15 +385,15 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 7070003333813674514, guid: 329464837f557e9448fe6a1212926975, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 190190897103966948}
+      addedObject: {fileID: 1855594759961368682}
   m_SourcePrefab: {fileID: 100100000, guid: 329464837f557e9448fe6a1212926975, type: 3}
 --- !u!1 &355332311613634532 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7070003333813674514, guid: 329464837f557e9448fe6a1212926975, type: 3}
   m_PrefabInstance: {fileID: 7418508616106792438}
   m_PrefabAsset: {fileID: 0}
---- !u!65 &190190897103966948
-BoxCollider:
+--- !u!136 &1855594759961368682
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -389,8 +410,10 @@ BoxCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1.9610006, y: 0.39600086, z: 0.20000021}
+  serializedVersion: 2
+  m_Radius: 0.19800043
+  m_Height: 1.9610006
+  m_Direction: 0
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!212 &8132158863381734476 stripped
 SpriteRenderer:

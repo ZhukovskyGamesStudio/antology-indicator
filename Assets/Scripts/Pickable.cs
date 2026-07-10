@@ -25,6 +25,13 @@ public class Pickable : MonoBehLogger {
     public UnityEvent OnPick;
     public UnityEvent OnDrop;
 
+    [Header("Звук (случайный клип из набора)")]
+    [Tooltip("Случайный клип при поднятии. Пусто — без звука")]
+    public AudioClip[] pickClips;
+
+    [Tooltip("Случайный клип при опускании. Пусто — используются pickClips")]
+    public AudioClip[] dropClips;
+
     [Tooltip("Скорость вращения предмета мышью (°/сек на единицу mouse delta).")]
     public float rotateSpeed = 200f;
 
@@ -72,6 +79,13 @@ public class Pickable : MonoBehLogger {
             FirstPersonController.isHolding = false;
             HUD.instance.SetCursorAndHand(true);
         }
+
+        // Звук берётся/кладётся. Дистанция взаимодействия короткая (CursorRaycast),
+        // поэтому позиционный PlayClipAtPoint в точке предмета всегда слышен рядом.
+        AudioClip[] soundSet = IsPicked
+            ? pickClips
+            : (dropClips != null && dropClips.Length > 0 ? dropClips : pickClips);
+        SoundUtil.PlayRandom(null, soundSet, transform.position);
     }
 
     private void DisableColliders() {

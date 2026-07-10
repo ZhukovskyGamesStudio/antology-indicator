@@ -71,6 +71,11 @@ MonoBehaviour:
             \u0434\u0440\u0443\u0433\u043E\u0439."
           m_BoolArgument: 0
         m_CallState: 2
+  pickClips:
+  - {fileID: 8300000, guid: d0e0a67cf6f14e7428fcbbb98da268e2, type: 3}
+  - {fileID: 8300000, guid: 4f79b7aab16642d44a396345ee79b285, type: 3}
+  - {fileID: 8300000, guid: cac1a25ae2802044190f0c0ce07ea61b, type: 3}
+  dropClips: []
   rotateSpeed: 100
 --- !u!114 &4175008286083188579
 MonoBehaviour:

@@ -308,6 +308,9 @@ MonoBehaviour:
           m_StringArgument: PillowBroken
           m_BoolArgument: 1
         m_CallState: 2
+  hitClips:
+  - {fileID: 8300000, guid: b23cea8c6515b5c4f8a93db2c2b7ff8a, type: 3}
+  deathClips: []
 --- !u!65 &2085219416466527777
 BoxCollider:
   m_ObjectHideFlags: 0

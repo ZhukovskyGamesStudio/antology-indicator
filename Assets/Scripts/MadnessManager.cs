@@ -38,6 +38,7 @@ public class MadnessManager : MonoBehaviour {
     public StoryManager StoryManager;
     public HUD hud;
     private bool isDead;
+    private float _lastNoHearHint = -999f;
     public bool IsVolumesFixed;
     public AudioSource FakeHummingFade;
     private CancellationTokenSource humCts = new();
@@ -80,7 +81,9 @@ public class MadnessManager : MonoBehaviour {
                     if (CursorRaycast.CanHit(hit, out HittableObj obj)) {
                         hud.TriggerHit();
                     } else if (inter != null && inter.enabled) {
-                        hud.PlaySwing();
+                        // Взаимодействие с предметом (взять/открыть) — без взмаха
+                        // и без звука взмаха. Сам клик по InteractiveObj обрабатывается
+                        // в InteractiveObj.OnMouseDown.
                     } else {
                         hud.TriggerSwing();
                     }
@@ -127,6 +130,14 @@ public class MadnessManager : MonoBehaviour {
         HummingPower = Mathf.Clamp(HummingPower, 0, 100);
         ClickingPower = Mathf.Clamp(ClickingPower, 0, 100);
         Madness = Mathf.Clamp(Madness, 0, TmpMaxMadness);
+
+        // Подсказка, если игрок «сбил» и щелчки, и пение (обе шкалы почти пусты) —
+        // намекаем переждать, пока восстановятся. Не чаще раза в 25 сек.
+        if (!isDead && IsMadnessRaising && HummingPower < 15f && ClickingPower < 15f
+            && Time.time - _lastNoHearHint > 25f && TalkUI.instance != null) {
+            _lastNoHearHint = Time.time;
+            TalkUI.instance.Say("Я сам себя не слышу... Нужно немного переждать.").Forget();
+        }
 
         if (!IsVolumesFixed) {
             UpdateSounds();

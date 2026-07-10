@@ -45,7 +45,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 0.8
+  m_Volume: 0.65
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -310,32 +310,32 @@ MonoBehaviour:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
-      time: 0.0009536743
-      value: 0.23495483
-      inSlope: 0
-      outSlope: 0
+      time: 0
+      value: 0.14
+      inSlope: 1.8400002
+      outSlope: 1.8400002
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0
-      outWeight: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.25045776
-      value: 1.0019035
-      inSlope: 0
-      outSlope: 0
+      time: 0.25
+      value: 0.6
+      inSlope: 0.74
+      outSlope: 0.74
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0
-      outWeight: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.49952197
-      value: 0.8490703
-      inSlope: 0
-      outSlope: 0
+      time: 0.5
+      value: 0.51
+      inSlope: -0.36000013
+      outSlope: -0.36000013
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0
-      outWeight: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
@@ -856,7 +856,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 9194404420554039999, guid: 81eeabd306940b44297416389b9f0616, type: 2}
   m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 8300000, guid: 5650d7ffccfc7a14babd57e90eece4dd, type: 3}
+  m_Resource: {fileID: 8300000, guid: bc70a0a3402f815459bb7d9334bd75c7, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 0
   m_Pitch: 1
@@ -1081,6 +1081,10 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  hitClips:
+  - {fileID: 8300000, guid: 2bcefd1c1ebc1714085cbc47e1634dad, type: 3}
+  deathClips:
+  - {fileID: 8300000, guid: 2bcefd1c1ebc1714085cbc47e1634dad, type: 3}
 --- !u!65 &1211536022963823715
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1145,7 +1149,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 9194404420554039999, guid: 81eeabd306940b44297416389b9f0616, type: 2}
   m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 8300000, guid: 4a38809b1b7a66e4cb462e36a47ed331, type: 3}
+  m_Resource: {fileID: 8300000, guid: f862430b482d1b14e8e56769e586dacc, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 0
   m_Pitch: 1
@@ -1740,6 +1744,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  hitClips: []
+  deathClips: []
 --- !u!65 &3534470837370672542
 BoxCollider:
   m_ObjectHideFlags: 0

@@ -16,12 +16,23 @@ public class StoryManager : MonoBehaviour {
     public Pickable book;
     public HintUI hintUI;
     public static StoryManager instance;
+
+    /// <summary>Открыт ли выход из квартиры (ставится в финале). До этого дверь реагирует «нет ключей».</summary>
+    public static bool CanExit;
+
     public TalkUI TalkUI;
 
     public RadioAudio radioAudio;
     public MadnessManager madnessManager;
     public StoryObjectsContainer storyObjectsContainer;
     public HUD HUD;
+
+    [Header("Финал (диалог ГГ и дяди)")]
+    [Tooltip("Уличный эмбиент, играет фоном во время титров/диалога")]
+    public AudioSource finalOutdoors;
+    [Tooltip("Шаги вбегающего ГГ в начале диалога")]
+    public AudioSource finalSteps;
+
     public bool isDropProgress = true;
     public int StartingChapter;
 
@@ -63,6 +74,7 @@ public class StoryManager : MonoBehaviour {
         SetPuddles(false);
 
         FirstPersonController.isHolding = false;
+        CanExit = false;
 
         if (isDropProgress) {
             PlayerPrefs.SetInt("Chapter", StartingChapter);
@@ -252,6 +264,8 @@ public class StoryManager : MonoBehaviour {
         storyObjectsContainer.FridgeAnim.Play();
         storyObjectsContainer.fridgeOpen.Play();
 
+        TalkUI.Say("Ааа! Как громко!").Forget();
+
         await UniTask.WaitForSeconds(1.5f);
 
         tasksUI.ShowTask("Избавьтесь от шума");
@@ -300,6 +314,7 @@ public class StoryManager : MonoBehaviour {
         TeleportRadio();
 
         await UniTask.WaitForSeconds(1f);
+        await TalkUI.Say("А ванная где..?");
         await TalkUI.Say("Пора с ним кончать");
 
         await UniTask.WaitUntil(() => EventsLogged.Count(l => l.Contains("RadioHit")) >= 1);
@@ -330,7 +345,11 @@ public class StoryManager : MonoBehaviour {
 
         Openable.IsChangeAllowed = true;
         SetPuddles(true);
-        
+
+        // Подсказка, если игрок долго тупит и не находит предметы для чихания.
+        CancellationTokenSource sneezeHintCts = new();
+        SneezeHintLoop(sneezeHintCts.Token).Forget();
+
         await UniTask.WaitUntil(() => EventsLogged.Count(IsSneezeItem) >= 1);
         tasksUI.CompleteTask();
         await UniTask.WaitForSeconds(1.5f);
@@ -345,7 +364,8 @@ public class StoryManager : MonoBehaviour {
         await UniTask.WaitForSeconds(1.5f);
         tasksUI.ShowTask("Заставьте себя чихнуть (3 из 3)");
         tasksUI.CompleteTask();
-        
+        sneezeHintCts.Cancel();
+
         playerMovement.playerCanMove = false;
         storyObjectsContainer.BookMoved.gameObject.SetActive(true);
         storyObjectsContainer.BookUnmoved.gameObject.SetActive(false);
@@ -365,6 +385,23 @@ public class StoryManager : MonoBehaviour {
 
     private bool IsSneezeItem(string l) {
         return l.Contains("PepperDust") || l.Contains("Earstick") || l.Contains("Feather");
+    }
+
+    // Пока идёт этап чихания: если за интервал не появилось новых «чихательных»
+    // предметов — ненавязчиво напоминаем, что искать. Останавливается по токену.
+    private async UniTaskVoid SneezeHintLoop(CancellationToken token) {
+        while (!token.IsCancellationRequested) {
+            int before = EventsLogged.Count(IsSneezeItem);
+            bool canceled = await UniTask.Delay(TimeSpan.FromSeconds(40), cancellationToken: token)
+                .SuppressCancellationThrow();
+            if (canceled || token.IsCancellationRequested) {
+                return;
+            }
+
+            if (EventsLogged.Count(IsSneezeItem) == before && before < 3) {
+                TalkUI.Say("Перец, ватная палочка, перо… Перец, ватная палочка, перо…").Forget();
+            }
+        }
     }
 
     private async UniTask FinalChapter() {
@@ -392,6 +429,7 @@ public class StoryManager : MonoBehaviour {
         playerMovement.playerCanMove = true;
         await TalkUI.Say("надо добраться до дяди, и поскорее");
         storyObjectsContainer.ApartmentsExit.enabled = true;
+        CanExit = true;
         await UniTask.WaitUntil(() => EventsLogged.Any(l => l == "ApartmentsExit"));
         
         //await TalkUI.Say("не помню как запирал дверь, но ключ точно где-то рядом");
@@ -408,7 +446,16 @@ public class StoryManager : MonoBehaviour {
         UI.WinPanel.SetText("Вы спасли свой разум!");
         await UniTask.WaitForSeconds(1f);
         storyObjectsContainer.TitlesAnimation.Play();
+        if (finalOutdoors != null) {
+            finalOutdoors.Play();
+        }
+
         await UI.ShowFade(0, 3f);
+        // ГГ как бы вбегает в сцену — шаги в самом начале диалога.
+        if (finalSteps != null) {
+            finalSteps.Play();
+        }
+
         await TalkUI.Say("ГГ: Дядя?.. Подожди... Ты почему здесь? Я же думал, ты в больнице!");
         await TalkUI.Say("Дядя: Тише, тише. Всё нормально.");
         await TalkUI.Say("ГГ: Ты не представляешь, что произошло.");
@@ -447,6 +494,7 @@ public class StoryManager : MonoBehaviour {
         _deathCts?.Cancel();
         playerMovement.playerCanMove = false;
         HUD.TriggerDeath();
+        TalkUI.Say("Нет... Голова...").Forget();
         await UniTask.WaitForSeconds(5f);
         UI.ShowLoseScreen();
     }

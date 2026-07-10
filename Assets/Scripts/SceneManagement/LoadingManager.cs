@@ -11,6 +11,11 @@ public class LoadingManager : MonoBehaviour {
     private float _delayBeforeSceneSwitch = 2.5f;
 
     public void StartLoading() {
+        // Настройки применяем сразу на LoadingScene, чтобы громкость и язык
+        // были верными с самого старта, ещё до появления меню.
+        VolumeSettings.ApplySaved();
+        Language.ChangeLanguage(Language.Current);
+
         Application.targetFrameRate = -1;
         LoadManagers().Forget();
     }

@@ -209,6 +209,10 @@ MonoBehaviour:
             \u043D\u0430 \u043F\u0435\u0440\u0435\u0446..."
           m_BoolArgument: 1
         m_CallState: 2
+  hitClips:
+  - {fileID: 8300000, guid: d370945b15be0ee40a3d662ce52b2562, type: 3}
+  deathClips:
+  - {fileID: 8300000, guid: d370945b15be0ee40a3d662ce52b2562, type: 3}
 --- !u!54 &6852713319261249551
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -504,6 +508,8 @@ MonoBehaviour:
           m_StringArgument: Pepper
           m_BoolArgument: 0
         m_CallState: 2
+  pickClips: []
+  dropClips: []
   rotateSpeed: 200
 --- !u!4 &5847887554223540071 stripped
 Transform:

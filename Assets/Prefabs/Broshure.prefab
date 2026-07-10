@@ -71,6 +71,11 @@ MonoBehaviour:
   OnDrop:
     m_PersistentCalls:
       m_Calls: []
+  pickClips:
+  - {fileID: 8300000, guid: b7b05d006c429f14984d0a93dfabea11, type: 3}
+  - {fileID: 8300000, guid: 57a5a0bdb0814db49801d439dc657d2f, type: 3}
+  - {fileID: 8300000, guid: 0bacd07b5e68393499754725b3c0f3a2, type: 3}
+  dropClips: []
   rotateSpeed: 100
 --- !u!114 &7892057750364324998
 MonoBehaviour:

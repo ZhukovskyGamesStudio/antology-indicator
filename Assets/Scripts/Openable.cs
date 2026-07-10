@@ -26,6 +26,13 @@ public class Openable : MonoBehaviour {
     [Tooltip("Хлопок дверцей при щелчке — момент смены содержимого в закрытом шкафу")]
     public AnimationClip changeClip;
 
+    [Header("Звук")]
+    [Tooltip("Звук открытия дверцы. Проигрывается в Open(). Можно не задавать")]
+    public AudioSource openSound;
+
+    [Tooltip("Звук закрытия дверцы. Проигрывается в Close(). Можно не задавать")]
+    public AudioSource closeSound;
+
     [Header("Содержимое")]
     [Tooltip("Состояния содержимого. На каждый щелчок (в закрытом шкафу) активируется " +
              "следующее по кругу. Должно быть >= 2, чтобы было что менять")]
@@ -38,6 +45,11 @@ public class Openable : MonoBehaviour {
     [Header("Условия")]
     [Tooltip("Минимальный интервал между сменами, чтобы спам Q не дёргал предмет каждый кадр")]
     public float cooldown = 0.5f;
+
+    [Tooltip("Реплика при первом сдвиге мебели щелчком (один раз за игру, на любом Openable). Пусто — без реакции")]
+    public string snapReactionOnce = "Издеваетесь?.. Теперь я двигаю мебель щелчками?";
+
+    private static bool _snapReacted;
 
     /// <summary>Открыта ли дверца сейчас.</summary>
     public bool IsOpen { get; private set; }
@@ -110,13 +122,12 @@ public class Openable : MonoBehaviour {
 
         IsOpen = true;
         PlayClip(openClip, reversed: false);
+        PlaySound(openSound);
     }
 
     public void Close() {
-        if (!IsOpen) {
-            return;
-        }
-
+        // Без guard по IsOpen: триггер TriggerToClose должен закрывать дверцы,
+        // даже если шкаф-проход открыт "по умолчанию" (IsOpen ещё false).
         IsOpen = false;
 
         // Закрытие = отдельный клип, либо openClip проигранный наоборот.
@@ -124,6 +135,14 @@ public class Openable : MonoBehaviour {
             PlayClip(closeClip, reversed: false);
         } else {
             PlayClip(openClip, reversed: true);
+        }
+
+        PlaySound(closeSound);
+    }
+
+    private static void PlaySound(AudioSource source) {
+        if (source != null) {
+            source.Play();
         }
     }
 
@@ -171,6 +190,11 @@ public class Openable : MonoBehaviour {
         _isChanging = true;
 
         PlayClip(changeClip, reversed: false);
+
+        if (!_snapReacted && !string.IsNullOrEmpty(snapReactionOnce) && TalkUI.instance != null) {
+            _snapReacted = true;
+            TalkUI.instance.Say(snapReactionOnce).Forget();
+        }
 
         if (states.Count > 0) {
             if (swapAt > 0) {

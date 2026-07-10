@@ -23,6 +23,12 @@ public class MonoBehLogger : MonoBehaviour {
         HUD.instance.TriggerAnim(anim);
     }
 
+    public void PlaySound(AudioSource source) {
+        if (source != null) {
+            source.Play();
+        }
+    }
+
     public void React(string msg) {
         // Реакция fire-and-forget. TalkUI сам дедуплицирует подряд идущие
         // одинаковые реплики: если такая же фраза уже играет или стоит

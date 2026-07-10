@@ -90,6 +90,10 @@ MonoBehaviour:
           m_StringArgument: "\u0410 \u0432\u0430\u043D\u043D\u0430\u044F \u0433\u0434\u0435..?"
           m_BoolArgument: 0
         m_CallState: 2
+  hitClips:
+  - {fileID: 8300000, guid: 2bcefd1c1ebc1714085cbc47e1634dad, type: 3}
+  deathClips:
+  - {fileID: 8300000, guid: 2bcefd1c1ebc1714085cbc47e1634dad, type: 3}
 --- !u!54 &2585615554349983256
 Rigidbody:
   m_ObjectHideFlags: 0
