@@ -243,6 +243,14 @@ public class StoryManager : MonoBehaviour {
         storyObjectsContainer.Lamp.Set(false);
         storyObjectsContainer.LampEmission.Set(false);
         storyObjectsContainer.LampInteractive.enabled = false;
+        // Приглушаем общий свет комнаты (не гасим целиком) — вместе с лампой.
+        if (storyObjectsContainer.RoomLights != null) {
+            foreach (Light roomLight in storyObjectsContainer.RoomLights) {
+                if (roomLight != null) {
+                    roomLight.intensity *= storyObjectsContainer.RoomLightDim;
+                }
+            }
+        }
         await UniTask.WaitForSeconds(1.5f);
 
         await TalkUI.Say("Хм, я же точно видел, это радио-провод...");
@@ -304,7 +312,8 @@ public class StoryManager : MonoBehaviour {
         storyObjectsContainer.WardrobeAnim.Play();
         storyObjectsContainer.WardrobeAnim.GetComponent<InteractiveObj>().enabled = true;
         await UniTask.WaitForSeconds(0.5f);
-        await TalkUI.Say("Померещилось, но кажется молоток был в прихожей");
+        // Фраза про молоток в прихожей теперь звучит при каждом подъёме фейкового
+        // молотка, пока нет настоящего (FakeHammer.OnPick -> ReactWhileNoHammer).
 
         await UniTask.WaitUntil(() => EventsLogged.Any(l => l == "FakeUmbrella"));
 

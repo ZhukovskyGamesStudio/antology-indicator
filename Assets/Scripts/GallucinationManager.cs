@@ -14,8 +14,18 @@ public class GallucinationManager : MonoBehaviour {
     [Header("Fov")]
     public bool IsFov = true;
 
+    [Tooltip("Нормальный FOV (безумие = 0), вокруг него идёт дыхание")]
     public float MinFov;
-    public float MaxFov;
+    public float MaxFov; // оставлено для совместимости, в осцилляции не используется
+
+    [Tooltip("Макс. амплитуда дыхания FOV (градусы) при полном безумии. Амплитуда растёт с безумием")]
+    public float FovOscAmplitude = 7f;
+
+    [Tooltip("Скорость дыхания FOV (рад/сек)")]
+    public float FovOscSpeed = 1.2f;
+
+    [Tooltip("Скорость возврата FOV к нормальному, когда держишь предмет (1/сек)")]
+    public float FovHoldReturnSpeed = 14f;
 
     [Header("Chromatic Aberration")]
     public bool IsChromaticAberration = true;
@@ -58,7 +68,17 @@ public class GallucinationManager : MonoBehaviour {
 
     private void UpdateVolume(float curved, float smooth) {
         if (IsFov) {
-            firstPersonController.fov = Mathf.Lerp(firstPersonController.fov, Mathf.Lerp(MinFov, MaxFov, curved), smooth);
+            if (FirstPersonController.isHolding) {
+                // Держим предмет — быстро возвращаем FOV к нормальному (без дыхания).
+                float holdSmooth = 1f - Mathf.Exp(-FovHoldReturnSpeed * Mathf.Min(Time.deltaTime, 0.1f));
+                firstPersonController.fov = Mathf.Lerp(firstPersonController.fov, MinFov, holdSmooth);
+            } else {
+                // Постоянное «дыхание» дальше-ближе вокруг нормального FOV.
+                // Амплитуда растёт с безумием, но остаётся небольшой.
+                float amp = FovOscAmplitude * curved;
+                float target = MinFov + amp * Mathf.Sin(Time.time * FovOscSpeed);
+                firstPersonController.fov = Mathf.Lerp(firstPersonController.fov, target, smooth);
+            }
         }
 
         if (IsChromaticAberration) {

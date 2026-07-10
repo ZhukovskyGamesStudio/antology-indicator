@@ -36,6 +36,18 @@ public class MonoBehLogger : MonoBehaviour {
         TalkUI.instance.Say(msg).Forget();
     }
     
+    /// <summary>
+    /// Реакция, пока у игрока ещё нет настоящего молотка (напр. при подъёме фейкового).
+    /// Как только молоток получен — молчит.
+    /// </summary>
+    public void ReactWhileNoHammer(string msg) {
+        if (HUD.instance == null || HUD.instance.HasHammer) {
+            return;
+        }
+
+        TalkUI.instance.Say(msg).Forget();
+    }
+
     private static readonly List<string> _reactedMessages = new();
     public void ReactOnce(string msg) {
         if (_reactedMessages.Contains(msg)) {

@@ -1463,9 +1463,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82424054dd9b3b84a962cd0a6a8d07c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DoorLockedReaction
-  reaction: "\u0412\u043E\u0442 \u0436\u0435... \u0421\u043E\u0432\u0441\u0435\u043C
-    \u043D\u0435 \u043F\u043E\u043C\u043D\u044E, \u043A\u0443\u0434\u0430 \u0434\u0435\u043B
-    \u043A\u043B\u044E\u0447\u0438."
+  reaction: "\u044F \u043F\u043E\u043A\u0430 \u043D\u0435 \u043C\u043E\u0433\u0443
+    \u043F\u043E\u043A\u0438\u043D\u0443\u0442\u044C \u043A\u0432\u0430\u0440\u0442\u0438\u0440\u0443"
 --- !u!1001 &4595013342727879647
 PrefabInstance:
   m_ObjectHideFlags: 0

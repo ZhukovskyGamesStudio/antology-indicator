@@ -173,8 +173,8 @@ public class Openable : MonoBehaviour {
     }
 
     public void TrySnap() {
-        // Содержимое меняется только в закрытом шкафу, который сейчас в кадре.
-        if (_isChanging || IsOpen || !IsVisible) {
+        // Работаем только с тем, что сейчас в кадре и не в процессе анимации.
+        if (_isChanging || !IsVisible) {
             return;
         }
 
@@ -183,18 +183,26 @@ public class Openable : MonoBehaviour {
         }
 
         _lastChangeTime = Time.time;
-        Change(this.GetCancellationTokenOnDestroy()).Forget();
+
+        // Реакция на первый сдвиг мебели щелчком (один раз за игру).
+        if (!_snapReacted && !string.IsNullOrEmpty(snapReactionOnce) && TalkUI.instance != null) {
+            _snapReacted = true;
+            TalkUI.instance.Say(snapReactionOnce).Forget();
+        }
+
+        if (IsOpen) {
+            // Открытое — закрываем щелчком.
+            Close();
+        } else {
+            // Закрытое — меняем содержимое (как раньше).
+            Change(this.GetCancellationTokenOnDestroy()).Forget();
+        }
     }
 
     private async UniTaskVoid Change(CancellationToken token) {
         _isChanging = true;
 
         PlayClip(changeClip, reversed: false);
-
-        if (!_snapReacted && !string.IsNullOrEmpty(snapReactionOnce) && TalkUI.instance != null) {
-            _snapReacted = true;
-            TalkUI.instance.Say(snapReactionOnce).Forget();
-        }
 
         if (states.Count > 0) {
             if (swapAt > 0) {

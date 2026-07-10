@@ -7,6 +7,12 @@ public class StoryObjectsContainer : MonoBehaviour {
     public GameObject KitchenWire;
     public ToggleOnOff Lamp;
     public ToggleEmission LampEmission;
+
+    [Tooltip("Свет комнаты (люстры), который приглушается вместе с лампой при отключении из розетки")]
+    public Light[] RoomLights;
+
+    [Tooltip("Во сколько раз приглушать свет комнаты при отключении (0.2 = до 20%)")]
+    public float RoomLightDim = 0.2f;
     public InteractiveObj RadioChange, RadioOnOff;
     
 

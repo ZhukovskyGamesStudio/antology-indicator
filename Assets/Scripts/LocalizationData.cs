@@ -161,6 +161,8 @@ public static class LocalizationData {
             "And where's the bathroom..?"),
         ("Вот же... Совсем не помню, куда дел ключи.",
             "Ugh... I don't remember where I put the keys at all."),
+        ("я пока не могу покинуть квартиру",
+            "I can't leave the apartment yet"),
         ("Издеваетесь?.. Теперь я двигаю мебель щелчками?",
             "Are you kidding me?.. Now I move furniture by snapping my fingers?"),
         ("Так, нет. Здесь что-то поменялось.",
