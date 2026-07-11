@@ -11176,7 +11176,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3577390154379973238, guid: 3ef1a105f3fe0494383e375d6e0a0082, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3606389793096729429, guid: 3ef1a105f3fe0494383e375d6e0a0082, type: 3}
       propertyPath: m_RenderingLayerMask
