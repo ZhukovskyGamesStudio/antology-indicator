@@ -35,6 +35,16 @@ public class Pickable : MonoBehLogger {
     [Tooltip("Скорость вращения предмета мышью (°/сек на единицу mouse delta).")]
     public float rotateSpeed = 200f;
 
+    [Header("Обучение вращению")]
+    [Tooltip("Событие, которое логируется один раз, когда игрок повернёт удерживаемый предмет " +
+             "суммарно на rotateLogThreshold градусов. Пусто — ничего не логировать.")]
+    public string rotateLogEvent = "";
+
+    [Tooltip("Сколько суммарно градусов нужно повернуть, чтобы засчитать вращение.")]
+    public float rotateLogThreshold = 90f;
+
+    private float _rotatedAmount;
+
     private int _heldLayer = -1;
     private readonly Dictionary<Transform, int> _originalLayers = new();
     private readonly Dictionary<Collider, bool> _originalColliderEnabled = new();
@@ -67,6 +77,7 @@ public class Pickable : MonoBehLogger {
         MoveTo().Forget();
 
         if (IsPicked) {
+            _rotatedAmount = 0f;
             ApplyHeldLayer();
             DisableColliders();
             OnPick?.Invoke();
@@ -131,6 +142,14 @@ public class Pickable : MonoBehLogger {
                 float frame = rotateSpeed * Time.deltaTime;
                 transform.RotateAround(transform.position, upAxis, -dx * frame);
                 transform.RotateAround(transform.position, rightAxis, dy * frame);
+
+                // Обучение вращению: копим суммарный поворот и один раз логируем событие.
+                if (!string.IsNullOrEmpty(rotateLogEvent)) {
+                    _rotatedAmount += (Mathf.Abs(dx) + Mathf.Abs(dy)) * frame;
+                    if (_rotatedAmount >= rotateLogThreshold) {
+                        LogOnce(rotateLogEvent);
+                    }
+                }
             }
         }
     }

@@ -39,6 +39,10 @@ public static class LocalizationData {
             "Just what I needed"),
         ("Продолжите читать",
             "Keep reading"),
+        ("Посмотрите обложку (вращать предмет с зажатой <b>ЛКМ</b>)",
+            "Look at the cover (rotate the item holding <b>LMB</b>)"),
+        ("Кто это написал вообще?",
+            "Who even wrote this?"),
         ("Старое барахло, постоянно ломается",
             "Old junk, always breaking down"),
         ("Восстановите волну",
@@ -197,12 +201,20 @@ public static class LocalizationData {
             "Resume"),
         ("Пауза",
             "Paused"),
+        ("Пропустить текст (Пробел)",
+            "Skip Text (Space)"),
         ("Играть снова",
             "Play Again"),
         ("Громкость",
             "Volume"),
         ("Радиоволна\nзахватила ваш разум",
             "The radio wave\nseized your mind"),
+
+        // ── Экран паузы: подсказка по управлению (EscapePanel/Help, ключи = sourceOverride) ──
+        ("Управление",
+            "Controls"),
+        ("Взаимодействие - ЛКМ\nПоложить предмет - ПКМ\nВращать - зажать ЛКМ\nПропустить текст - Пробел\nЩелчок - Q\nПение - E",
+            "Interact - LMB\nPlace Item - RMB\nRotate - Hold LMB\nSkip Text - Space\nClick - Q\nSing - E"),
 
         // ───────────────────────── Финал: осознание (внутренний монолог ГГ) ─────────────────────────
         (" ...Что?.. Это... всё?",

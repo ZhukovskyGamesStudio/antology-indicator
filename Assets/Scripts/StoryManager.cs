@@ -15,6 +15,9 @@ public class StoryManager : MonoBehaviour {
 
     public Pickable book;
     public HintUI hintUI;
+
+    [Tooltip("Плашка «Пропустить текст (Пробел)» в правом верхнем углу — обучение проматыванию")]
+    public GameObject skipHint;
     public static StoryManager instance;
 
     /// <summary>Открыт ли выход из квартиры (ставится в финале). До этого дверь реагирует «нет ключей».</summary>
@@ -141,6 +144,17 @@ public class StoryManager : MonoBehaviour {
         await WinChapter();
     }
 
+    /// <summary>Показывает плашку «Пропустить текст (Пробел)» на seconds секунд (обучение проматыванию).</summary>
+    private async UniTaskVoid ShowSkipHint(float seconds) {
+        if (skipHint == null) {
+            return;
+        }
+
+        skipHint.SetActive(true);
+        await UniTask.WaitForSeconds(seconds);
+        skipHint.SetActive(false);
+    }
+
     private async UniTask TableChapter() {
         playerMovement.playerCanMove = false;
 
@@ -149,6 +163,8 @@ public class StoryManager : MonoBehaviour {
         //поработать над анимацией вступления
         await UniTask.WaitForSeconds(4f);
         await TalkUI.Say("\"Феномен меметического гипноза...\"\nХах, ну и бред. Кто вообще верит в такое?");
+        // Обучение проматыванию: после первой реплики на 5 секунд показываем плашку про Пробел.
+        ShowSkipHint(5f).Forget();
         await TalkUI.Say("\"Такое только мой дядька и читает.\n  Атлантида!.. Планета нибиру...");
         await TalkUI.Say("\"Сам-то в больницу уехал - как на похороны, жутко ему от врачей..\n А я после перелома как новенький!");
         await TalkUI.Say("\"Поразвлекаюсь пока с его книжками, всё равно он нескоро вернётся.");
@@ -188,8 +204,16 @@ public class StoryManager : MonoBehaviour {
         await UniTask.WaitUntil(() => EventsLogged.Any(l => l == "RadioMusic2"));
         tasksUI.CompleteTask();
         TalkUI.Say("То что нужно").Forget();
-        tasksUI.ShowTask("Продолжите читать");
+
+        // Обучение вращению: игрок сам берёт книгу (клик) и рассматривает обложку.
+        tasksUI.ShowTask("Посмотрите обложку (вращать предмет с зажатой <b>ЛКМ</b>)");
+        TalkUI.Say("Кто это написал вообще?").Forget();
         storyObjectsContainer.RadioChange.enabled = false;
+        await UniTask.WaitUntil(() => EventsLogged.Any(l => l == "BookRotated"));
+        tasksUI.CompleteTask();
+        await UniTask.WaitForSeconds(1f);
+
+        // Книгу игрок кладёт сам (ПКМ), когда захочет вернуться к радио.
         await UniTask.WaitUntil(() => EventsLogged.Any(l => l == "RadioNoise"));
 
         madnessManager.IsVolumesFixed = false;
@@ -450,6 +474,19 @@ public class StoryManager : MonoBehaviour {
 
     private async UniTask WinChapter() {
         playerMovement.playerCanMove = false;
+
+        // Глушим игровое аудио перед финалом: радио-шум/проклятия и весь кухонный
+        // шум/шёпот (NormalRooms снова активна после TeleportBack). Кухню гасим
+        // целиком (все её источники), но НЕ всю NormalRooms — на её столе идут титры.
+        madnessManager.IsVolumesFixed = true;
+        if (radioAudio != null) {
+            radioAudio.gameObject.SetActive(false);
+        }
+        if (storyObjectsContainer.NormalKitchen != null) {
+            storyObjectsContainer.NormalKitchen.SetActive(false);
+        }
+        storyObjectsContainer.LabirintRooms.SetActive(false);
+
         await UI.ShowFade(1, 0.5f);
         UI.ShowTitlesScreen();
         UI.WinPanel.SetText("Вы спасли свой разум!");
@@ -493,9 +530,13 @@ public class StoryManager : MonoBehaviour {
         await TalkUI.Say("ГГ: Когда это началось? Что было по радио? Как я избавился от чипа?");
         await TalkUI.Say("Дядя: ...");
         await TalkUI.Say("ГГ: Ты всё знаешь. Ты...");
-        //Если игрок дочитал до конца, было бы прикольно экран покрыть помехами.
-        //Чтобы как-то показать оборванный диалог. Типа картинка вся, кроме кнопки выход и заголовка сверху, превратилась в шум.
-        await UniTask.WaitForSeconds(10f);
+        // Диалог обрывается: вся картинка (кроме заголовка и кнопки выхода)
+        // рассыпается в помехи. Заголовок и кнопка остаются поверх шума.
+        if (UI.ScreenStatic != null) {
+            UI.ScreenStatic.Show(1.2f).Forget();
+        }
+
+        await UniTask.WaitForSeconds(3f);
         UI.WinPanel.SetText("Вы спасли свой разум?");
     }
 

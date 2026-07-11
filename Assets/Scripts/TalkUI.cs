@@ -126,6 +126,8 @@ public class TalkUI : MonoBehaviour {
     private string BuildDisplay(string rawSource) {
         ParseSpeaker(rawSource, out string clean, out bool isUncle);
         string translated = Language.Get(clean);
+        // Подсветка важных для прохождения слов (по русскому ключу clean).
+        translated = HighlightData.Apply(clean, translated);
         if (isUncle) {
             return "<color=#" + ColorUtility.ToHtmlStringRGB(uncleColor) + ">" + translated + "</color>";
         }

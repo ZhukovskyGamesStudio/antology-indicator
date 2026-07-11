@@ -23,6 +23,9 @@ public class StoryObjectsContainer : MonoBehaviour {
 
     public PlayAnim WardrobeAnim;
     public GameObject NormalRooms, LabirintRooms;
+
+    [Tooltip("Кухня в NormalRooms — гасим её целиком в финале (все источники шума/шёпота), не трогая гостиную с титрами")]
+    public GameObject NormalKitchen;
     public GameObject Radio, FirstRadioPoint, NextRadioPoint;
     public InteractiveObj[] SneezeObjects => FindObjectsByType<InteractiveObj>(FindObjectsInactive.Include, FindObjectsSortMode.None).Where(o=>o.CompareTag("Sneeze")).ToArray();
 

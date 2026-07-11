@@ -11,6 +11,9 @@ public class UI : MonoBehaviour {
     public GameObject Crosshair;
     public WinPanel WinPanel;
     public BarsPanel BarsPanel;
+
+    [Tooltip("Полноэкранные помехи в финале (появляются под заголовком и кнопкой выхода)")]
+    public ScreenStatic ScreenStatic;
     private bool canMove;
     private bool canRotate;
 

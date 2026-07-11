@@ -605,6 +605,7 @@ MonoBehaviour:
   AllowedEntrySide: {x: 1, y: 0, z: 0}
   UseLocalSpace: 1
   SideThreshold: 0.5
+  ignoreAfterEnable: 0.3
 --- !u!1 &5216112849659867579
 GameObject:
   m_ObjectHideFlags: 0
@@ -3364,7 +3365,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: ba7f75da9d474574288af3553532caba, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -3461,7 +3462,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: 036e80da7057de64f952e5d1a014eb3b, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 0
   Mute: 0

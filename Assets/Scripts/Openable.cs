@@ -51,6 +51,41 @@ public class Openable : MonoBehaviour {
 
     private static bool _snapReacted;
 
+    // Игрок — чтобы щелчок не прятал комнату-состояние, внутри которой он стоит
+    // (иначе провал в пустоту, баг с ванной).
+    private static Transform _player;
+    private static Transform Player {
+        get {
+            if (_player == null) {
+                GameObject p = GameObject.FindGameObjectWithTag("Player");
+                if (p != null) {
+                    _player = p.transform;
+                }
+            }
+
+            return _player;
+        }
+    }
+
+    /// <summary>Стоит ли игрок сейчас внутри границ этого состояния (комнаты).</summary>
+    private static bool PlayerInside(GameObject state) {
+        if (state == null || !state.activeInHierarchy || Player == null) {
+            return false;
+        }
+
+        Renderer[] rs = state.GetComponentsInChildren<Renderer>();
+        if (rs.Length == 0) {
+            return false;
+        }
+
+        Bounds b = rs[0].bounds;
+        for (int i = 1; i < rs.Length; i++) {
+            b.Encapsulate(rs[i].bounds);
+        }
+
+        return b.Contains(Player.position);
+    }
+
     /// <summary>Открыта ли дверца сейчас.</summary>
     public bool IsOpen { get; private set; }
 
@@ -193,6 +228,9 @@ public class Openable : MonoBehaviour {
         if (IsOpen) {
             // Открытое — закрываем щелчком.
             Close();
+        } else if (states.Count > 0 && PlayerInside(states[_currentState])) {
+            // Не прячем комнату-состояние, внутри которой сейчас стоит игрок —
+            // иначе он проваливается в пустоту (баг со щелчком в ванной).
         } else {
             // Закрытое — меняем содержимое (как раньше).
             Change(this.GetCancellationTokenOnDestroy()).Forget();
@@ -209,8 +247,12 @@ public class Openable : MonoBehaviour {
                 await UniTask.Delay(TimeSpan.FromSeconds(swapAt), cancellationToken: token);
             }
 
-            _currentState = (_currentState + 1) % states.Count;
-            ApplyState();
+            // Повторная проверка после задержки: если игрок за это время зашёл
+            // в текущую комнату-состояние — не прячем её.
+            if (!PlayerInside(states[_currentState])) {
+                _currentState = (_currentState + 1) % states.Count;
+                ApplyState();
+            }
         }
 
         _isChanging = false;

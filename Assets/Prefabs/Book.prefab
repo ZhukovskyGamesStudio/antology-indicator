@@ -86,6 +86,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: cac1a25ae2802044190f0c0ce07ea61b, type: 3}
   dropClips: []
   rotateSpeed: 100
+  rotateLogEvent: BookRotated
+  rotateLogThreshold: 90
 --- !u!114 &4175008286083188579
 MonoBehaviour:
   m_ObjectHideFlags: 0

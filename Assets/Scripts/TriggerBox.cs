@@ -16,7 +16,23 @@ public class TriggerBox : MonoBehaviour {
     [Range(0f, 1f)]
     public float SideThreshold = 0.25f;
 
+    [Tooltip("Игнорировать срабатывания первые доли секунды после включения — чтобы не " +
+             "ловить ложный 'вход', когда триггер активировался, уже перекрывая игрока " +
+             "(напр. звук шкафа при появлении лабиринта).")]
+    public float ignoreAfterEnable = 0.3f;
+
+    private float _enabledTime;
+
+    private void OnEnable() {
+        _enabledTime = Time.time;
+    }
+
     private void OnTriggerEnter(Collider other) {
+        // Активационный overlap (триггер включился, уже перекрывая игрока) — не вход.
+        if (Time.time - _enabledTime < ignoreAfterEnable) {
+            return;
+        }
+
         if (!other.gameObject.CompareTag("Player")) {
             return;
         }
