@@ -7,12 +7,6 @@ public class StoryObjectsContainer : MonoBehaviour {
     public GameObject KitchenWire;
     public ToggleOnOff Lamp;
     public ToggleEmission LampEmission;
-
-    [Tooltip("Свет комнаты (люстры), который приглушается вместе с лампой при отключении из розетки")]
-    public Light[] RoomLights;
-
-    [Tooltip("Во сколько раз приглушать свет комнаты при отключении (0.2 = до 20%)")]
-    public float RoomLightDim = 0.2f;
     public InteractiveObj RadioChange, RadioOnOff;
     
 
@@ -30,6 +24,9 @@ public class StoryObjectsContainer : MonoBehaviour {
     public InteractiveObj[] SneezeObjects => FindObjectsByType<InteractiveObj>(FindObjectsInactive.Include, FindObjectsSortMode.None).Where(o=>o.CompareTag("Sneeze")).ToArray();
 
     public GameObject[] Puddles;
+
+    [Tooltip("Шторы, за которыми ванная. Сдвинуть их можно только с того момента, как появляются лужи")]
+    public InteractiveObj[] BathroomCurtains;
     public Pickable ChipOnTable, BookMoved, BookUnmoved;
     public InteractiveObj ApartmentsExit;
     public PlayAnim TitlesAnimation;

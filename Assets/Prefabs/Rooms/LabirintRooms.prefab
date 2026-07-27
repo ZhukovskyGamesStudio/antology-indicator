@@ -790,9 +790,9 @@ Light:
   m_Enabled: 1
   serializedVersion: 12
   m_Type: 0
-  m_Color: {r: 0.9924528, g: 0.9146635, b: 0.7546386, a: 1}
-  m_Intensity: 0.5
-  m_Range: 20
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Intensity: 0.78
+  m_Range: 14
   m_SpotAngle: 54.025536
   m_InnerSpotAngle: 54.025536
   m_CookieSize2D: {x: 0.5, y: 0.5}
@@ -834,8 +834,8 @@ Light:
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
-  m_ColorTemperature: 6570
-  m_UseColorTemperature: 0
+  m_ColorTemperature: 3300
+  m_UseColorTemperature: 1
   m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
@@ -1231,6 +1231,14 @@ PrefabInstance:
       propertyPath: OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
+    - target: {fileID: 6278916626775128970, guid: 5d89a613e3afee346b3d3fbf73732541, type: 3}
+      propertyPath: m_Range
+      value: 12.349999
+      objectReference: {fileID: 0}
+    - target: {fileID: 6278916626775128970, guid: 5d89a613e3afee346b3d3fbf73732541, type: 3}
+      propertyPath: m_Intensity
+      value: 0.78000003
+      objectReference: {fileID: 0}
     - target: {fileID: 6845644377613055820, guid: 5d89a613e3afee346b3d3fbf73732541, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.925
@@ -1317,11 +1325,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8060209505877583298, guid: 5d89a613e3afee346b3d3fbf73732541, type: 3}
       propertyPath: m_Range
-      value: 11.35
+      value: 9.5
       objectReference: {fileID: 0}
     - target: {fileID: 8060209505877583298, guid: 5d89a613e3afee346b3d3fbf73732541, type: 3}
       propertyPath: m_Intensity
-      value: 4
+      value: 2.6
       objectReference: {fileID: 0}
     - target: {fileID: 8060209505877583298, guid: 5d89a613e3afee346b3d3fbf73732541, type: 3}
       propertyPath: m_SpotAngle
@@ -1333,7 +1341,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8060209505877583298, guid: 5d89a613e3afee346b3d3fbf73732541, type: 3}
       propertyPath: m_InnerSpotAngle
-      value: 91.908936
+      value: 42
       objectReference: {fileID: 0}
     - target: {fileID: 8060209505877583298, guid: 5d89a613e3afee346b3d3fbf73732541, type: 3}
       propertyPath: m_Shadows.m_Type
@@ -2172,6 +2180,10 @@ PrefabInstance:
       propertyPath: Location1
       value: 
       objectReference: {fileID: 3205876880265519106}
+    - target: {fileID: 566942603091559280, guid: ff2b3cc6ca9756448aa066ee0c3b1e19, type: 3}
+      propertyPath: states.Array.size
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 691452185978501943, guid: ff2b3cc6ca9756448aa066ee0c3b1e19, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.77

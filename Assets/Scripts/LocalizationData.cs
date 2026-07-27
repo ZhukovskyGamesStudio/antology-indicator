@@ -137,8 +137,8 @@ public static class LocalizationData {
             "So that's where my uncle got his hospital horror stories..."),
 
         // ── Реакции-осознания (книги/папки/шкафы/подушки/лабиринт/финал) ──
-        ("Одна страннее другой.",
-            "One weirder than the last."),
+        ("Ох... я даже отвлёкся от этого жуткого шума.",
+            "Oh... it even took my mind off that awful noise."),
         ("Бредовые записки дядьки…",
             "Uncle's crackpot notes…"),
         ("Жаба… Что за бред?",
@@ -195,6 +195,8 @@ public static class LocalizationData {
             "Quit Game"),
         ("Выйти",
             "Quit"),
+        ("Выйти в меню",
+            "Exit to Main Menu"),
         ("Продолжить",
             "Resume"),
         ("Пауза",

@@ -45,7 +45,7 @@
 В коде стоит TODO: `// отрефакторить чтобы зависимости сами решались, написать норм DI` — текущая инициализация ручная.
 
 ### MainMenu
-[Assets/Scripts/MainMenu.cs](Assets/Scripts/MainMenu.cs) — три кнопки: `Play` (грузит сцену с индексом 2 = GameScene), `Rate` (ссылка на itch.io), `Exit`.
+[Assets/Scripts/MainMenu.cs](Assets/Scripts/MainMenu.cs) — три кнопки: `Play` (грузит `GameScene` по имени), `Rate` (ссылка на itch.io), `Exit`. Сюда же игрок возвращается с финального экрана и с экрана смерти — смотреть собранные книги на столе.
 
 ### GameScene
 Стартует [StoryManager](Assets/Scripts/StoryManager.cs).
@@ -86,6 +86,10 @@
 
 Прогресс между главами сохраняется через `PlayerPrefs["Chapter"]` (0..4), флаг `isDropProgress` в инспекторе сбрасывает прогресс при `Start`, `StartingChapter` позволяет начать с любой главы (дев-инструмент).
 
+**Открываешь что-то сюжетным клипом — синхронизируй `Openable`.** В кухонной главе холодильник открывается клипом `FridgeWork` через `PlayAnim`, то есть мимо [Openable](Assets/Scripts/Openable.cs). Пока `StoryManager` не сообщал об этом дверце, её `IsOpen` оставался `false`, и первый клик игрока трактовался как «открыть»: дверца рывком захлопывалась и открывалась заново, **а шум при этом засчитывался как убранный** — хотя холодильник оставался открытым и гудел (`InteractiveObj.LogOnce` стоит в `OnClick` перед `Openable.Interact`). Лечится строкой `fridge.SetOpenState(true)` сразу после `FridgeAnim.Play()`. Та же ловушка ждёт любой другой `Openable`, который сюжет откроет анимацией напрямую.
+- Микроволновка этой проблемы не имеет: у неё на клике висит `PlayAnim` с `MicrowaveDoorSlam`, а не `Openable`, — состояния нет и разъезжаться нечему.
+- Все три клипа холодильника (`FridgeWork` Loop, `FridgeDoorOpen`, `FridgeDoorClose`) живут на **одном** `Animation` на `fridge_final` в слое 0, поэтому `anim.Play` каждого из них останавливает предыдущий — специально гасить `FridgeWork` не нужно.
+
 ### Событийная система
 `EventsLogged` — список строк-событий, на котором держится всё ветвление. Объекты сцены через [MonoBehLogger](Assets/Scripts/MonoBehLogger.cs) (`Log`/`LogOnce`/`LogClear`) пушат события (`"BookPicked"`, `"RadioMusic"`, `"RadioMusic2"`, `"RadioNoise"`, `"RadioSwitched"`, `"Hummed"`, `"Clicked"`, `"LampDisabled"`, `"KitchenDisabled"`, `"KitchenNoise*"`, `"FakeHammer"`, `"FakeUmbrella"`, `"RadioHit"`, `"RadioBroken"`, `"NoteFound"`, `"PepperBroken"`, `"PepperDust"`).
 
@@ -106,20 +110,89 @@
 - `UpdateSounds()` (если не `IsVolumesFixed`) масштабирует громкости радио-шума и кликов в зависимости от `Madness / MaxMadness`.
 - `DropMadness(maxTime)` — плавное снятие потолка `TmpMaxMadness` к финалу (100 → 0 за `maxTime` секунд).
 
+### Освещение и грейд
+
+Ключевое, что нужно знать: **настоящего GI в сцене нет**. Лайтмапы формально запечены (`LightmapSettings` отдаёт 2 штуки), но реально залайтмаплено 4 рендерера из 703, лайт-проб нет вообще, `reflectionIntensity = 0`. То есть весь свет — рантайм-прямой, и всё, куда лампа не достаёт напрямую, держится только на ambient.
+
+**Два профиля пост-обработки, и это важно:**
+- `Assets/Settings/SampleSceneProfile.asset` — дефолтный профиль из `PC_RPAsset`. Действует везде, в том числе в `MainMenu` (там своего `Volume` нет).
+- `Assets/Settings/DefaultVolumeProfile.asset` — на объекте `Volume` в `GameScene`, лежит поверх дефолтного и перебивает почти всё. Это тот профиль, который правит `GallucinationManager`. Правишь грейд игры — правишь именно его.
+
+**Опоры сцены** (`RenderSettings`, одинаковые в `GameScene` и `MainMenu`):
+- Ambient — режим **Trilight** (градиент): холодный сверху `(0.064, 0.074, 0.098)`, нейтральный по горизонту, тёплый снизу `(0.048, 0.038, 0.029)`. Именно ambient задаёт «дно» картинки: пока он был чистым чёрным (`Flat`, `(0,0,0)`), всё, куда не бьёт лампа, было буквально нулём, и текстура в тени переставала существовать.
+- Туман — `ExponentialSquared`, плотность **0.032**, цвет тёмно-тёплый `(0.055, 0.048, 0.042)`. Чёрный туман (как было, при 0.047) неотличим от «ничего не отрисовано» — даль читалась как дыра, а не как воздух.
+
+**Риг ламп.** Все лампы работают через `useColorTemperature`, цвет самих ламп белый — тонировать интенсивностью и цветом одновременно нельзя, иначе не понять, что именно крутишь.
+
+| Лампа | K | Интенсивность | Тени |
+|---|---|---|---|
+| `ChandelierLightD` | 3300 | 0.78 / 1.05 / 1.32 / 1.55 (по комнатам) | Soft, tier Medium |
+| `LampLight` (настольная) | 3000 | 2.08, inner spot 42° — мягкое пятно, а не плоский диск | Soft, tier High |
+| `FridgeLight1/2` | 5200 (холодная) | 1.1 | нет |
+| `MicrowaveLight` | 2700 | 1.0 | нет |
+
+Холодный холодильник против тёплых ламп — единственный источник цветового контраста на кухне, ради этого он и вытянут с 0.12 до 1.1.
+
+**Бюджет теней.** Шесть точечных ламп × 6 граней + спот = **37 теневых карт**. В атласе 2048 они не помещались, и URP молча резал разрешение вчетверо (в консоли висело `Reduced additional punctual light shadows resolution by 4`). Атлас поднят до **4096**, тиры — 256/512/1024, люстрам выставлен Medium: 37 × 512² влезает. Мелким лампам (холодильник, микроволновка) тени выключены совсем — они всё равно ничего не затеняли, но занимали слоты.
+
+**[BounceFill](Assets/Scripts/Lighting/BounceFill.cs)** — бестеневой «отражённый» свет, живёт дочерним объектом внутри `ChandelierLightD` и `LampLight` в базовых префабах [chandelier_final.prefab](Assets/Prefabs/chandelier_final.prefab) и [Lamp.prefab](Assets/Prefabs/Lamp.prefab). Подхватывает у родительской лампы интенсивность (× `IntensityFactor`), дальность (× `RangeFactor`) и **`renderingLayerMask`** — покомнатная изоляция света от этого не ломается. Он же чинит чёрный потолок: плафон висит между лампой и потолком и полностью его затенял. `[ExecuteAlways]`, так что в редакторе видно сразу.
+
+**[LightFlicker](Assets/Scripts/Lighting/LightFlicker.cs)** — еле заметное дыхание накала (±4.5%), которое с ростом безумия разгоняется до ±17% и начинает давать короткие провалы. Висит на самих лампах в тех же базовых префабах. Компонент пишет накал каждый кадр, поэтому если его меняют снаружи (`light.intensity = x` из сюжетного скрипта), он принимает чужое значение как новую базу — приглушение работает поверх мерцания, а не отменяется им. Гасить лампу лучше всё-таки через `SetActive(false)` на объекте света, как это делает `ToggleOnOff`: тогда вместе с ней уходит и её `BounceFill`.
+
+**Отключение света в главе с проводом** (`StoryManager.ElecticityChapter`) гасит **только настольную лампу**: `Lamp.Set(false)` выключает объект `LampLight` (заодно с дочерним `BounceFill`), `LampEmission.Set(false)` снимает свечение абажура. Люстры комнаты не трогаются — раньше они приглушались до 20% через `RoomLights` / `RoomLightDim` в `StoryObjectsContainer`, от этого отказались: гасла вся комната, хотя из розетки выдернули одну лампу.
+
+**Эмиссия светильников** поднята в HDR, чтобы блуму было за что зацепиться: `Assets/Models/Final/Material.033.mat` (плафон) → `(1.35, 1.08, 0.72)`, `Assets/Materials/lamp.mat` (абажур) → `(0.95, 0.88, 0.30)`. Порог блума 0.75 — эмиссия ниже единицы за него не цепляется.
+
+**Правишь свет — помни:**
+- Лампы живут в базовых префабах `chandelier_final` / `Lamp` / `fridge_final` / `microwave_final`, но интенсивность и `renderingLayerMask` перебиты per-instance в префабах комнат (`NormalRooms`, `LabirintRooms`, `MirrorRoom`, `livingroom`, `kitchen`, …). Правка базы цвет и тени раскатает, а яркость — нет.
+- [EyeSpawner.DarknessThreshold](Assets/Scripts/EyeSpawner.cs) = 0.08 калиброван под текущий риг: под него попадает ~34% точек стен. Сделаешь сцену заметно светлее — глаз перестанет находить, куда сесть.
+- На тех же объектах света, что `LightFlicker` и `BounceFill`, висят [LampHaze](Assets/Scripts/Atmosphere/LampHaze.cs) (дочерний квад `Haze`) и [IdleSway](Assets/Scripts/Atmosphere/IdleSway.cs) — см. «Атмосферный слой». Оба читают интенсивность лампы, так что менять яркость можно спокойно, ореол поедет следом.
+- **Ambient и туман в рантайме перебивает [MoodDirector](Assets/Scripts/Atmosphere/MoodDirector.cs)** по номеру главы. Правка `RenderSettings` в сцене задаёт только вид до его первого кадра; настоящие значения — в массиве `Moods` на объекте `MoodDirector`, глава 0 = текущий вид сцены.
+
 ### GallucinationManager — визуальные галлюцинации
 [Assets/Scripts/GallucinationManager.cs](Assets/Scripts/GallucinationManager.cs) — каждый кадр читает `Madness/MaxMadness`, прогоняет через `gallucinationCurve` (+ небольшой джиттер `randomGal`), и плавно лерпает на URP `VolumeProfile`:
 - `FOV` игрока — простой `Lerp(MinFov, MaxFov)` по безумию (60 → 68): мир слегка отодвигается. Дыхания/осцилляции нет (убрано после плейтеста). Пока игрок держит предмет, FOV быстро возвращается к `MinFov` (`FovHoldReturnSpeed`).
 - `ChromaticAberration.intensity` через `aberrationCurve` (× `AberrationMax`). Кривая специально «ранняя»: 10% безумия → 0.14, 30% → 0.41, 50% → 0.61. Если эффект пропал — смотри в консоль: `Start` ругается, если в профиле нет Chromatic Aberration, и принудительно ставит `active = true`.
-- `DepthOfField.focusDistance` (`0.7 * (1 - curved)`).
+- `DepthOfField.focusDistance` — `Lerp(SaneFocusDistance, MadFocusDistance, curved)`, то есть 12 м → 0.7 м. Раньше формула была `0.7 * (1 - curved)`: фокус стоял на 70 см уже при нулевом безумии, вся комната была расфокусирована с первой секунды, и это читалось не как эффект, а как мыло.
 - `ChannelMixer.blueOutBlueIn` / `redOutBlueIn` — уход в багровые тона при росте безумия.
 
 Каждый эффект включается флагом в инспекторе. Профиль берётся из `volume.profile` — это runtime-копия `Assets/Settings/DefaultVolumeProfile.asset`, сам ассет игра не портит.
+
+**Делит профиль с [MoodDirector](Assets/Scripts/Atmosphere/MoodDirector.cs), но не пересекается с ним по параметрам.** `GallucinationManager` владеет ChromaticAberration / ChannelMixer / DepthOfField / FOV, `MoodDirector` — ColorAdjustments / Vignette / FilmGrain. Добавляешь эффект в один — проверь, что второй его не трогает: оба пишут `Override()` каждый кадр, и в случае пересечения победит тот, кто отработал позже, без всякой диагностики.
 
 ### MadnessVignette — виньетка по безумию
 [Assets/Scripts/MadnessVignette.cs](Assets/Scripts/MadnessVignette.cs) на `UICanvas/OtherUi/Vignette` (первый ребёнок, рисуется под остальным HUD). Альфа полноэкранной картинки `Assets/ToSort/ui_eye/vignette.png` ведётся по `_alphaCurve` от процента безумия: до 35% нуль, дальше плавно до 1. Лежит внутри `OtherUi`, поэтому автоматически прячется в паузе и на экранах победы/проигрыша.
 
 ### EyeSpawner — моргающий глаз в тёмных углах
 [Assets/Scripts/EyeSpawner.cs](Assets/Scripts/EyeSpawner.cs) — отдельный объект `EyeSpawner` в сцене. Точки по сцене **не расставлены**: раз в `IntervalCalm` → `IntervalPeak` (14 → 5 сек по мере роста безумия, начиная с `MinMadnessPercent` = 25%) кидает до `AttemptsPerTry` рейкастов в периферию взгляда (угол 16–40° от центра, с уклоном влево/вправо), отбрасывает пол/потолок (`MaxUpDot`) и точки вне кадра, и считает освещённость кандидата `EstimateLight()` — сумма вкладов активных `Light` с учётом затухания, `NdotL`, перекрытий и **Rendering Layers** (в сцене свет разделён по комнатам). Перекрытия проверяются только для источников с тенями: свет без теней в URP светит сквозь стены, и рейкаст до лампы там врал бы. Если освещённость ниже `DarknessThreshold` (0.08 — примерно самая тёмная треть стен), там появляется спрайт-глаз: fade-in, 2–4 моргания кадрами `eye_1 → eye_2 → eye_3 → …`, fade-out. Спрайт один и переиспользуется, всегда повёрнут к камере, материал по умолчанию `Sprite-Unlit-Default` (виден в темноте).
+
+### Атмосферный слой
+
+Пять независимых надстроек в [Assets/Scripts/Atmosphere/](Assets/Scripts/Atmosphere), каждая с флагами в инспекторе и каждая отключаемая по отдельности. Общий принцип: **ничего не переписывать в сюжетном коде**. Все пять читают либо `MadnessManager.instance.Madness`, либо интенсивность самой лампы, либо `PlayerPrefs["Chapter"]` — то есть подключаются к тому, что уже есть, и молчат, если этого нет (в `MainMenu` нет ни `MadnessManager`, ни `StoryManager`, и всё продолжает работать).
+
+**1. [DustMotes](Assets/Scripts/Atmosphere/DustMotes.cs) — пыль в воздухе.** Объект `AirDust` в `GameScene`: `ParticleSystem` в **мировом** пространстве симуляции, за игроком едет только область эмиссии (бокс 6×3×6). Уже выпущенные пылинки остаются висеть в комнате, поэтому облако не приклеено к взгляду.
+- **Пока игрок сидит за столом, плотность режется до `SeatedRate` (20%).** В туториале камера утыкается в книгу, и пыль на полной плотности висит прямо перед носом, поверх текста. Условие — `FirstPersonController.playerCanMove`, то есть пыль набирается ровно тогда, когда игрок встаёт (начало `ElecticityChapter`), и набирается медленно (`SeatedBlend`, время жизни частиц 12–24 с): заметное появление пыли читалось бы как баг.
+- Плотность на старте выставляется **в первом `LateUpdate`, а не в `Start`** — порядок `Start`-ов не гарантирован, и до `StoryManager.Start` поле `playerCanMove` ещё в своём инспекторном значении. Там же облако пересобирается вручную (`Clear` + `Simulate`), потому что встроенный prewarm у `ParticleSystem` считает по полной плотности. Шейдер [DustMote.shader](Assets/Shaders/DustMote.shader) — свой, а не URP'шный `Particles/Lit`, ровно по одной причине: **в нём нет NdotL**. Билборд всегда повёрнут к камере, поэтому у честного Lambert'а пылинка между игроком и лампой выходит чёрной — то есть ровно там, где настоящая пыль светится ярче всего. Берётся только затухание с расстоянием, как и положено мелкой частице, рассеивающей свет во все стороны. Дальше `alpha *= Luminance` — и пыль сама гаснет в тёмном углу и вспыхивает в конусе лампы, без единой строки логики. `renderingLayerMask` рендерера выставлен во все слои: пыль ездит по всей квартире, а свет в сцене разложен по комнатам. Плотность и турбулентность растут с безумием (`CalmRate`/`MadRate`).
+
+**2. [LampHaze](Assets/Scripts/Atmosphere/LampHaze.cs) — объём света.** Дочерний квад `Haze` внутри `ChandelierLightD` и `LampLight` в базовых префабах [chandelier_final](Assets/Prefabs/chandelier_final.prefab) и [Lamp](Assets/Prefabs/Lamp.prefab) — там же, где живут `LightFlicker` и `BounceFill`. Шейдер [LampHaze.shader](Assets/Shaders/LampHaze.shader): аддитивный билборд с радиальным затуханием, мягко подрезанный о геометрию через `_CameraDepthTexture` (иначе виден круглый край квада, воткнувшегося в потолок) и гаснущий у самой камеры. Интенсивность и цвет (через `CorrelatedColorTemperatureToRGB`) берутся у родительской лампы каждый кадр — значит, и мерцание `LightFlicker`, и выключение лампы из `StoryManager` работают сами собой.
+- **Ореол должен быть БОЛЬШИМ и ТУСКЛЫМ, а не маленьким и ярким.** Первая версия была радиусом 0.4 м — и оказалась полностью невидимой: у плафона уже есть HDR-эмиссия с блумом, и тесный ореол просто тонет в ней. Смысл появляется только когда ореол заметно шире светильника (люстра — 1.25 м при `IntensityFactor` 0.11) и читается как светящийся воздух вокруг, а не как второй блум.
+- `Radius` задан в **метрах**: скрипт компенсирует масштаб родителя, потому что у люстры он ужат до 0.143.
+
+**3. [CameraLife](Assets/Scripts/Atmosphere/CameraLife.cs) — живая камера.** На `FirstPersonController`. Дыхание (±0.22°), перлин-качание (0.16° → 1.15° по безумию), крен при движении вбок и сердцебиение выше 40% безумия (64 → 130 уд/мин, двойной удар «тук-тук»). Десятых долей градуса достаточно: всё, что читается глазом как движение, — уже перебор и укачивает.
+- **Пишет в `Joint.localRotation` — и это единственное свободное место.** `FirstPersonController` пишет `joint.localPosition` (headbob) и `PlayerCamera.localEulerAngles` (питч, обнуляя y и z); клип `Sneeze` анимирует `CameraAnimAnchor`; `HUD.AsyncDeath` доворачивает саму камеру через DOTween. Локальный **поворот** `Joint` не трогает никто, поэтому иерархию менять не пришлось.
+- Гасит себя в ноль, когда `Controller.cameraCanMove == false` (смерть, чиханье, финал) — иначе выравнивание горизонта в `HUD` дёргалось бы, — и приглушает до `HoldDamping`, пока предмет в руках.
+
+**4. [IdleSway](Assets/Scripts/Atmosphere/IdleSway.cs) — живая квартира.** Висит на `ChandelierLightD` и `LampLight` в тех же базовых префабах. Адресат — не сам объект, а **тени**: весь свет рантайм-прямой, поэтому источник, гуляющий на пару сантиметров, тащит за собой все тени в комнате.
+- Два режима, потому что случаи разные. **Снос** (`CalmShift`/`MadShift`, в метрах) — для точечных ламп: у них поворот не значит ничего, значение имеет только позиция. **Поворот** вокруг `PivotOffset` — для настольной лампы: там спот, и его конус чуть гуляет по столу.
+- Плафон люстры в этой квартире **прижат к потолку** (толщина 0.133 м, пивот на креплении) — качаться ему нечем, поэтому двигается только свет под ним, а сам светильник стоит неподвижно. Раскачивать плафон бессмысленно.
+- Снос задан в мировых метрах и делится на `lossyScale` родителя: у люстры масштаб 0.143, и «полградуса» там означало бы три миллиметра.
+- **Шторы сюда добавлять нельзя.** `openable_curtain_livingroom` и `curtain_kitchen` открываются легаси-компонентом `Animation`, а `IdleSway` пишет трансформ в `LateUpdate` — штора перестала бы открываться совсем.
+
+**5. [MoodDirector](Assets/Scripts/Atmosphere/MoodDirector.cs) — спуск по главам.** Объект `MoodDirector` в `GameScene`. Безумие — величина **возвратная**: попел, пощёлкал, и картинка снова как в первую минуту, поэтому вся игра от первой главы до финала выглядела одинаково. Здесь ведётся невозвратная величина — номер главы из `PlayerPrefs["Chapter"]` (опрашивается раз в `PollInterval`, `StoryManager` править не понадобилось). По массиву `Moods` (по записи на главу) плавно ведутся ambient-градиент, плотность и цвет тумана, `ColorAdjustments`, `Vignette` и `FilmGrain`: квартира холодеет, темнеет и теряет цвет от главы к главе.
+- **Запись 0 — ровно текущий вид сцены**, поэтому первая глава выглядит так же, как до появления компонента, и спуск не бросается в глаза.
+- Диапазон от главы 0 к главе 4: экспозиция +0.3 → −0.3, насыщенность +6 → −35, туман 0.032 → 0.060, виньетка 0.25 → 0.47.
+- `BlendSpeed` = 0.25 — переход между главами растянут на десятки секунд и в моменте незаметен.
+- `OnDisable` возвращает `RenderSettings` как было: они общие для сцены, а `MainMenu` пользуется теми же значениями.
 
 ### Радио
 - [RadioChanger](Assets/Scripts/RadioChanger.cs) — три источника (`change` шипение перемотки, `normal` музыка, `noise` белый шум). `ChangeToNext()` инкрементит индекс клипа, через 0.75 сек переключения логает `RadioSwitched`. На предпоследнем клипе — плавный кроссфейд через `DOFade` в шум (`RadioNoise`). На индексе `RadioMusic` — синхронизирует `MadnessManager.SyncHumming(normal.time)`, чтобы мычание попало в такт.
@@ -139,6 +212,18 @@
 ### Объекты сцены и хранилище ссылок
 [StoryObjectsContainer](Assets/Scripts/StoryObjectsContainer.cs) — это просто инспекторный «контракт» ссылок (провода, лампа, краны, двери холодильника/микроволновки, анимации, две версии комнат `NormalRooms`/`LabirintRooms`, радио и точка телепортации, источники перца), на который опирается `StoryManager`.
 
+### Ванная за балконной дверью
+
+В гостиной (`livingroom`, общий префаб для `NormalRooms` и `LabirintRooms`) есть два взаимоисключающих объекта за шторой: `WindowState` (балкон с видом) и `fakeWatercloset` (целая ванная комната со своими стенами, светом, книгой и предметами для чихания).
+
+Сейчас всё просто: **`fakeWatercloset` включён всегда, `WindowState` выключен**, за закрытой балконной дверью всегда ванная, и дверь игрок открывает сам — на `fakeWatercloset/door_balcony` висят `SwingDoor` (94.6°) и `InteractiveObj → SwingDoor.Interact`.
+
+Попасть туда раньше времени нельзя: шторы перечислены в `StoryObjectsContainer.BathroomCurtains`, и их `InteractiveObj` включается ровно там же, где появляются лужи, — в `StoryManager.SetPuddles(true)` (глава с чипом). До этого штора не сдвигается и прицел на ней не подсвечивается.
+
+Раньше содержимое за шторой перещёлкивалось: у `Openable` шторы в списке `states` лежали `WindowState` и `fakeWatercloset`, и щелчок/открытие меняли их местами. От этого отказались — на плейтесте оказалось слишком запутанно. `states` шторы теперь пустой; сама штора по-прежнему открывается и закрывается.
+
+Правится это всё в базовом префабе [livingroom.prefab](Assets/Prefabs/Rooms/livingroom.prefab), но `NormalRooms.prefab` / `LabirintRooms.prefab` / `MirrorRoom.prefab` умеют перебивать `activeSelf` и `states` своими override-ами — после правки базы проверь и их.
+
 ### Pickable / PlayerPicker
 - [PlayerPicker](Assets/Scripts/PlayerPicker.cs) — синглтон с `Transform pickedPos` (точка перед камерой).
 - [Pickable](Assets/Scripts/Pickable.cs) — `TogglePick()` запускает `MoveTo()` (UniTask-лерп позиции и поворота за 0.5 сек), переключает `FirstPersonController.isHolding`, скрывает курсор и руку через `HUD.SetCursorAndHand` (в главном меню HUD-а нет, вызов пропускается). ЛКМ в режиме держания крутит предмет.
@@ -151,10 +236,16 @@
 - [CursorRaycast](Assets/Scripts/CursorRaycast.cs) — в `LateUpdate` рейкастит от камеры на дистанцию `RangeStatic` (1.6 м), переключает спрайт прицела между `defaultSprite` / `canInteract` / `canHit` (если есть `HittableObj` и игрок с молотком).
 - [InteractiveObj](Assets/Scripts/InteractiveObj.cs) — простой `UnityEvent OnClick`, срабатывает по `OnMouseDown` (со встроенной проверкой дистанции).
 - [HittableObj](Assets/Scripts/HittableObj.cs) — HP, события `OnHit` и `OnDeath`. Удар инициируется из `MadnessManager.Update` через `CursorRaycast.CanHit`.
+- [SwingDoor](Assets/Scripts/SwingDoor.cs) — распашная дверь: клик открывает, ещё клик закрывает. Крутит объект вокруг мировой вертикали через собственный пивот (у дверных FBX пивот стоит в петлях), твин DOTween. В отличие от `Openable` не нужен ни легаси-`Animation`, ни клип — что важно для дверей с «повёрнутым» из FBX локальным поворотом вида `(90, y, 0)`. Поза в сцене = закрытая дверь.
+- [MonoBehLogger](Assets/Scripts/MonoBehLogger.cs) — хелперы для `UnityEvent` (`Log`/`React`/`ReactOnce`/`ChangeQuest`/`PlayHandAnim`). **Все терпят отсутствие адресата**: те же префабы (книги) стоят и в главном меню, где нет ни `StoryManager`, ни `TalkUI`, ни `HUD`. Без проверок падал весь `UnityEvent` целиком — и, например, `Pickable.TogglePick` не успевал снять `isHolding`, после чего в меню переставали кликаться вообще все предметы.
 
 ### Прочие хелперы
 - [HUD](Assets/Scripts/HUD.cs) — управляет анимациями руки (триггеры `Click`/`Hit`/`Swing`/`Win`/`Death`/`HasHammer`), звуками, fade-курсором/рукой через DOTween, анимацией мелодии. Содержит `AsyncDeath`/`AsyncSneeze`: выравнивает камеру до горизонта DOTween-ом `DORotate`, потом проигрывает заранее заданный AnimationClip.
 - [UI](Assets/Scripts/UI.cs) — Win/Lose/Escape панели, пауза по `Esc` с заморозкой `Time.timeScale = 0` и сохранением предыдущих состояний `playerCanMove/cameraCanMove`. Кнопки рестарта, открытия itch.io, выхода, сброса прогресса. В `Update` кормит `BarsPanel` тремя шкалами и включает значок «рассудок восстанавливается».
+  - **Все три кнопки выхода в игре — «Выйти в меню» и ведут в главное меню (`GoToMainMenu`)**: финальный экран, экран смерти и пауза. Иначе игрок просто закроет игру и не увидит собранные книги на столе в меню. Из приложения выходит только «Выйти из игры» в главном меню (`MainMenu.Exit`); `UI.ExitGame` остался, но ни к одной кнопке не привязан.
+  - Раз приложение между прохождениями больше не перезапускается, `StoryManager.Start` чистит статику, которая переживает смену сцены: `MonoBehLogger.ResetReactions()`, `Openable.ResetRunState()`, `ReactionZone.ResetSaid()`, `PuddleZone.ResetSaid()`. **Добавил новую статическую «сказано один раз» — добавь и сброс сюда**, иначе второе прохождение пройдёт молча.
+  - **Экран титров — это `WinPanel`** (полноэкранная панель с нулевой альфой, сквозь неё видно `TitlesCamera`, снимающую стол). Первым ребёнком лежит `Vignette` — тот же рисованный спрайт `Assets/ToSort/ui_eye/vignette.png`, что и у [MadnessVignette](Assets/Scripts/MadnessVignette.cs), с постоянной альфой 0.8. Именно первым: так она рисуется поверх 3D-титров и помех `ScreenStatic`, но под заголовком и кнопкой выхода. `raycastTarget` выключен, иначе она перекрыла бы кнопку. Пост-обработки на титрах нет вовсе (`TitlesCamera.renderPostProcessing = false`), поэтому виньетку из `Volume` там взять было неоткуда — она и сделана как UI.
+- [VolumeSettings](Assets/Scripts/VolumeSettings.cs) — слайдер общей громкости в меню, пишет в `AudioListener.volume` и `PlayerPrefs["Volume"]`. Реальная громкость = позиция слайдера × `MasterScale` (сейчас `0.15`) — MasterScale и есть «комфортный потолок» всей игры, крутить общую громкость нужно им.
 - [BarsPanel](Assets/Scripts/BarsPanel.cs) — три шкалы в правом верхнем углу: пение (`HummSlider`), щелчки (`ClickSlider`) и рассудок (`SanitySlider` = `1 - Madness/MaxMadness`). Каждая — сериализуемый `Bar` (CanvasGroup + Slider + Image заливки), логика одна на всех. Все три невидимы, пока всё хорошо: альфа берётся из общей `_alphaCurve` (0 при значении ≥ 0.75, 1 при ≤ 0.3), цвет заливки — из `_colorGradient`. Внутри иконки рассудка две под-иконки: `Increase` (всплывает, пока игрок реально поёт или в течение `UI.IncreaseIconTime` после щелчка) и `Pause` — задел на будущее, наружу торчит только `SetPause(bool)`. Обе лежат внутри `CanvasGroup` шкалы рассудка, то есть видны только когда видна сама шкала.
 - [BlendItem](Assets/Scripts/BlendItem.cs) — две `Renderer` материала, кроссфейд альфы через DOTween. Используется для «галлюцинаторных» подмен (молоток ↔ фейк-молоток, зонт ↔ фейк-зонт): в третьей главе `StoryManager` включает их `InteractiveObj` и блендит обратно.
 - [HintUI](Assets/Scripts/HintUI.cs) / [TalkUI](Assets/Scripts/TalkUI.cs) / [TasksUI](Assets/Scripts/TasksUI.cs) — TMP-текстовые UI: подсказки, реплики персонажа (5 сек таймер с CancellationToken), активные задачи со зачёркиванием `<s>` и анимированной галочкой через `DOScaleX`.
@@ -166,7 +257,7 @@
 
 - **Принцип «русский исходник = ключ».** Реплики пишутся по-русски как обычно (в коде или в `React`/`ChangeQuest` префабов), а при показе прогоняются через [`Language.Get(ru)`](Assets/Scripts/Language.cs). Нет перевода — остаётся русский.
 - [Language.cs](Assets/Scripts/Language.cs) — статический движок: `Get`, `ChangeLanguage(LangCode)`, событие `OnLanguageChanged`, ленивая инициализация из PlayerPrefs.
-- [LocalizationData.cs](Assets/Scripts/LocalizationData.cs) — таблица переводов `RU → EN` (массив пар). **Чтобы добавить перевод — одна строка сюда.** Все существующие реплики/задачи/реакции/UI уже переведены (62 пары).
+- [LocalizationData.cs](Assets/Scripts/LocalizationData.cs) — таблица переводов `RU → EN` (массив пар). **Чтобы добавить перевод — одна строка сюда.** Все существующие реплики/задачи/реакции/UI уже переведены (123 пары).
 - **Sinks локализуются сами:** `TalkUI.Say`, `TasksUI.ShowTask`, `HintUI.ShowHint`, `WinPanel.SetText` переводят на показе и перерисовываются при смене языка (хранят русский ключ). Дедуп реплик/задач идёт по русскому ключу — независим от языка.
 - **Компоненты:** [LocalizedText](Assets/Scripts/Localization/LocalizedText.cs) — статичные TMP-подписи (кнопки меню, заголовки; ключ берётся из текста подписи). [LocalizedTexture](Assets/Scripts/Localization/LocalizedTexture.cs) — текстура на материале 3D-меша через `MaterialPropertyBlock`. [LocalizedSprite](Assets/Scripts/Localization/LocalizedSprite.cs) — спрайт в UI/2D. [LanguageToggle](Assets/Scripts/Localization/LanguageToggle.cs) — подсветка кнопок RU/EN.
 - **Переводимые текстуры:** пары `*_ru`/`*_en` в `Assets/Models/TranslatableModels/` (`note`, `newspaper`, `table_book`); `LocalizedTexture` навешан на эти меши в `NormalRooms` и `LabirintRooms`.
@@ -206,6 +297,5 @@ python Tools/fix_tmp_kerning.py
 - В [StoryManager.cs:140](Assets/Scripts/StoryManager.cs:140) ожидание `EventsLogged.All(l => l != "BookPicked")` срабатывает, только если события вообще нет — а `BookPicked` так нигде в коде и не пушится строкой `"BookPicked"`. Похоже, логика держится на префабе/UnityEvent — стоит проверить, что префаб книги действительно логает это событие.
 - `SafeArea.UpdateSafeArea` содержит выражение `safeArea.position = safeArea.size`, которое мутирует локальную копию `Rect` и легко спутать с настоящей логикой.
 - Старая save-инфраструктура (`SaveLoadManager` + `GameSaveProfile`) фактически не используется игрой — параллельно живёт `PlayerPrefs["Chapter"]` в `StoryManager`.
-- В `MainMenu.Play()` сцена грузится по индексу `2` — если порядок сцен в build settings изменится, кнопка сломается. Лучше по имени.
 - `manifest.json` тянет и `InputSystem`, и `visualscripting`, но игра использует старый `UnityEngine.Input` — лишние пакеты можно удалить.
 - README.md — однострочный `# mobile-template` (видимо, проект вырос из мобильного шаблона).

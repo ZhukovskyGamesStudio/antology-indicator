@@ -85,17 +85,20 @@ public class Pickable : MonoBehLogger {
         _cts = new CancellationTokenSource();
         MoveTo().Forget();
 
+        // isHolding выставляем ДО UnityEvent-ов: если слушатель упадёт с ошибкой,
+        // Invoke прервётся, и флаг «что-то в руках» остался бы включённым навсегда —
+        // а он статический и глобально блокирует InteractiveObj на всей сцене.
+        FirstPersonController.isHolding = IsPicked;
+
         if (IsPicked) {
             _rotatedAmount = 0f;
             ApplyHeldLayer();
             DisableColliders();
             OnPick?.Invoke();
-            FirstPersonController.isHolding = true;
         } else {
             RestoreOriginalLayer();
             RestoreColliders();
             OnDrop?.Invoke();
-            FirstPersonController.isHolding = false;
         }
 
         // В главном меню HUD-а нет — там книги берутся тем же кодом, но без руки и прицела.

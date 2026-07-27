@@ -39,6 +39,12 @@ public class GallucinationManager : MonoBehaviour {
     [Header("Depth Of Field")]
     public bool IsDof = true;
 
+    [Tooltip("Дистанция фокуса при нулевом безумии. Должна покрывать комнату целиком, иначе картинка мутная с первой секунды")]
+    public float SaneFocusDistance = 12f;
+
+    [Tooltip("Дистанция фокуса при полном безумии — мир расплывается, в фокусе остаётся только то, что под носом")]
+    public float MadFocusDistance = 0.7f;
+
     [Header("Smoothing")]
     [Tooltip("Скорость сглаживания эффектов (1/сек), кадронезависимая. 6.32 ≈ прежнее ощущение при 60 FPS; меньше — плавнее, больше — резче.")]
     public float responseSpeed = 6.32f;
@@ -103,7 +109,11 @@ public class GallucinationManager : MonoBehaviour {
         }
 
         if (IsDof && dof != null) {
-            dof.focusDistance.Override( Mathf.Lerp(dof.focusDistance.value, 0.7f * (1 - curved), smooth));
+            // Раньше фокус стоял на 0.7 м при нулевом безумии и уезжал к нулю — то есть вся
+            // комната была расфокусирована с самого начала, и это читалось не как эффект,
+            // а как мыло. Теперь трезвый взгляд резкий, а расплывается мир по мере безумия.
+            float focusTarget = Mathf.Lerp(SaneFocusDistance, MadFocusDistance, curved);
+            dof.focusDistance.Override(Mathf.Lerp(dof.focusDistance.value, focusTarget, smooth));
         }
 
         if (IsChannelMixer && channelMixer != null) {

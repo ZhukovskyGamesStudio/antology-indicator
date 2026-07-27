@@ -4341,7 +4341,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7689271221153338450, guid: 33b6a9a562bfa454f9301d9f9a159ea9, type: 3}
       propertyPath: m_Intensity
-      value: 0.75
+      value: 1.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 8911376530921169799, guid: 33b6a9a562bfa454f9301d9f9a159ea9, type: 3}
+      propertyPath: m_Intensity
+      value: 0.399
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -4958,7 +4962,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7689271221153338450, guid: 33b6a9a562bfa454f9301d9f9a159ea9, type: 3}
       propertyPath: m_Intensity
-      value: 1.2
+      value: 1.55
+      objectReference: {fileID: 0}
+    - target: {fileID: 8911376530921169799, guid: 33b6a9a562bfa454f9301d9f9a159ea9, type: 3}
+      propertyPath: m_Intensity
+      value: 0.589
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -6422,7 +6430,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7689271221153338450, guid: 33b6a9a562bfa454f9301d9f9a159ea9, type: 3}
       propertyPath: m_Intensity
-      value: 0.75
+      value: 1.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 8911376530921169799, guid: 33b6a9a562bfa454f9301d9f9a159ea9, type: 3}
+      propertyPath: m_Intensity
+      value: 0.399
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -6934,7 +6946,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7689271221153338450, guid: 33b6a9a562bfa454f9301d9f9a159ea9, type: 3}
       propertyPath: m_Intensity
-      value: 0.75
+      value: 1.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 8911376530921169799, guid: 33b6a9a562bfa454f9301d9f9a159ea9, type: 3}
+      propertyPath: m_Intensity
+      value: 0.399
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -7131,6 +7147,14 @@ PrefabInstance:
       propertyPath: OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
+    - target: {fileID: 6278916626775128970, guid: 5d89a613e3afee346b3d3fbf73732541, type: 3}
+      propertyPath: m_Range
+      value: 12.349999
+      objectReference: {fileID: 0}
+    - target: {fileID: 6278916626775128970, guid: 5d89a613e3afee346b3d3fbf73732541, type: 3}
+      propertyPath: m_Intensity
+      value: 0.78000003
+      objectReference: {fileID: 0}
     - target: {fileID: 6845644377613055820, guid: 5d89a613e3afee346b3d3fbf73732541, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.925
@@ -7217,11 +7241,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8060209505877583298, guid: 5d89a613e3afee346b3d3fbf73732541, type: 3}
       propertyPath: m_Range
-      value: 11.35
+      value: 9.5
       objectReference: {fileID: 0}
     - target: {fileID: 8060209505877583298, guid: 5d89a613e3afee346b3d3fbf73732541, type: 3}
       propertyPath: m_Intensity
-      value: 4
+      value: 2.6
       objectReference: {fileID: 0}
     - target: {fileID: 8060209505877583298, guid: 5d89a613e3afee346b3d3fbf73732541, type: 3}
       propertyPath: m_SpotAngle
@@ -7233,7 +7257,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8060209505877583298, guid: 5d89a613e3afee346b3d3fbf73732541, type: 3}
       propertyPath: m_InnerSpotAngle
-      value: 91.908936
+      value: 42
       objectReference: {fileID: 0}
     - target: {fileID: 8060209505877583298, guid: 5d89a613e3afee346b3d3fbf73732541, type: 3}
       propertyPath: m_Shadows.m_Type
@@ -8573,7 +8597,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7689271221153338450, guid: 33b6a9a562bfa454f9301d9f9a159ea9, type: 3}
       propertyPath: m_Intensity
-      value: 0.75
+      value: 1.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 8911376530921169799, guid: 33b6a9a562bfa454f9301d9f9a159ea9, type: 3}
+      propertyPath: m_Intensity
+      value: 0.399
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -8869,7 +8897,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7689271221153338450, guid: 33b6a9a562bfa454f9301d9f9a159ea9, type: 3}
       propertyPath: m_Intensity
-      value: 1.2
+      value: 1.55
+      objectReference: {fileID: 0}
+    - target: {fileID: 8911376530921169799, guid: 33b6a9a562bfa454f9301d9f9a159ea9, type: 3}
+      propertyPath: m_Intensity
+      value: 0.589
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -8936,6 +8968,10 @@ PrefabInstance:
     - target: {fileID: 5521569526723557061, guid: 9a6ef56e0f6fc8d4a95b798d0d29d1b4, type: 3}
       propertyPath: m_Name
       value: openable_curtain_livingroom
+      objectReference: {fileID: 0}
+    - target: {fileID: 7955475903412937527, guid: 9a6ef56e0f6fc8d4a95b798d0d29d1b4, type: 3}
+      propertyPath: states.Array.size
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -9147,6 +9183,14 @@ PrefabInstance:
       propertyPath: OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
+    - target: {fileID: 6278916626775128970, guid: 5d89a613e3afee346b3d3fbf73732541, type: 3}
+      propertyPath: m_Range
+      value: 12.349999
+      objectReference: {fileID: 0}
+    - target: {fileID: 6278916626775128970, guid: 5d89a613e3afee346b3d3fbf73732541, type: 3}
+      propertyPath: m_Intensity
+      value: 0.78000003
+      objectReference: {fileID: 0}
     - target: {fileID: 6845644377613055820, guid: 5d89a613e3afee346b3d3fbf73732541, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.73
@@ -9237,11 +9281,11 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 96ac362dfe06c254e84c4874aa820719, type: 2}
     - target: {fileID: 8060209505877583298, guid: 5d89a613e3afee346b3d3fbf73732541, type: 3}
       propertyPath: m_Range
-      value: 11.35
+      value: 9.5
       objectReference: {fileID: 0}
     - target: {fileID: 8060209505877583298, guid: 5d89a613e3afee346b3d3fbf73732541, type: 3}
       propertyPath: m_Intensity
-      value: 4
+      value: 2.6
       objectReference: {fileID: 0}
     - target: {fileID: 8060209505877583298, guid: 5d89a613e3afee346b3d3fbf73732541, type: 3}
       propertyPath: m_SpotAngle
@@ -9253,7 +9297,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8060209505877583298, guid: 5d89a613e3afee346b3d3fbf73732541, type: 3}
       propertyPath: m_InnerSpotAngle
-      value: 91.908936
+      value: 42
       objectReference: {fileID: 0}
     - target: {fileID: 8060209505877583298, guid: 5d89a613e3afee346b3d3fbf73732541, type: 3}
       propertyPath: m_Shadows.m_Type
@@ -9516,7 +9560,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7689271221153338450, guid: 33b6a9a562bfa454f9301d9f9a159ea9, type: 3}
       propertyPath: m_Intensity
-      value: 1.2
+      value: 1.55
+      objectReference: {fileID: 0}
+    - target: {fileID: 8911376530921169799, guid: 33b6a9a562bfa454f9301d9f9a159ea9, type: 3}
+      propertyPath: m_Intensity
+      value: 0.589
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -9664,7 +9712,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7689271221153338450, guid: 33b6a9a562bfa454f9301d9f9a159ea9, type: 3}
       propertyPath: m_Intensity
-      value: 1.2
+      value: 1.55
+      objectReference: {fileID: 0}
+    - target: {fileID: 8911376530921169799, guid: 33b6a9a562bfa454f9301d9f9a159ea9, type: 3}
+      propertyPath: m_Intensity
+      value: 0.589
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

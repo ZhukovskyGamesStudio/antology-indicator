@@ -390,9 +390,13 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: -0.688
       objectReference: {fileID: 0}
+    - target: {fileID: 4664415841534468455, guid: 6db6769b701f7aa47845378559e07d26, type: 3}
+      propertyPath: m_Intensity
+      value: 0.5016
+      objectReference: {fileID: 0}
     - target: {fileID: 5883112527787218610, guid: 6db6769b701f7aa47845378559e07d26, type: 3}
       propertyPath: m_Intensity
-      value: 1
+      value: 1.32
       objectReference: {fileID: 0}
     - target: {fileID: 6068243350276922790, guid: 6db6769b701f7aa47845378559e07d26, type: 3}
       propertyPath: m_Animations.Array.size

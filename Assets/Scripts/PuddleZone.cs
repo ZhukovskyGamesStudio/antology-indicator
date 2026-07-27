@@ -11,6 +11,12 @@ public class PuddleZone : MonoBehaviour {
     public string reactionOnce = "Откуда вода? На улице ж нет дождя! Что за дверью?..";
 
     private static bool _reacted;
+
+    /// <summary>Забыть, что реплика уже звучала — новый запуск игры начинается с нуля.</summary>
+    public static void ResetSaid() {
+        _reacted = false;
+    }
+
     private void Reset() {
         Collider c = GetComponent<Collider>();
         if (c != null) {

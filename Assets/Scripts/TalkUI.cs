@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Threading;
 using Cysharp.Threading.Tasks;
 using TMPro;
 using UnityEngine;
@@ -69,11 +70,20 @@ public class TalkUI : MonoBehaviour {
     // при смене языка "на лету". null — на экране ничего нет.
     private string _onScreenSource;
 
+    // Очередь реплик крутится в fire-and-forget UniTask, а он не привязан к
+    // времени жизни объекта: после выгрузки сцены цикл продолжал тикать и лез
+    // в уже уничтоженный TMP. Токен гасит ожидания на Destroy.
+    private CancellationToken _lifetime;
+
     /// <summary>Есть ли что-то в очереди или активно проигрывается.</summary>
     public bool IsBusy => _isPlaying || _queue.Count > 0;
 
+    /// <summary>Объект ещё жив и есть куда писать текст.</summary>
+    private bool IsAlive => this != null && text != null;
+
     private void Awake() {
         instance = this;
+        _lifetime = this.GetCancellationTokenOnDestroy();
     }
 
     private void OnEnable() {
@@ -82,6 +92,30 @@ public class TalkUI : MonoBehaviour {
 
     private void OnDisable() {
         Language.OnLanguageChanged -= OnLanguageChanged;
+    }
+
+    private void OnDestroy() {
+        if (instance == this) {
+            instance = null;
+        }
+
+        // Никто не должен остаться висеть в await реплики, которая уже не покажется.
+        DrainQueue();
+    }
+
+    /// <summary>Завершает все незакрытые ожидания — реплики показывать больше негде.</summary>
+    private void DrainQueue() {
+        while (_queue.Count > 0) {
+            _queue.Dequeue().Tcs.TrySetResult();
+        }
+
+        if (_currentTcs != null) {
+            _currentTcs.TrySetResult();
+        }
+
+        _currentPhrase = null;
+        _currentTcs = null;
+        _onScreenSource = null;
     }
 
     // Смена языка во время показа реплики: мгновенно перерисовываем её целиком
@@ -142,6 +176,12 @@ public class TalkUI : MonoBehaviour {
     /// Можно не ждать (вызывать без await) - реплика всё равно отыграет.
     /// </summary>
     public UniTask Say(string phrase) {
+        // Сцена уже выгружается (финал уводит в меню) — показывать реплику некуда.
+        // Возвращаем завершённый таск, чтобы сюжетный скрипт не завис в await.
+        if (!IsAlive) {
+            return UniTask.CompletedTask;
+        }
+
         // Дедуп подряд идущих дублей: если такая же реплика уже играет или
         // уже сидит в очереди, не добавляем — возвращаем её tcs, чтобы все
         // ожидающие синхронно завершились с реальной репликой.
@@ -182,7 +222,7 @@ public class TalkUI : MonoBehaviour {
     /// Если очередь пуста - возвращает завершённый UniTask мгновенно.
     /// </summary>
     public UniTask WaitUntilDone() {
-        if (!IsBusy) {
+        if (!IsBusy || !IsAlive) {
             return UniTask.CompletedTask;
         }
 
@@ -199,6 +239,11 @@ public class TalkUI : MonoBehaviour {
         _isPlaying = true;
         try {
             while (_queue.Count > 0) {
+                if (!IsAlive) {
+                    DrainQueue();
+                    return;
+                }
+
                 Entry e = _queue.Dequeue();
 
                 if (e.Phrase == null) {
@@ -211,6 +256,11 @@ public class TalkUI : MonoBehaviour {
                 _currentTcs = e.Tcs;
                 try {
                     await PlayOne(e.Phrase);
+                }
+                catch (System.OperationCanceledException) {
+                    // Объект уничтожили посреди реплики — штатный выход, а не ошибка.
+                    DrainQueue();
+                    return;
                 }
                 catch (System.Exception ex) {
                     Debug.LogException(ex);
@@ -227,6 +277,10 @@ public class TalkUI : MonoBehaviour {
     }
 
     private async UniTask PlayOne(string phrase) {
+        if (!IsAlive) {
+            return;
+        }
+
         if (back != null) {
             back.gameObject.SetActive(true);
         }
@@ -268,6 +322,10 @@ public class TalkUI : MonoBehaviour {
             await WaitOrSkip(hold);
         }
 
+        if (!IsAlive) {
+            return;
+        }
+
         _onScreenSource = null;
         text.text = "";
         text.maxVisibleCharacters = 0;
@@ -286,7 +344,9 @@ public class TalkUI : MonoBehaviour {
             if (ConsumeSkip()) {
                 return true;
             }
-            await UniTask.Yield();
+            // Yield с токеном: на Destroy бросит OperationCanceledException и
+            // разорвёт цикл, вместо того чтобы дальше тикать в мёртвой сцене.
+            await UniTask.Yield(_lifetime);
             remaining -= Time.deltaTime;
         }
 

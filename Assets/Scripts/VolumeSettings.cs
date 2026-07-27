@@ -14,9 +14,9 @@ public class VolumeSettings : MonoBehaviour {
     public const string Key = "Volume";
     public const float DefaultVolume = 1f;
 
-    [Tooltip("Громкость AudioListener при слайдере на 100%. 0.10 — комфортный " +
-             "потолок (раньше столько давало ~20% слайдера)")]
-    public const float MasterScale = 0.10f;
+    [Tooltip("Громкость AudioListener при слайдере на 100%. 0.15 — комфортный " +
+             "потолок (после плейтеста подняли в полтора раза с 0.10)")]
+    public const float MasterScale = 0.15f;
 
     [Tooltip("Слайдер громкости. Если пусто — берётся с этого объекта")]
     public Slider slider;

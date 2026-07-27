@@ -1787,6 +1787,10 @@ PrefabInstance:
       propertyPath: m_RenderingLayerMask
       value: 9
       objectReference: {fileID: 0}
+    - target: {fileID: 8911376530921169799, guid: 33b6a9a562bfa454f9301d9f9a159ea9, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 9
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

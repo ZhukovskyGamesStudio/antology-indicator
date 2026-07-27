@@ -79,6 +79,14 @@ public class StoryManager : MonoBehaviour {
         FirstPersonController.isHolding = false;
         CanExit = false;
 
+        // Статика, которая переживает смену сцены: из финала игрок теперь уходит
+        // в главное меню, а не из приложения, поэтому второй заход должен
+        // начинаться с чистого листа.
+        MonoBehLogger.ResetReactions();
+        Openable.ResetRunState();
+        ReactionZone.ResetSaid();
+        PuddleZone.ResetSaid();
+
         if (isDropProgress) {
             PlayerPrefs.SetInt("Chapter", StartingChapter);
         }
@@ -267,14 +275,6 @@ public class StoryManager : MonoBehaviour {
         storyObjectsContainer.Lamp.Set(false);
         storyObjectsContainer.LampEmission.Set(false);
         storyObjectsContainer.LampInteractive.enabled = false;
-        // Приглушаем общий свет комнаты (не гасим целиком) — вместе с лампой.
-        if (storyObjectsContainer.RoomLights != null) {
-            foreach (Light roomLight in storyObjectsContainer.RoomLights) {
-                if (roomLight != null) {
-                    roomLight.intensity *= storyObjectsContainer.RoomLightDim;
-                }
-            }
-        }
         await UniTask.WaitForSeconds(1.5f);
 
         await TalkUI.Say("Хм, я же точно видел, это радио-провод...");
@@ -295,6 +295,15 @@ public class StoryManager : MonoBehaviour {
         storyObjectsContainer.microwaveAnim.Play();
         storyObjectsContainer.FridgeAnim.Play();
         storyObjectsContainer.fridgeOpen.Play();
+
+        // FridgeWork держит дверцу открытой и идёт мимо Openable, поэтому его надо
+        // об этом предупредить. Иначе первый клик игрока по холодильнику считает
+        // дверцу закрытой: она рывком захлопывается и открывается заново, а шум при
+        // этом засчитывается как убранный — хотя холодильник остался открыт и гудит.
+        Openable fridge = storyObjectsContainer.FridgeDoor.GetComponent<Openable>();
+        if (fridge != null) {
+            fridge.SetOpenState(true);
+        }
 
         TalkUI.Say("Ааа! Как громко!").Forget();
 
@@ -413,6 +422,16 @@ public class StoryManager : MonoBehaviour {
     private void SetPuddles(bool isActive) {
         foreach (GameObject puddle in storyObjectsContainer.Puddles) {
             puddle.SetActive(isActive);
+        }
+
+        // Ванная за шторой открывается ровно тогда же, когда из-под двери натекает
+        // лужа: до этого штору не сдвинуть, и лезть туда рано.
+        if (storyObjectsContainer.BathroomCurtains != null) {
+            foreach (InteractiveObj curtain in storyObjectsContainer.BathroomCurtains) {
+                if (curtain != null) {
+                    curtain.enabled = isActive;
+                }
+            }
         }
     }
 

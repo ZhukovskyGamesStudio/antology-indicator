@@ -456,6 +456,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  IgnoreRange: 0
 --- !u!114 &3369229056601437778
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -672,6 +673,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  IgnoreRange: 0
 --- !u!4 &708639927761494768 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: fde039f978c905d4c9bb221ea0ff244c, type: 3}

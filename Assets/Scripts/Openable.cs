@@ -51,6 +51,16 @@ public class Openable : MonoBehaviour {
 
     private static bool _snapReacted;
 
+    /// <summary>
+    /// Сброс статики между запусками игры (из меню приложение не перезапускается):
+    /// реакция на первый сдвиг мебели снова прозвучит, а щелчки снова не двигают
+    /// содержимое, пока сюжет этого не разрешит.
+    /// </summary>
+    public static void ResetRunState() {
+        _snapReacted = false;
+        IsChangeAllowed = false;
+    }
+
     // Игрок — чтобы щелчок не прятал комнату-состояние, внутри которой он стоит
     // (иначе провал в пустоту, баг с ванной).
     private static Transform _player;
@@ -158,6 +168,19 @@ public class Openable : MonoBehaviour {
         IsOpen = true;
         PlayClip(openClip, reversed: false);
         PlaySound(openSound);
+    }
+
+    /// <summary>
+    /// Сообщить, что дверцу открыли/закрыли МИМО этого компонента — например,
+    /// сюжетным клипом через <see cref="PlayAnim"/>, — не проигрывая ничего заново.
+    ///
+    /// Без этого состояние разъезжается с картинкой: холодильник в кухонной главе
+    /// открывает клип FridgeWork, а <see cref="IsOpen"/> остаётся false, и первый
+    /// клик игрока считает дверцу закрытой — она рывком захлопывается и открывается
+    /// снова вместо того, чтобы закрыться.
+    /// </summary>
+    public void SetOpenState(bool isOpen) {
+        IsOpen = isOpen;
     }
 
     public void Close() {

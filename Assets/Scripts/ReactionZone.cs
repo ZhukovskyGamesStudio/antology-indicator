@@ -18,6 +18,11 @@ public class ReactionZone : MonoBehaviour {
     private static readonly HashSet<string> _saidGlobal = new();
     private bool _saidLocal;
 
+    /// <summary>Забыть все сказанные реплики — новый запуск игры начинается с нуля.</summary>
+    public static void ResetSaid() {
+        _saidGlobal.Clear();
+    }
+
     private void Reset() {
         Collider c = GetComponent<Collider>();
         if (c != null) {

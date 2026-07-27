@@ -129,6 +129,19 @@ public class UI : MonoBehaviour {
         Application.Quit();
     }
 
+    /// <summary>
+    /// Уход с финального экрана (и с экрана проигрыша) в главное меню, а не из игры:
+    /// собранные книги лежат на столе в меню, и специально запускать игру заново,
+    /// чтобы на них посмотреть, игрок не станет.
+    /// </summary>
+    public void GoToMainMenu() {
+        // Экран паузы мог оставить время остановленным — в меню оно нужно живым.
+        Time.timeScale = 1;
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+        SceneManager.LoadScene("MainMenu");
+    }
+
     public void DropProgress() {
         PlayerPrefs.SetInt("Chapter", 0);
         // Сброс — значит сброс: коллекция книг тоже начинается заново,
