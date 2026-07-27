@@ -207,6 +207,9 @@ public static class LocalizationData {
             "Play Again"),
         ("Громкость",
             "Volume"),
+        // Счётчик коллекции книг: {0} — найдено, {1} — всего
+        ("{0} из {1}",
+            "{0} of {1}"),
         ("Радиоволна\nзахватила ваш разум",
             "The radio wave\nseized your mind"),
 

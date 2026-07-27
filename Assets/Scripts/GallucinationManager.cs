@@ -14,23 +14,25 @@ public class GallucinationManager : MonoBehaviour {
     [Header("Fov")]
     public bool IsFov = true;
 
-    [Tooltip("Нормальный FOV (безумие = 0), вокруг него идёт дыхание")]
-    public float MinFov;
-    public float MaxFov; // оставлено для совместимости, в осцилляции не используется
+    [Tooltip("Нормальный FOV (безумие = 0)")]
+    public float MinFov = 60f;
 
-    [Tooltip("Макс. амплитуда дыхания FOV (градусы) при полном безумии. Амплитуда растёт с безумием")]
-    public float FovOscAmplitude = 7f;
-
-    [Tooltip("Скорость дыхания FOV (рад/сек)")]
-    public float FovOscSpeed = 1.2f;
+    [Tooltip("FOV при полном безумии — мир слегка отодвигается. Разница с MinFov должна быть небольшой (5–10 градусов)")]
+    public float MaxFov = 68f;
 
     [Tooltip("Скорость возврата FOV к нормальному, когда держишь предмет (1/сек)")]
     public float FovHoldReturnSpeed = 14f;
 
     [Header("Chromatic Aberration")]
     public bool IsChromaticAberration = true;
+
+    [Tooltip("X — безумие после gallucinationCurve (0..1), Y — интенсивность аберрации (0..1). Чтобы эффект начинался раньше — поднимай левую часть кривой")]
     public AnimationCurve aberrationCurve;
-    
+
+    [Range(0f, 1f)]
+    [Tooltip("Общий множитель силы аберрации")]
+    public float AberrationMax = 1f;
+
     [Header("Channels Mixer")]
     public bool IsChannelMixer = true;
 
@@ -47,7 +49,16 @@ public class GallucinationManager : MonoBehaviour {
 
     private void Start() {
         VolumeProfile = volume.profile;
-        VolumeProfile.TryGet(out chromaticAberration);
+
+        if (!VolumeProfile.TryGet(out chromaticAberration)) {
+            Debug.LogError($"[Gallucination] В профиле {volume.sharedProfile?.name} нет Chromatic Aberration — эффект не будет работать", this);
+        } else {
+            // Override у параметра ставит сам intensity.Override(), но сам компонент
+            // тоже должен быть включён, иначе URP просто пропустит эффект.
+            chromaticAberration.active = true;
+            chromaticAberration.intensity.overrideState = true;
+        }
+
         VolumeProfile.TryGet(out channelMixer);
         VolumeProfile.TryGet(out dof);
         // Мгновенно выставляем стартовые значения (безумие = 0), без сглаживания.
@@ -55,7 +66,12 @@ public class GallucinationManager : MonoBehaviour {
     }
 
     private void Update() {
-        float curGal = MadnessManager.instance.Madness / MadnessManager.instance.MaxMadness * Random.Range(1f - randomGal, 1f + randomGal);
+        MadnessManager madness = MadnessManager.instance;
+        if (madness == null || madness.MaxMadness <= 0f) {
+            return;
+        }
+
+        float curGal = madness.Madness / madness.MaxMadness * Random.Range(1f - randomGal, 1f + randomGal);
 
         float curved = gallucinationCurve.Evaluate(curGal);
 
@@ -69,30 +85,28 @@ public class GallucinationManager : MonoBehaviour {
     private void UpdateVolume(float curved, float smooth) {
         if (IsFov) {
             if (FirstPersonController.isHolding) {
-                // Держим предмет — быстро возвращаем FOV к нормальному (без дыхания).
+                // Держим предмет — быстро возвращаем FOV к нормальному.
                 float holdSmooth = 1f - Mathf.Exp(-FovHoldReturnSpeed * Mathf.Min(Time.deltaTime, 0.1f));
                 firstPersonController.fov = Mathf.Lerp(firstPersonController.fov, MinFov, holdSmooth);
             } else {
-                // Постоянное «дыхание» дальше-ближе вокруг нормального FOV.
-                // Амплитуда растёт с безумием, но остаётся небольшой.
-                float amp = FovOscAmplitude * curved;
-                float target = MinFov + amp * Mathf.Sin(Time.time * FovOscSpeed);
+                // Без дыхания: с ростом безумия мир просто слегка отодвигается.
+                float target = Mathf.Lerp(MinFov, MaxFov, curved);
                 firstPersonController.fov = Mathf.Lerp(firstPersonController.fov, target, smooth);
             }
         }
 
-        if (IsChromaticAberration) {
+        if (IsChromaticAberration && chromaticAberration != null) {
             // Сначала переводим безумие через кривую в целевую интенсивность,
             // затем плавно ведём к ней — так же, как остальные эффекты (без петли обратной связи).
-            float target = aberrationCurve.Evaluate(curved);
+            float target = Mathf.Clamp01(aberrationCurve.Evaluate(curved) * AberrationMax);
             chromaticAberration.intensity.Override(Mathf.Lerp(chromaticAberration.intensity.value, target, smooth));
         }
 
-        if (IsDof) {
+        if (IsDof && dof != null) {
             dof.focusDistance.Override( Mathf.Lerp(dof.focusDistance.value, 0.7f * (1 - curved), smooth));
         }
 
-        if (IsChannelMixer) {
+        if (IsChannelMixer && channelMixer != null) {
             channelMixer.blueOutBlueIn.Override( Mathf.Lerp(channelMixer.blueOutBlueIn.value, Mathf.Lerp(100, 50f, curved), smooth));
             channelMixer.redOutBlueIn.Override( Mathf.Lerp(channelMixer.redOutBlueIn.value, Mathf.Lerp(0, 50f, curved), smooth));
         }

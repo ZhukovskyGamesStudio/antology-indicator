@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 4292107304441019435}
   - component: {fileID: 6627371635763788127}
   - component: {fileID: 3744986416732409528}
+  - component: {fileID: 407408748735908827}
   m_Layer: 6
   m_Name: BookGeneral
   m_TagString: Untagged
@@ -77,6 +78,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: cac1a25ae2802044190f0c0ce07ea61b, type: 3}
   dropClips: []
   rotateSpeed: 100
+  rotateLogEvent: 
+  rotateLogThreshold: 90
 --- !u!114 &4175008286083188579
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -169,6 +172,20 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.2991582, y: 0.46112323, z: 0.076597705}
   m_Center: {x: 0.000000044703484, y: 0.23056158, z: -0.0000011045486}
+--- !u!114 &407408748735908827
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1893616152958443925}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 700a6702ae8084442919fdd12f30007d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CollectableBook
+  Id: 
+  CollectOnDrop: 1
 --- !u!1001 &6005537479006425579
 PrefabInstance:
   m_ObjectHideFlags: 0

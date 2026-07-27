@@ -26,6 +26,16 @@ public class LocalizedTexture : MonoBehaviour {
         target = GetComponent<Renderer>();
     }
 
+    /// <summary>
+    /// Подменить пару текстур в рантайме — нужно там, где объект собирается
+    /// на лету (книги, которые меню раскладывает на столе).
+    /// </summary>
+    public void SetTextures(Texture2D ruTexture, Texture2D enTexture) {
+        ru = ruTexture;
+        en = enTexture;
+        Apply();
+    }
+
     private void OnEnable() {
         Language.OnLanguageChanged += Apply;
         Apply();

@@ -14,6 +14,10 @@ public class UI : MonoBehaviour {
 
     [Tooltip("Полноэкранные помехи в финале (появляются под заголовком и кнопкой выхода)")]
     public ScreenStatic ScreenStatic;
+
+    [Tooltip("Сколько секунд после щелчка держать значок восстановления рассудка")]
+    public float IncreaseIconTime = 0.6f;
+
     private bool canMove;
     private bool canRotate;
 
@@ -44,14 +48,39 @@ public class UI : MonoBehaviour {
             OnPressedEsc();
         }
 
-        if (!MadnessManager.instance.IsVolumesFixed) {
-            BarsPanel.SetClicking(MadnessManager.instance.ClickingPower/100f);
-            BarsPanel.SetHumming(MadnessManager.instance.HummingPower/100f);
-        } else {
+        UpdateBars(MadnessManager.instance);
+    }
+
+    private void UpdateBars(MadnessManager madness) {
+        if (madness == null) {
+            return;
+        }
+
+        // Книга в руках: безумие стоит. Шкалу рассудка при этом показываем
+        // насильно — иначе значок паузы висел бы на невидимой шкале.
+        bool isPaused = madness.IsBookPaused;
+        BarsPanel.SetPause(isPaused);
+        float minAlpha = isPaused ? 1f : 0f;
+
+        // Пока безумие «зафиксировано» (туториал, финал), шкалы стоят на максимуме
+        // и не отвлекают — они и так невидимы при полном значении.
+        if (madness.IsVolumesFixed) {
             BarsPanel.SetClicking(1f);
             BarsPanel.SetHumming(1f);
+            BarsPanel.SetSanity(1f, minAlpha);
+            BarsPanel.SetIncrease(false);
+            return;
         }
-     
+
+        BarsPanel.SetClicking(madness.ClickingPower / 100f);
+        BarsPanel.SetHumming(madness.HummingPower / 100f);
+        BarsPanel.SetSanity(madness.MaxMadness <= 0f ? 1f : 1f - Mathf.Clamp01(madness.Madness / madness.MaxMadness), minAlpha);
+
+        // Значок «рассудок восстанавливается»: пока игрок реально поёт (есть чем)
+        // и коротко после каждого щелчка.
+        bool isRestoring = (madness.IsHumming && madness.HummingPower > 5f)
+            || (DateTime.Now - madness.LastClickTime).TotalSeconds < IncreaseIconTime;
+        BarsPanel.SetIncrease(isRestoring);
     }
 
     public async UniTask ShowFade(float fin, float duration) {
@@ -102,6 +131,9 @@ public class UI : MonoBehaviour {
 
     public void DropProgress() {
         PlayerPrefs.SetInt("Chapter", 0);
+        // Сброс — значит сброс: коллекция книг тоже начинается заново,
+        // иначе её нечем обнулить.
+        BookCollection.Clear();
         Restart();
     }
 

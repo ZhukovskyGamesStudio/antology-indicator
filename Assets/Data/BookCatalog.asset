@@ -1,0 +1,92 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f718a1cd9f4821648be47461da1391b3, type: 3}
+  m_Name: BookCatalog
+  m_EditorClassIdentifier: Assembly-CSharp::BookCatalog
+  BookPrefab: {fileID: 1893616152958443925, guid: 03e15d359a62f8044b13c726c8c89ece, type: 3}
+  Books:
+  - Id: book_1
+    Mesh: {fileID: 4824123659213521449, guid: 3f108ee9e56b6324292c4c53de2e7f6f, type: 3}
+    Ru: {fileID: 2800000, guid: b873c78d12caa5445bdea059d21a0950, type: 3}
+    En: {fileID: 2800000, guid: f12fbe345c6f3c4458e1912dd5941905, type: 3}
+  - Id: book_2
+    Mesh: {fileID: 4824123659213521449, guid: ae80488c2549b3a4099c8012a741683f, type: 3}
+    Ru: {fileID: 2800000, guid: 36ad7c5a4f908804f8a522f8784338bb, type: 3}
+    En: {fileID: 2800000, guid: 181e2ceda8fe90b45aabf092c2e27894, type: 3}
+  - Id: book_3
+    Mesh: {fileID: 4824123659213521449, guid: d056f0603b7e5b747b5d270e80cbc37c, type: 3}
+    Ru: {fileID: 2800000, guid: 07c382cf29e0e09429c5c3e94da94142, type: 3}
+    En: {fileID: 2800000, guid: a659f68aea2831f45a76084e5dc812b0, type: 3}
+  - Id: book_4
+    Mesh: {fileID: 4824123659213521449, guid: ec920b83f02a1484789265152b386739, type: 3}
+    Ru: {fileID: 2800000, guid: 635ebe5e41d0ebf4a8dc247def27c7dc, type: 3}
+    En: {fileID: 2800000, guid: ed5c0204f5d60b14383736bf1caeeca4, type: 3}
+  - Id: book_5
+    Mesh: {fileID: 4824123659213521449, guid: c600bdd45f55f6c4fb7241b9fae95da8, type: 3}
+    Ru: {fileID: 2800000, guid: 27b53d33f7e128f48b836108accd879f, type: 3}
+    En: {fileID: 2800000, guid: ed8a48adc738ec14dad7786ff199e3d9, type: 3}
+  - Id: book_6
+    Mesh: {fileID: 4824123659213521449, guid: d14a5156b70d19e428699ddcc23f5605, type: 3}
+    Ru: {fileID: 2800000, guid: 4cb544884c47aed498220f851e7d3379, type: 3}
+    En: {fileID: 2800000, guid: e3bda5895842e514c94db94fc92fcc45, type: 3}
+  - Id: book_7
+    Mesh: {fileID: 4824123659213521449, guid: 29b45a83aed19c544a8bbd1acfadda2c, type: 3}
+    Ru: {fileID: 2800000, guid: ac19199a716ca34418f5ef8e1be9676d, type: 3}
+    En: {fileID: 2800000, guid: 1f30f316502b6f34c89d305bc8066ca9, type: 3}
+  - Id: book_8
+    Mesh: {fileID: 4824123659213521449, guid: fb717406f4ca7964c9983da0692f689a, type: 3}
+    Ru: {fileID: 2800000, guid: b43cb88a0bc3f49438d8a9e2dc9ce90b, type: 3}
+    En: {fileID: 2800000, guid: a48e880205506574bbaef022295af957, type: 3}
+  - Id: book_9
+    Mesh: {fileID: 4824123659213521449, guid: cf2a500627da2d04bb5119a3a6394746, type: 3}
+    Ru: {fileID: 2800000, guid: f55a58bc416eae24cb81daff44b09c07, type: 3}
+    En: {fileID: 2800000, guid: 246d9ff6438b35149bd4ee71c730bc44, type: 3}
+  - Id: book_10
+    Mesh: {fileID: 4824123659213521449, guid: 8352983b1f410074e9878044dbd2016a, type: 3}
+    Ru: {fileID: 2800000, guid: cc28d31564ac04345997e2e5ffad1175, type: 3}
+    En: {fileID: 2800000, guid: b5f87aa8bf751224aaf422f274c489cc, type: 3}
+  - Id: book_11
+    Mesh: {fileID: 4824123659213521449, guid: 8a12231cc8e84d44580162cf5d640484, type: 3}
+    Ru: {fileID: 2800000, guid: c8455e07b3b512441b287a1d97121261, type: 3}
+    En: {fileID: 2800000, guid: 2b7fc467f3af44c4e804c28873b1690a, type: 3}
+  - Id: book_12
+    Mesh: {fileID: 4824123659213521449, guid: f579ec629697f38428202ba6615c1e79, type: 3}
+    Ru: {fileID: 2800000, guid: ac941b1ea854a274e8347ae07d721251, type: 3}
+    En: {fileID: 2800000, guid: 58ef254780202cf4091754a338eaf866, type: 3}
+  - Id: book_13
+    Mesh: {fileID: 4824123659213521449, guid: 7cb645584b6d79a47b8533e91b40cc51, type: 3}
+    Ru: {fileID: 2800000, guid: 9542ffc41aac9da46b27987014eb0e29, type: 3}
+    En: {fileID: 2800000, guid: 844e7a13bf2a5b6448dc9282552e44a2, type: 3}
+  - Id: book_14
+    Mesh: {fileID: 4824123659213521449, guid: f085e0d072df6cd46b08f9b5b27010a1, type: 3}
+    Ru: {fileID: 2800000, guid: 7c453ed1303c640498af038defbd8189, type: 3}
+    En: {fileID: 2800000, guid: d7333841e30a5de43b7b414228f8e99a, type: 3}
+  - Id: book_15
+    Mesh: {fileID: 4824123659213521449, guid: f085e0d072df6cd46b08f9b5b27010a1, type: 3}
+    Ru: {fileID: 2800000, guid: bbaf455273f2edb4aa2463f71b420b6b, type: 3}
+    En: {fileID: 2800000, guid: 176715b253d8dca4c831062aa02b5b9a, type: 3}
+  - Id: book_16
+    Mesh: {fileID: 4824123659213521449, guid: f085e0d072df6cd46b08f9b5b27010a1, type: 3}
+    Ru: {fileID: 2800000, guid: 65a16b32961eb6749824d8d8aa7f7252, type: 3}
+    En: {fileID: 2800000, guid: 62f3e1cd6ab8a2b479f2c7698dd6e49a, type: 3}
+  - Id: book_17
+    Mesh: {fileID: 4824123659213521449, guid: f085e0d072df6cd46b08f9b5b27010a1, type: 3}
+    Ru: {fileID: 2800000, guid: 93620a039214b294a80295d1988c7b85, type: 3}
+    En: {fileID: 2800000, guid: c8a2075142d03fe4d8b33d6fbf7ef46b, type: 3}
+  - Id: book_18
+    Mesh: {fileID: 4824123659213521449, guid: f085e0d072df6cd46b08f9b5b27010a1, type: 3}
+    Ru: {fileID: 2800000, guid: 10c2923fe8a98ce4a8b5d7337d49af39, type: 3}
+    En: {fileID: 2800000, guid: f3ed48f7f147cc9458d5d67ad6cd0704, type: 3}
+  - Id: book_19
+    Mesh: {fileID: 4824123659213521449, guid: f085e0d072df6cd46b08f9b5b27010a1, type: 3}
+    Ru: {fileID: 2800000, guid: b5534a02194a95d40bf1d8cb2099e7e9, type: 3}
+    En: {fileID: 2800000, guid: 93ff03fc138966d4fa2d53d28aa10c4b, type: 3}

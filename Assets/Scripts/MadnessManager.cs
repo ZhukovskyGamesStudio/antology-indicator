@@ -19,6 +19,13 @@ public class MadnessManager : MonoBehaviour {
     public float MadnessSpeedPerS = 1;
 
     public bool IsMadnessRaising;
+
+    /// <summary>
+    /// Игрок читает книгу: безумие стоит на месте, а щелчки и пение
+    /// спокойно восстанавливаются. Ставится из <see cref="CollectableBook"/>.
+    /// </summary>
+    public bool IsBookPaused { get; private set; }
+
     public float HummingChillPerS = 2;
 
     public float ClickChillPerClick = 10;
@@ -101,7 +108,8 @@ public class MadnessManager : MonoBehaviour {
             StoryManager.LogOnce("Clicked");
         }
 
-        IsHumming = Input.GetKey(HummingKey);
+        // С книгой в руках пение не тратится: игрок отдыхает, обе шкалы копятся.
+        IsHumming = Input.GetKey(HummingKey) && !IsBookPaused;
         if (!isDead && IsHumming) {
             HummingPower -= HummingChillPerS * 1.5f * Time.deltaTime;
             if (!_wasHumming) {
@@ -117,7 +125,7 @@ public class MadnessManager : MonoBehaviour {
             }
         }
 
-        if (IsMadnessRaising) {
+        if (IsMadnessRaising && !IsBookPaused) {
             Madness += MadnessSpeedPerS * speedMultiplier * Time.deltaTime;
         }
 
@@ -156,6 +164,11 @@ public class MadnessManager : MonoBehaviour {
     private void UpdateSounds() {
         RadioAudio.SetPercent(Madness / MaxMadness);
         clicking.volume = ClickingPower / 100f;
+    }
+
+    /// <summary>Взял/положил книгу — ставим или снимаем паузу безумия.</summary>
+    public void SetBookPause(bool isPaused) {
+        IsBookPaused = isPaused;
     }
 
     public void Click() {

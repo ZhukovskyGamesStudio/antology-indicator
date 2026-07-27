@@ -82,13 +82,16 @@ public class Pickable : MonoBehLogger {
             DisableColliders();
             OnPick?.Invoke();
             FirstPersonController.isHolding = true;
-            HUD.instance.SetCursorAndHand(false);
         } else {
             RestoreOriginalLayer();
             RestoreColliders();
             OnDrop?.Invoke();
             FirstPersonController.isHolding = false;
-            HUD.instance.SetCursorAndHand(true);
+        }
+
+        // В главном меню HUD-а нет — там книги берутся тем же кодом, но без руки и прицела.
+        if (HUD.instance != null) {
+            HUD.instance.SetCursorAndHand(!IsPicked);
         }
 
         // Звук берётся/кладётся. Дистанция взаимодействия короткая (CursorRaycast),
