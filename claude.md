@@ -141,7 +141,10 @@
 
 ### Pickable / PlayerPicker
 - [PlayerPicker](Assets/Scripts/PlayerPicker.cs) — синглтон с `Transform pickedPos` (точка перед камерой).
-- [Pickable](Assets/Scripts/Pickable.cs) — `IDragHandler`. `TogglePick()` запускает `MoveTo()` (UniTask-лерп позиции и поворота за 0.5 сек), переключает `FirstPersonController.isHolding`, скрывает курсор и руку через `HUD.SetCursorAndHand(false)`. `OnDrag` в режиме держания крутит объект вокруг мира.
+- [Pickable](Assets/Scripts/Pickable.cs) — `TogglePick()` запускает `MoveTo()` (UniTask-лерп позиции и поворота за 0.5 сек), переключает `FirstPersonController.isHolding`, скрывает курсор и руку через `HUD.SetCursorAndHand` (в главном меню HUD-а нет, вызов пропускается). ЛКМ в режиме держания крутит предмет.
+  - **Предмет держится и крутится за геометрический центр**, а не за пивот: центр считается один раз по локальным границам всех рендереров (`CalculateLocalCenter`), поэтому предметам с пивотом снизу (книги, папки) больше не нужно компенсировать это через `shiftPos`. `shiftPos` теперь — чистое художественное смещение от точки в руке.
+  - Чувствительность вращения (`rotateSpeed`) не зависит от частоты кадров: `Input.GetAxis("Mouse X")` — это уже дельта за кадр, и умножать её на `deltaTime` было нельзя (на 144 Гц предмет крутился в 2.4 раза медленнее, чем на 60). Значения нормированы на 60 кадров, то есть остались в прежних единицах.
+- [HeldItemLight](Assets/Scripts/HeldItemLight.cs) — мягкий широкий спот на камере (`PlayerCamera/HeldItemLight`), который плавно разгорается, пока предмет в руках, и гаснет при опускании. Угол широкий (120°, внутренний 85°) и источник сдвинут на 0.25 м за камеру — так свет ложится на предмет ровно, без яркого пятна посередине. Дальность 1.5 м, чтобы комнате доставалось по минимуму. Есть в обеих сценах — и в игре, и в меню.
 - ПКМ — положить (`Input.GetMouseButtonDown(1)`).
 
 ### CursorRaycast и интерактив
@@ -168,6 +171,23 @@
 - **Компоненты:** [LocalizedText](Assets/Scripts/Localization/LocalizedText.cs) — статичные TMP-подписи (кнопки меню, заголовки; ключ берётся из текста подписи). [LocalizedTexture](Assets/Scripts/Localization/LocalizedTexture.cs) — текстура на материале 3D-меша через `MaterialPropertyBlock`. [LocalizedSprite](Assets/Scripts/Localization/LocalizedSprite.cs) — спрайт в UI/2D. [LanguageToggle](Assets/Scripts/Localization/LanguageToggle.cs) — подсветка кнопок RU/EN.
 - **Переводимые текстуры:** пары `*_ru`/`*_en` в `Assets/Models/TranslatableModels/` (`note`, `newspaper`, `table_book`); `LocalizedTexture` навешан на эти меши в `NormalRooms` и `LabirintRooms`.
 - **Шрифт:** игровой `Old-Soviet` статичный и без латинского апострофа/кавычек, поэтому к нему добавлен fallback `LiberationSans SDF` — английский с сокращениями (`I'll`, `won't`) рендерится корректно. При замене шрифта сохранить fallback.
+
+## Шрифт и кернинг
+
+`Assets/Fonts/Old Soviet/Old-Soviet.asset` — статичный TMP-ассет (атлас 2048×2048, sampling point size 219, 140 глифов).
+
+**Кернинг в ассете собран вручную, а не импортом Unity.** Нативный font engine (`FontEngine.GetPairAdjustmentRecords`) неправильно разбирает GPOS-кернинг формата 2 (class-based PairPos) у этого шрифта: в ассет попадало 17 854 записи вместо 2 138 — с индексами глифов вне диапазона шрифта (до 1917 при 149 глифах), с положительными подвижками и с подвижками на парах, которых в шрифте нет. Из-за этого русский текст слипался (`Ат`, `Ак`, `Ар`, `Ас`, `Аф`, `БИ`, `БК` получали по −21 px при sampling 219), а реально кернящиеся пары (`АВ`, `УА`, `АЧ`) не сдвигались вообще. На латинице это было заметно меньше — мусор попадал в основном на редкие сочетания вроде `Cq`/`CM`.
+
+Правильная таблица достаётся из самого OTF через `fontTools` скриптом [Tools/fix_tmp_kerning.py](Tools/fix_tmp_kerning.py): 2 138 пар, все отрицательные, −1.1…−26.9 px, формат тот же, что пишет Font Asset Creator (`значение_в_юнитах × pointSize / unitsPerEM`). Заодно скрипт чистит `m_LigatureSubstitutionRecords` — Unity насочиняла 614 лигатур, хотя в шрифте вообще нет GSUB-фич.
+
+```bash
+pip install fonttools
+python Tools/fix_tmp_kerning.py
+```
+
+**Перегенерировал ассет шрифта через Font Asset Creator — прогони скрипт заново**, иначе мусорный кернинг вернётся.
+
+Известное ограничение: в `Old-Soviet.otf` нет глифа `_` (U+005F), которым TMP рисует underline/strikethrough. Поэтому зачёркивание `<s>` в `TasksUI` не рисуется и в консоль капает предупреждение «Unable to add underline or strikethrough».
 
 ## Ассеты
 

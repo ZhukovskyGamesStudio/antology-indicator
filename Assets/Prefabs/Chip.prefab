@@ -181,7 +181,11 @@ MonoBehaviour:
           m_StringArgument: ChipPuttedAway
           m_BoolArgument: 0
         m_CallState: 2
-  rotateSpeed: 100
+  pickClips: []
+  dropClips: []
+  rotateSpeed: 200
+  rotateLogEvent: 
+  rotateLogThreshold: 90
 --- !u!114 &5081952392344398511
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -209,6 +213,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  IgnoreRange: 0
 --- !u!54 &5774431007189016953
 Rigidbody:
   m_ObjectHideFlags: 0

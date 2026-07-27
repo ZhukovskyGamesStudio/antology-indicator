@@ -32,7 +32,8 @@ public class Pickable : MonoBehLogger {
     [Tooltip("Случайный клип при опускании. Пусто — используются pickClips")]
     public AudioClip[] dropClips;
 
-    [Tooltip("Скорость вращения предмета мышью (°/сек на единицу mouse delta).")]
+    [Tooltip("Чувствительность вращения предмета мышью. Значение — как раньше при 60 кадрах, " +
+             "но теперь не зависит от частоты кадров.")]
     public float rotateSpeed = 200f;
 
     [Header("Обучение вращению")]
@@ -49,6 +50,14 @@ public class Pickable : MonoBehLogger {
     private readonly Dictionary<Transform, int> _originalLayers = new();
     private readonly Dictionary<Collider, bool> _originalColliderEnabled = new();
     private bool _isMoving;
+
+    private static readonly Vector3[] BoxCorners = {
+        new(-1f, -1f, -1f), new(-1f, -1f, 1f), new(-1f, 1f, -1f), new(-1f, 1f, 1f),
+        new(1f, -1f, -1f), new(1f, -1f, 1f), new(1f, 1f, -1f), new(1f, 1f, 1f)
+    };
+
+    private Vector3 _localCenter;
+    private bool _centerReady;
 
     private void Awake() {
         FixStartingPos();
@@ -142,9 +151,18 @@ public class Pickable : MonoBehLogger {
                 Camera cam = Camera.main;
                 Vector3 upAxis = cam != null ? cam.transform.up : Vector3.up;
                 Vector3 rightAxis = cam != null ? cam.transform.right : Vector3.right;
-                float frame = rotateSpeed * Time.deltaTime;
-                transform.RotateAround(transform.position, upAxis, -dx * frame);
-                transform.RotateAround(transform.position, rightAxis, dy * frame);
+
+                // GetAxis("Mouse X") — это уже смещение мыши за кадр, поэтому умножать
+                // его ещё и на deltaTime нельзя: на 144 Гц предмет крутился бы в 2.4 раза
+                // медленнее, чем на 60. Нормируем на 60 кадров, чтобы значения rotateSpeed
+                // остались в привычных единицах.
+                float frame = rotateSpeed / 60f;
+
+                // Вертим вокруг геометрического центра, а не вокруг пивота: у части
+                // предметов пивот снизу, и вращение вокруг него уводило предмет из кадра.
+                Vector3 pivot = CenterWorld;
+                transform.RotateAround(pivot, upAxis, -dx * frame);
+                transform.RotateAround(pivot, rightAxis, dy * frame);
 
                 // Обучение вращению: копим суммарный поворот и один раз логируем событие.
                 if (!string.IsNullOrEmpty(rotateLogEvent)) {
@@ -179,14 +197,68 @@ public class Pickable : MonoBehLogger {
         _originalLayers.Clear();
     }
 
-    private Vector3 end =>
-        IsPicked
-            ? PlayerPicker.instance.pickedPos.position + PlayerPicker.instance.pickedPos.right * shiftPos.x +
-              PlayerPicker.instance.pickedPos.up * shiftPos.y + PlayerPicker.instance.pickedPos.forward * shiftPos.z
-            : startingPos;
+    /// <summary>Точка перед камерой, куда приезжает середина предмета.</summary>
+    private Vector3 HoldPoint {
+        get {
+            Transform anchor = PlayerPicker.instance.pickedPos;
+            return anchor.position + anchor.right * shiftPos.x + anchor.up * shiftPos.y + anchor.forward * shiftPos.z;
+        }
+    }
+
+    /// <summary>
+    /// Куда должен приехать пивот. В руке считаем от геометрического центра —
+    /// у части предметов пивот снизу, и без поправки они висели бы боком от точки.
+    /// При опускании пивот возвращается ровно туда, откуда предмет взяли.
+    /// </summary>
+    private Vector3 end => IsPicked ? HoldPoint - endq * ScaledLocalCenter : startingPos;
+
     private Quaternion endq => IsPicked
         ? PlayerPicker.instance.pickedPos.rotation * Quaternion.Euler(shiftRot)
         : startingRot;
+
+    /// <summary>Геометрический центр предмета в мировых координатах.</summary>
+    public Vector3 CenterWorld => transform.TransformPoint(LocalCenter);
+
+    private Vector3 ScaledLocalCenter => Vector3.Scale(LocalCenter, transform.lossyScale);
+
+    private Vector3 LocalCenter {
+        get {
+            if (!_centerReady) {
+                _localCenter = CalculateLocalCenter();
+                _centerReady = true;
+            }
+
+            return _localCenter;
+        }
+    }
+
+    /// <summary>
+    /// Середина общего бокса всех рендереров в локальных координатах предмета.
+    /// Считаем по углам локальных границ каждого рендерера, а не по мировому AABB,
+    /// чтобы результат не зависел от того, как предмет повёрнут в сцене.
+    /// </summary>
+    private Vector3 CalculateLocalCenter() {
+        Renderer[] renderers = GetComponentsInChildren<Renderer>(true);
+        bool any = false;
+        Bounds local = new();
+
+        foreach (Renderer r in renderers) {
+            Bounds rb = r.localBounds;
+            for (int i = 0; i < BoxCorners.Length; i++) {
+                Vector3 corner = rb.center + Vector3.Scale(rb.extents, BoxCorners[i]);
+                Vector3 point = transform.InverseTransformPoint(r.transform.TransformPoint(corner));
+
+                if (!any) {
+                    local = new Bounds(point, Vector3.zero);
+                    any = true;
+                } else {
+                    local.Encapsulate(point);
+                }
+            }
+        }
+
+        return any ? local.center : Vector3.zero;
+    }
 
     private async UniTask MoveTo() {
         _isMoving = true;
@@ -196,7 +268,7 @@ public class Pickable : MonoBehLogger {
             float t = 0;
             float max = 0.5f;
             while (t <= max) {
-              
+
                 transform.position = Vector3.Slerp(transform.position, end, t / max);
                 transform.rotation = Quaternion.Slerp(transform.rotation, endq, t / max);
                 await UniTask.WaitForEndOfFrame(_cts.Token);

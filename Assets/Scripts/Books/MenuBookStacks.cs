@@ -59,6 +59,8 @@ public class MenuBookStacks : MonoBehaviour {
             return;
         }
 
+        FreeAllPickablesFromRangeLimit();
+
         Random.State savedState = Random.state;
         Random.InitState(_seed);
 
@@ -76,6 +78,24 @@ public class MenuBookStacks : MonoBehaviour {
         }
 
         Random.state = savedState;
+    }
+
+    /// <summary>
+    /// В меню курсор свободный и прицела нет, поэтому лимит дистанции в 1.6 м только
+    /// мешает: стопки стоят там, где их поставил художник, и до дальней уже «не дотянуться».
+    /// Снимаем ограничение со всего, что вообще можно взять в руки в этой сцене.
+    /// </summary>
+    private void FreeAllPickablesFromRangeLimit() {
+        foreach (Pickable pickable in FindObjectsByType<Pickable>(FindObjectsInactive.Include, FindObjectsSortMode.None)) {
+            if (pickable.gameObject.scene != gameObject.scene) {
+                continue;
+            }
+
+            InteractiveObj interactive = pickable.GetComponent<InteractiveObj>();
+            if (interactive != null) {
+                interactive.IgnoreRange = true;
+            }
+        }
     }
 
     private int StackCount => _stackAnchors == null ? 0 : _stackAnchors.Length;

@@ -78,6 +78,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  IgnoreRange: 0
 --- !u!54 &6880349380911472244
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -182,7 +183,9 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 250eb109a8f58104bba30faafdcabbc2, type: 3}
   - {fileID: 8300000, guid: d40a3a47e224e2d4a91e396404ea7cec, type: 3}
   - {fileID: 8300000, guid: e6fee91aa6701a7488970d63d052cec2, type: 3}
-  rotateSpeed: 100
+  rotateSpeed: 200
+  rotateLogEvent: 
+  rotateLogThreshold: 90
 --- !u!114 &3893346527106383816
 MonoBehaviour:
   m_ObjectHideFlags: 0

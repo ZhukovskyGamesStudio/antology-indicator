@@ -445,22 +445,20 @@ public class StoryManager : MonoBehaviour {
         
         storyObjectsContainer.ChipOnTable.gameObject.SetActive(true);
         storyObjectsContainer.ChipOnTable.PickUp();
-        await TalkUI.Say(" ...Что?.. Это... всё?");
-        await TalkUI.Say("Маленькая дрянь... Это всё из-за неё? Радио… эти комнаты...");
-        await TalkUI.Say("Нет, я же видел это по-настоящему! Я что, схожу с ума?");
-        await TalkUI.Say("Я же говорил себе, что это бред. Что дядя просто любит свои теории...");
-        await TalkUI.Say("Хах, чёрт. А если он был прав?");
-        await TalkUI.Say("А ведь… он был прав! Все эти записки, книжки… Он к чему-то готовился.");
+        await TalkUI.Say("...Всё закончилось?");
+        await TalkUI.Say("Чип?! Я же думал, что это бред.");
+        await TalkUI.Say("Что дядя просто фанатик…");
+        await TalkUI.Say("Хах, чёрт. А если он был прав и к чему-то готовился?");
         tasksUI.ShowTask("Отложите чип.");
-        
+
         await UniTask.WaitUntil(() => EventsLogged.Any(l => l == "ChipPuttedAway"));
         tasksUI.CompleteTask();
-        await TalkUI.Say("Всё. Хватит. Теперь они меня не отследят. И не будут управлять мной!");
+        await TalkUI.Say("Всё. Чип оставлю, чтобы не отследили.");
+        await TalkUI.Say("Потом посмотрим, что у него внутри…");
         await TalkUI.Say("Нужно к дяде. Срочно! Пока ему тоже не засунули чип в башку!");
-        
+
         tasksUI.ShowTask("Отправьтесь к дяде.");
         playerMovement.playerCanMove = true;
-        await TalkUI.Say("надо добраться до дяди, и поскорее");
         storyObjectsContainer.ApartmentsExit.enabled = true;
         CanExit = true;
         await UniTask.WaitUntil(() => EventsLogged.Any(l => l == "ApartmentsExit"));
@@ -502,34 +500,30 @@ public class StoryManager : MonoBehaviour {
             finalSteps.Play();
         }
 
-        await TalkUI.Say("ГГ: Дядя?.. Подожди... Ты почему здесь? Я же думал, ты в больнице!");
-        await TalkUI.Say("Дядя: Тише, тише. Всё нормально.");
-        await TalkUI.Say("ГГ: Ты не представляешь, что произошло.");
-        await TalkUI.Say("ГГ: У меня в голове был чип. Настоящий чип. Я вытащил его.");
-        await TalkUI.Say("Дядя: Я знаю.");
-        await TalkUI.Say("ГГ: ...Что?");
-        await TalkUI.Say("Дядя: …гм.");
-        await TalkUI.Say("Дядя: Продолжай.");
-        await TalkUI.Say("ГГ: Я слышал голоса, видел всякое... Твоя квартира стала лабиринтом! Радио сводило меня с ума! Но я его разбил. Разбил.");
-        await TalkUI.Say("ГГ: И твоя записка мне помогла!");
+        await TalkUI.Say("ГГ: Дядя?.. Ты почему здесь? Я бежал к тебе в больницу!");
+        await TalkUI.Say("Дядя: Тише. Всё нормально.");
+        await TalkUI.Say("ГГ: Ты не представляешь!");
+        await TalkUI.Say("ГГ: У меня в голове был чип! Я вытащил его.");
+        await TalkUI.Say("Дядя: Понятно.");
+        await TalkUI.Say("ГГ: Я слышал голоса, видел всякое…");
+        await TalkUI.Say("ГГ: Твоя квартира стала лабиринтом!");
+        await TalkUI.Say("ГГ: Радио сводило меня с ума. Но я его разбил!");
         await UniTask.WaitForSeconds(1f);
         await TalkUI.Say("ГГ: Погоди... А больница? Они хотели тебя оперировать.");
         await TalkUI.Say("Дядя: Хотели.");
         await TalkUI.Say("ГГ: И?..");
         await TalkUI.Say("Дядя: Я ушёл.");
-        await TalkUI.Say("ГГ: Что?");
-        await TalkUI.Say("Дядя: Успел вовремя.");
-        await TalkUI.Say("ГГ: ...");
         await TalkUI.Say("ГГ: Подожди. Тебя вообще не удивляет это?");
         await TalkUI.Say("Дядя: Что именно?");
-        await TalkUI.Say("ГГ: Да всё! Я только что сказал, что нашёл чип! Что видел всякое! ");
-        await TalkUI.Say("ГГ: Ты же всю жизнь пытался что-то паранормальное разыскать. Книги собирал. Теории строил. И сейчас ты даже ничего не спрашиваешь");
-        await TalkUI.Say("Дядя: Ты всё понял. Этого достаточно.");
-        await TalkUI.Say("ГГ: Нет... Нет, не достаточно. Ты бы сейчас уже завалил меня вопросами как это было!");
-        await TalkUI.Say("Дядя: ...");
-        await TalkUI.Say("ГГ: Когда это началось? Что было по радио? Как я избавился от чипа?");
-        await TalkUI.Say("Дядя: ...");
-        await TalkUI.Say("ГГ: Ты всё знаешь. Ты...");
+        await TalkUI.Say("ГГ: Да всё! Я только что сказал, что достал чип!");
+        await TalkUI.Say("ГГ: Ты же всю жизнь пытался что-то паранормальное разыскать.");
+        await TalkUI.Say("ГГ: Книги собирал. Теории строил.");
+        await TalkUI.Say("ГГ: И сейчас ты даже ничего не спрашиваешь?");
+        await TalkUI.Say("Дядя: Твоего рассказа достаточно.");
+        await TalkUI.Say("ГГ: Нет, ТЕБЕ было бы не достаточно!");
+        await TalkUI.Say("Дядя: …");
+        await TalkUI.Say("ГГ: Ты кто?! Это снова галлюцинации?");
+        await TalkUI.Say("ГГ: Неужели…");
         // Диалог обрывается: вся картинка (кроме заголовка и кнопки выхода)
         // рассыпается в помехи. Заголовок и кнопка остаются поверх шума.
         if (UI.ScreenStatic != null) {

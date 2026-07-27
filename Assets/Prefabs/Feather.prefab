@@ -149,6 +149,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  IgnoreRange: 0
 --- !u!65 &1717218034689537403
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -240,4 +241,8 @@ MonoBehaviour:
           m_StringArgument: Feather
           m_BoolArgument: 0
         m_CallState: 2
-  rotateSpeed: 200
+  pickClips: []
+  dropClips: []
+  rotateSpeed: 400
+  rotateLogEvent: 
+  rotateLogThreshold: 90

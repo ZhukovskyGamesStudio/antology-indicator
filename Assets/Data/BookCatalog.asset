@@ -71,22 +71,22 @@ MonoBehaviour:
     Ru: {fileID: 2800000, guid: 7c453ed1303c640498af038defbd8189, type: 3}
     En: {fileID: 2800000, guid: d7333841e30a5de43b7b414228f8e99a, type: 3}
   - Id: book_15
-    Mesh: {fileID: 4824123659213521449, guid: f085e0d072df6cd46b08f9b5b27010a1, type: 3}
+    Mesh: {fileID: 4824123659213521449, guid: 5fa2e9e9df213f845934d242e96ccf6e, type: 3}
     Ru: {fileID: 2800000, guid: bbaf455273f2edb4aa2463f71b420b6b, type: 3}
     En: {fileID: 2800000, guid: 176715b253d8dca4c831062aa02b5b9a, type: 3}
   - Id: book_16
-    Mesh: {fileID: 4824123659213521449, guid: f085e0d072df6cd46b08f9b5b27010a1, type: 3}
+    Mesh: {fileID: 4824123659213521449, guid: c1585bcec7a3d6d40a40143c83750c99, type: 3}
     Ru: {fileID: 2800000, guid: 65a16b32961eb6749824d8d8aa7f7252, type: 3}
     En: {fileID: 2800000, guid: 62f3e1cd6ab8a2b479f2c7698dd6e49a, type: 3}
   - Id: book_17
-    Mesh: {fileID: 4824123659213521449, guid: f085e0d072df6cd46b08f9b5b27010a1, type: 3}
+    Mesh: {fileID: 4824123659213521449, guid: 1d7c132587f662b409a22b45b8b613ca, type: 3}
     Ru: {fileID: 2800000, guid: 93620a039214b294a80295d1988c7b85, type: 3}
     En: {fileID: 2800000, guid: c8a2075142d03fe4d8b33d6fbf7ef46b, type: 3}
   - Id: book_18
-    Mesh: {fileID: 4824123659213521449, guid: f085e0d072df6cd46b08f9b5b27010a1, type: 3}
+    Mesh: {fileID: 4824123659213521449, guid: 01f65ba1aff459c40b6faaba0a74679b, type: 3}
     Ru: {fileID: 2800000, guid: 10c2923fe8a98ce4a8b5d7337d49af39, type: 3}
     En: {fileID: 2800000, guid: f3ed48f7f147cc9458d5d67ad6cd0704, type: 3}
   - Id: book_19
-    Mesh: {fileID: 4824123659213521449, guid: f085e0d072df6cd46b08f9b5b27010a1, type: 3}
+    Mesh: {fileID: 4824123659213521449, guid: 50d51aedff5afb44e939cd1a7f81b08d, type: 3}
     Ru: {fileID: 2800000, guid: b5534a02194a95d40bf1d8cb2099e7e9, type: 3}
     En: {fileID: 2800000, guid: 93ff03fc138966d4fa2d53d28aa10c4b, type: 3}

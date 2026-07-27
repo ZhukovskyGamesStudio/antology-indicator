@@ -101,6 +101,7 @@ MonoBehaviour:
           m_StringArgument: NoteFound
           m_BoolArgument: 0
         m_CallState: 2
+  IgnoreRange: 0
 --- !u!114 &7736203689449939605
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -115,7 +116,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Pickable
   IsPicked: 0
   shiftRot: {x: 0, y: 0, z: 0}
-  shiftPos: {x: 0, y: 0, z: 0}
+  shiftPos: {x: 0, y: -0.000000029802326, z: 0.0022540695}
   OnPick:
     m_PersistentCalls:
       m_Calls:
@@ -141,7 +142,9 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 57a5a0bdb0814db49801d439dc657d2f, type: 3}
   - {fileID: 8300000, guid: 0bacd07b5e68393499754725b3c0f3a2, type: 3}
   dropClips: []
-  rotateSpeed: 100
+  rotateSpeed: 200
+  rotateLogEvent: 
+  rotateLogThreshold: 90
 --- !u!1001 &1174840371773249652
 PrefabInstance:
   m_ObjectHideFlags: 0

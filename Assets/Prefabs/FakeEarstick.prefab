@@ -78,6 +78,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  IgnoreRange: 0
 --- !u!54 &5462822421052326266
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -166,7 +167,9 @@ MonoBehaviour:
         m_CallState: 2
   pickClips: []
   dropClips: []
-  rotateSpeed: 100
+  rotateSpeed: 200
+  rotateLogEvent: 
+  rotateLogThreshold: 90
 --- !u!114 &2500556946113732806
 MonoBehaviour:
   m_ObjectHideFlags: 0
