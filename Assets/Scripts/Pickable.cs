@@ -36,6 +36,12 @@ public class Pickable : MonoBehLogger {
              "но теперь не зависит от частоты кадров.")]
     public float rotateSpeed = 200f;
 
+    [Tooltip("Насколько можно сдвинуть мышь за одно нажатие, чтобы отпускание ЛКМ всё ещё " +
+             "считалось кликом «положить», а не вращением. Единицы — сумма |Mouse X| + |Mouse Y| " +
+             "за нажатие: при стандартной чувствительности осей (0.1) 1.2 ≈ 12 экранных пикселей. " +
+             "Меньше — «положить» придётся кликать точнее, больше — легче уронить предмет случайно.")]
+    public float dropDragTolerance = 1.2f;
+
     [Header("Обучение вращению")]
     [Tooltip("Событие, которое логируется один раз, когда игрок повернёт удерживаемый предмет " +
              "суммарно на rotateLogThreshold градусов. Пусто — ничего не логировать.")]
@@ -45,6 +51,14 @@ public class Pickable : MonoBehLogger {
     public float rotateLogThreshold = 90f;
 
     private float _rotatedAmount;
+
+    // Сколько мышь прошла за текущее нажатие ЛКМ. Меньше dropDragTolerance на момент
+    // отпускания — значит это был клик «положить», а не вращение.
+    private float _dragAmount;
+
+    // Нажатие ЛКМ, которым предмет и подняли, не должно тут же его и положить:
+    // OnMouseDown приходит по тому же кадру, что и GetMouseButtonDown.
+    private bool _lmbOwnedByPickup;
 
     private int _heldLayer = -1;
     private readonly Dictionary<Transform, int> _originalLayers = new();
@@ -92,6 +106,10 @@ public class Pickable : MonoBehLogger {
 
         if (IsPicked) {
             _rotatedAmount = 0f;
+            _dragAmount = 0f;
+            // Подняли кликом — эту же зажатую ЛКМ игнорируем до отпускания,
+            // иначе предмет ляжет обратно тем же нажатием, которым его взяли.
+            _lmbOwnedByPickup = Input.GetMouseButton(0);
             ApplyHeldLayer();
             DisableColliders();
             OnPick?.Invoke();
@@ -135,45 +153,77 @@ public class Pickable : MonoBehLogger {
         _originalColliderEnabled.Clear();
     }
 
+    /// <summary>
+    /// Весь предмет в руках управляется одной ЛКМ: зажал и повёл мышью — вращение,
+    /// коротко кликнул — положить. ПКМ намеренно не участвует: игроки, привыкшие
+    /// вращать предметы зажатой ПКМ, ею же роняли книгу — а книга при этом уходит
+    /// в коллекцию и исчезает, то есть случайный клик стоил дочитывания.
+    /// </summary>
     private void Update() {
         if (!IsPicked) {
             return;
         }
 
-        if (Input.GetMouseButtonDown(1)) {
-            TogglePick();
+        if (Input.GetMouseButtonDown(0)) {
+            _dragAmount = 0f;
+        }
+
+        if (Input.GetMouseButton(0) && !_lmbOwnedByPickup) {
+            RotateByMouse();
+        }
+
+        if (Input.GetMouseButtonUp(0)) {
+            bool wasPickupPress = _lmbOwnedByPickup;
+            _lmbOwnedByPickup = false;
+
+            // Клик без заметного движения мышью = «положить». Порог именно по
+            // движению руки, а не по получившимся градусам поворота: у папок
+            // rotateSpeed вдвое выше, чем у книг, и порог «в градусах» дал бы им
+            // вдвое более узкий допуск на клик — при одном и том же жесте игрока.
+            if (!wasPickupPress && _dragAmount < dropDragTolerance) {
+                TogglePick();
+            }
+        }
+    }
+
+    private void RotateByMouse() {
+        float dx = Input.GetAxis("Mouse X");
+        float dy = Input.GetAxis("Mouse Y");
+        if (dx == 0f && dy == 0f) {
             return;
         }
 
-        // Вращение драгом ЛКМ. Пока MoveTo тянет предмет к точке в руке -
-        // не вмешиваемся, чтобы лерп не дёргало.
-        if (!_isMoving && Input.GetMouseButton(0)) {
-            float dx = Input.GetAxis("Mouse X");
-            float dy = Input.GetAxis("Mouse Y");
-            if (dx != 0f || dy != 0f) {
-                Camera cam = Camera.main;
-                Vector3 upAxis = cam != null ? cam.transform.up : Vector3.up;
-                Vector3 rightAxis = cam != null ? cam.transform.right : Vector3.right;
+        // GetAxis("Mouse X") — это уже смещение мыши за кадр, поэтому умножать
+        // его ещё и на deltaTime нельзя: на 144 Гц предмет крутился бы в 2.4 раза
+        // медленнее, чем на 60. Нормируем на 60 кадров, чтобы значения rotateSpeed
+        // остались в привычных единицах.
+        float frame = rotateSpeed / 60f;
 
-                // GetAxis("Mouse X") — это уже смещение мыши за кадр, поэтому умножать
-                // его ещё и на deltaTime нельзя: на 144 Гц предмет крутился бы в 2.4 раза
-                // медленнее, чем на 60. Нормируем на 60 кадров, чтобы значения rotateSpeed
-                // остались в привычных единицах.
-                float frame = rotateSpeed / 60f;
+        // Драг копим всегда, даже пока MoveTo тянет предмет к руке: иначе размах
+        // мышью в первые полсекунды не считался бы вращением, и отпускание ЛКМ
+        // положило бы предмет обратно.
+        _dragAmount += Mathf.Abs(dx) + Mathf.Abs(dy);
 
-                // Вертим вокруг геометрического центра, а не вокруг пивота: у части
-                // предметов пивот снизу, и вращение вокруг него уводило предмет из кадра.
-                Vector3 pivot = CenterWorld;
-                transform.RotateAround(pivot, upAxis, -dx * frame);
-                transform.RotateAround(pivot, rightAxis, dy * frame);
+        // Пока MoveTo тянет предмет к точке в руке — не вмешиваемся, чтобы лерп не дёргало.
+        if (_isMoving) {
+            return;
+        }
 
-                // Обучение вращению: копим суммарный поворот и один раз логируем событие.
-                if (!string.IsNullOrEmpty(rotateLogEvent)) {
-                    _rotatedAmount += (Mathf.Abs(dx) + Mathf.Abs(dy)) * frame;
-                    if (_rotatedAmount >= rotateLogThreshold) {
-                        LogOnce(rotateLogEvent);
-                    }
-                }
+        Camera cam = Camera.main;
+        Vector3 upAxis = cam != null ? cam.transform.up : Vector3.up;
+        Vector3 rightAxis = cam != null ? cam.transform.right : Vector3.right;
+
+        // Вертим вокруг геометрического центра, а не вокруг пивота: у части
+        // предметов пивот снизу, и вращение вокруг него уводило предмет из кадра.
+        Vector3 pivot = CenterWorld;
+        transform.RotateAround(pivot, upAxis, -dx * frame);
+        transform.RotateAround(pivot, rightAxis, dy * frame);
+
+        // Обучение вращению: копим суммарный поворот и один раз логируем событие.
+        if (!string.IsNullOrEmpty(rotateLogEvent)) {
+            _rotatedAmount += (Mathf.Abs(dx) + Mathf.Abs(dy)) * frame;
+            if (_rotatedAmount >= rotateLogThreshold) {
+                LogOnce(rotateLogEvent);
             }
         }
     }

@@ -1,15 +1,47 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
 /// <summary>
 /// Полноэкранная виньетка, которая проявляется по мере роста безумия.
-/// Висит на самой картинке внутри OtherUi — значит, автоматически прячется
-/// вместе с остальным HUD в паузе и на экранах победы/проигрыша.
+///
+/// Слоёв может быть несколько (рисованная рамка поверх мягкого затемнения),
+/// у каждого — свой набор кадров и своя скорость перещёлкивания: рамка «кипит»,
+/// как в рисованной анимации, а мягкая подложка дышит медленнее. Фазы слоёв
+/// специально разведены — если кадры меняются синхронно, это читается как
+/// подёргивание всей картинки, а не как живая линия.
+///
+/// Порядок слоёв в этом списке ни на что не влияет — что поверх чего решает
+/// порядок объектов в иерархии Canvas.
+///
+/// Живёт внутри OtherUi — значит, автоматически прячется вместе с остальным
+/// HUD в паузе и на экранах победы/проигрыша.
 /// </summary>
-[RequireComponent(typeof(Image))]
 public class MadnessVignette : MonoBehaviour {
+    [Serializable]
+    public class Layer {
+        [Tooltip("Картинка слоя")]
+        public Image Image;
+
+        [Tooltip("Кадры по порядку. Один кадр — слой просто не анимируется")]
+        public Sprite[] Frames;
+
+        [Tooltip("Потолок альфы этого слоя. Общая альфа по безумию домножается на него")]
+        [Range(0f, 1f)]
+        public float MaxAlpha = 1f;
+
+        [Tooltip("Сколько держится один кадр, сек")]
+        public float FrameDuration = 0.13f;
+
+        [Tooltip("Сдвиг фазы, сек — чтобы слои не перещёлкивались в такт друг другу")]
+        public float PhaseOffset;
+
+        [NonSerialized]
+        public int ShownFrame = -1;
+    }
+
     [SerializeField]
-    private Image _image;
+    private Layer[] _layers = new Layer[0];
 
     [Tooltip("X — безумие 0..1, Y — альфа виньетки 0..1. Держи левую часть в нуле, чтобы в начале игры её не было видно")]
     [SerializeField]
@@ -19,17 +51,20 @@ public class MadnessVignette : MonoBehaviour {
     [SerializeField]
     private float _responseSpeed = 3f;
 
-    private void Reset() {
-        _image = GetComponent<Image>();
-    }
+    private float _alpha;
 
     private void Awake() {
-        if (_image == null) {
-            _image = GetComponent<Image>();
-        }
+        _alpha = 0f;
+        for (int i = 0; i < _layers.Length; i++) {
+            Layer layer = _layers[i];
+            if (layer == null || layer.Image == null) {
+                continue;
+            }
 
-        _image.raycastTarget = false;
-        SetAlpha(0f, 0f);
+            layer.Image.raycastTarget = false;
+            layer.ShownFrame = -1;
+            SetAlpha(layer.Image, 0f);
+        }
     }
 
     private void Update() {
@@ -42,23 +77,53 @@ public class MadnessVignette : MonoBehaviour {
         float target = Mathf.Clamp01(_alphaCurve.Evaluate(percent));
         float smooth = 1f - Mathf.Exp(-_responseSpeed * Mathf.Min(Time.deltaTime, 0.1f));
 
-        SetAlpha(Mathf.Lerp(_image.color.a, target, smooth), target);
-    }
+        _alpha = Mathf.Lerp(_alpha, target, smooth);
 
-    /// <param name="snapTo">Значение, к которому нужно прилипнуть, когда разница уже незаметна:
-    /// экспоненциальное сглаживание до цели не доходит, а запись цвета каждый кадр
-    /// без нужды помечает канвас грязным.</param>
-    private void SetAlpha(float alpha, float snapTo) {
-        if (Mathf.Abs(alpha - snapTo) < 0.002f) {
-            alpha = snapTo;
+        // Экспоненциальное сглаживание до цели не доходит — прилипаем, когда
+        // разница уже незаметна, иначе каждый кадр без нужды пишем цвет.
+        if (Mathf.Abs(_alpha - target) < 0.002f) {
+            _alpha = target;
         }
 
-        if (Mathf.Approximately(_image.color.a, alpha)) {
+        for (int i = 0; i < _layers.Length; i++) {
+            Apply(_layers[i]);
+        }
+    }
+
+    private void Apply(Layer layer) {
+        if (layer == null || layer.Image == null) {
             return;
         }
 
-        Color color = _image.color;
+        float alpha = _alpha * layer.MaxAlpha;
+        SetAlpha(layer.Image, alpha);
+
+        // Пока виньетки не видно, кадры не листаем: смена спрайта помечает
+        // канвас грязным, даже если картинка полностью прозрачна.
+        if (alpha <= 0f || layer.Frames == null || layer.Frames.Length == 0) {
+            return;
+        }
+
+        int frame = 0;
+        if (layer.Frames.Length > 1 && layer.FrameDuration > 0f) {
+            float cycle = layer.FrameDuration * layer.Frames.Length;
+            float time = Mathf.Repeat(Time.unscaledTime + layer.PhaseOffset, cycle);
+            frame = Mathf.Min(layer.Frames.Length - 1, (int)(time / layer.FrameDuration));
+        }
+
+        if (frame != layer.ShownFrame && layer.Frames[frame] != null) {
+            layer.ShownFrame = frame;
+            layer.Image.sprite = layer.Frames[frame];
+        }
+    }
+
+    private static void SetAlpha(Image image, float alpha) {
+        if (Mathf.Approximately(image.color.a, alpha)) {
+            return;
+        }
+
+        Color color = image.color;
         color.a = alpha;
-        _image.color = color;
+        image.color = color;
     }
 }

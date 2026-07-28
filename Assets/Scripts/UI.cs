@@ -15,6 +15,14 @@ public class UI : MonoBehaviour {
     [Tooltip("Полноэкранные помехи в финале (появляются под заголовком и кнопкой выхода)")]
     public ScreenStatic ScreenStatic;
 
+    [Header("Курсор на финальных экранах")]
+    [Tooltip("Курсор с тёмным ореолом. Системная белая стрелка полностью теряется " +
+             "в белом шуме ScreenStatic — ореол выбивает под ней пятно и отделяет её от помех")]
+    public Texture2D EndScreenCursor;
+
+    [Tooltip("Остриё курсора в пикселях от левого верхнего угла текстуры")]
+    public Vector2 EndScreenCursorHotspot = new(5f, 5f);
+
     [Tooltip("Сколько секунд после щелчка держать значок восстановления рассудка")]
     public float IncreaseIconTime = 0.6f;
 
@@ -24,6 +32,7 @@ public class UI : MonoBehaviour {
     public void ShowLoseScreen() {
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
+        SetEndScreenCursor(true);
         LosePanel.SetActive(true);
         OtherUi.SetActive(false);
         TalkUi.SetActive(false);
@@ -33,6 +42,7 @@ public class UI : MonoBehaviour {
     public void ShowTitlesScreen() {
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
+        SetEndScreenCursor(true);
         WinPanel.gameObject.SetActive(true);
         TaskPanel.SetActive(false);
         OtherUi.SetActive(false);
@@ -117,7 +127,22 @@ public class UI : MonoBehaviour {
         Cursor.lockState = EscapePanel.gameObject.activeSelf ? CursorLockMode.None : CursorLockMode.Locked;
     }
 
+    /// <summary>
+    /// Свой курсор на финальных экранах. Настройка курсора глобальная и переживает
+    /// смену сцены, поэтому уходя с этих экранов обязательно возвращаем системный.
+    /// </summary>
+    private void SetEndScreenCursor(bool isOn) {
+        if (isOn && EndScreenCursor == null) {
+            return;
+        }
+
+        Cursor.SetCursor(isOn ? EndScreenCursor : null,
+            isOn ? EndScreenCursorHotspot : Vector2.zero,
+            CursorMode.Auto);
+    }
+
     public void Restart() {
+        SetEndScreenCursor(false);
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
@@ -137,6 +162,7 @@ public class UI : MonoBehaviour {
     public void GoToMainMenu() {
         // Экран паузы мог оставить время остановленным — в меню оно нужно живым.
         Time.timeScale = 1;
+        SetEndScreenCursor(false);
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
         SceneManager.LoadScene("MainMenu");

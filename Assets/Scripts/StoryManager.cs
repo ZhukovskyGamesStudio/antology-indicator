@@ -182,7 +182,7 @@ public class StoryManager : MonoBehaviour {
         
         UI.TaskPanel.SetActive(true);
         tasksUI.ShowTask(EventsLogged.Any(l => l == "BookPicked")
-            ? "Найдите музыкальную волну (<b>ПКМ</b> положить предмет)"
+            ? "Найдите музыкальную волну (<b>ЛКМ</b> положить предмет)"
             : "Найдите музыкальную волну");
         await UniTask.WaitForSeconds(1.5f);
 
@@ -221,7 +221,7 @@ public class StoryManager : MonoBehaviour {
         tasksUI.CompleteTask();
         await UniTask.WaitForSeconds(1f);
 
-        // Книгу игрок кладёт сам (ПКМ), когда захочет вернуться к радио.
+        // Книгу игрок кладёт сам (клик ЛКМ), когда захочет вернуться к радио.
         await UniTask.WaitUntil(() => EventsLogged.Any(l => l == "RadioNoise"));
 
         madnessManager.IsVolumesFixed = false;

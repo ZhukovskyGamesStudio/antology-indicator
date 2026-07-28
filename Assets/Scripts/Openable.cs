@@ -8,9 +8,10 @@ using UnityEngine;
 /// "Открываемый" объект (шкаф, тумбочка и т.п.) с галлюцинаторным поведением.
 ///
 /// Взаимодействие мышью (<see cref="Interact"/>) открывает/закрывает дверцу.
-/// Когда шкаф закрыт и игрок щёлкает пальцем (<see cref="MadnessManager.ClickKey"/>),
-/// проигрывается анимация хлопка и внутри по кругу меняется содержимое
-/// (книги → инструменты → ...). В открытом состоянии содержимое не меняется.
+/// Щелчок пальцем (<see cref="MadnessManager.ClickKey"/>) по кругу меняет
+/// содержимое (книги → инструменты → ...). Если шкаф закрыт — играется хлопок
+/// дверцей, если открыт — дверца закрывается, и подмена происходит в конце
+/// анимации закрытия. В обоих случаях один щелчок = одна смена содержимого.
 /// </summary>
 public class Openable : MonoBehaviour {
     [Header("Анимации")]
@@ -249,8 +250,10 @@ public class Openable : MonoBehaviour {
         }
 
         if (IsOpen) {
-            // Открытое — закрываем щелчком.
-            Close();
+            // Открытое — закрываем щелчком и меняем содержимое в конце анимации
+            // закрытия, за уже закрытой дверцей. Раньше на это уходило два щелчка
+            // (первый закрывал, второй менял) — лишнее действие без смысла.
+            CloseAndChange(this.GetCancellationTokenOnDestroy()).Forget();
         } else if (states.Count > 0 && PlayerInside(states[_currentState])) {
             // Не прячем комнату-состояние, внутри которой сейчас стоит игрок —
             // иначе он проваливается в пустоту (баг со щелчком в ванной).
@@ -266,19 +269,67 @@ public class Openable : MonoBehaviour {
         PlayClip(changeClip, reversed: false);
 
         if (states.Count > 0) {
-            if (swapAt > 0) {
-                await UniTask.Delay(TimeSpan.FromSeconds(swapAt), cancellationToken: token);
+            if (await WaitOrCanceled(swapAt, token)) {
+                return;
             }
 
-            // Повторная проверка после задержки: если игрок за это время зашёл
-            // в текущую комнату-состояние — не прячем её.
-            if (!PlayerInside(states[_currentState])) {
-                _currentState = (_currentState + 1) % states.Count;
-                ApplyState();
-            }
+            NextState();
         }
 
         _isChanging = false;
+    }
+
+    /// <summary>
+    /// Щелчок по открытому предмету: закрыть дверцу и подменить содержимое,
+    /// когда она уже закрылась. Ждём длину того клипа, который реально играет
+    /// <see cref="Close"/>, — подмена происходит ровно на последнем кадре.
+    /// </summary>
+    private async UniTaskVoid CloseAndChange(CancellationToken token) {
+        _isChanging = true;
+
+        Close();
+
+        if (states.Count > 0) {
+            if (await WaitOrCanceled(CloseDuration, token)) {
+                return;
+            }
+
+            NextState();
+        }
+
+        _isChanging = false;
+    }
+
+    /// <summary>Сколько играет закрытие: отдельный клип, либо openClip наоборот.</summary>
+    private float CloseDuration {
+        get {
+            AnimationClip clip = closeClip != null ? closeClip : openClip;
+            return clip != null ? clip.length : swapAt;
+        }
+    }
+
+    /// <returns>true, если ждать больше нет смысла (объект уничтожают).</returns>
+    private async UniTask<bool> WaitOrCanceled(float seconds, CancellationToken token) {
+        if (seconds <= 0f) {
+            return token.IsCancellationRequested;
+        }
+
+        return await UniTask.Delay(TimeSpan.FromSeconds(seconds), cancellationToken: token)
+            .SuppressCancellationThrow();
+    }
+
+    /// <summary>
+    /// Следующее состояние содержимого. Проверка PlayerInside повторяется здесь,
+    /// а не только перед задержкой: игрок мог зайти в комнату-состояние, пока
+    /// играла анимация, и прятать её тогда нельзя — он провалится в пустоту.
+    /// </summary>
+    private void NextState() {
+        if (PlayerInside(states[_currentState])) {
+            return;
+        }
+
+        _currentState = (_currentState + 1) % states.Count;
+        ApplyState();
     }
 
     private void ApplyState() {
