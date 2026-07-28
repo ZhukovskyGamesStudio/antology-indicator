@@ -467,7 +467,7 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: "\u0412\u0434\u043E\u0445\u043D\u0438\u0442\u0435 \u043F\u0435\u0440\u0435\u0446!
-            (\u041F\u041A\u041C)"
+            (\u043A\u043B\u0438\u043A \u041B\u041A\u041C)"
           m_BoolArgument: 0
         m_CallState: 2
   OnDrop:
@@ -512,6 +512,7 @@ MonoBehaviour:
   pickClips: []
   dropClips: []
   rotateSpeed: 400
+  dropDragTolerance: 1.2
   rotateLogEvent: 
   rotateLogThreshold: 90
 --- !u!4 &5847887554223540071 stripped
