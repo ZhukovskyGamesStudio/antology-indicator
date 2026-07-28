@@ -44,8 +44,14 @@ public class MoodDirector : MonoBehaviour {
         public float Contrast = 10f;
         public float Saturation = 6f;
 
+        /// <summary>
+        /// Пост-процессная виньетка — только едва заметная подложка. Затемнением
+        /// краёв в этой игре занимается рисованная виньетка (MadnessVignette):
+        /// она с характером, а ровный чёрный овал из Volume поверх неё читался
+        /// как «на экран что-то надели» и к финалу забивал картинку.
+        /// </summary>
         [Range(0f, 1f)]
-        public float VignetteIntensity = 0.25f;
+        public float VignetteIntensity = 0.10f;
 
         [Range(0f, 1f)]
         public float FilmGrain = 0.14f;
@@ -245,7 +251,7 @@ public class MoodDirector : MonoBehaviour {
                 PostExposure = 0.3f,
                 Contrast = 10f,
                 Saturation = 6f,
-                VignetteIntensity = 0.25f,
+                VignetteIntensity = 0.10f,
                 FilmGrain = 0.14f
             },
             new Mood {
@@ -258,7 +264,7 @@ public class MoodDirector : MonoBehaviour {
                 PostExposure = 0.18f,
                 Contrast = 13f,
                 Saturation = -5f,
-                VignetteIntensity = 0.30f,
+                VignetteIntensity = 0.12f,
                 FilmGrain = 0.18f
             },
             new Mood {
@@ -271,7 +277,7 @@ public class MoodDirector : MonoBehaviour {
                 PostExposure = 0.04f,
                 Contrast = 16f,
                 Saturation = -14f,
-                VignetteIntensity = 0.35f,
+                VignetteIntensity = 0.14f,
                 FilmGrain = 0.21f
             },
             new Mood {
@@ -284,7 +290,7 @@ public class MoodDirector : MonoBehaviour {
                 PostExposure = -0.12f,
                 Contrast = 20f,
                 Saturation = -24f,
-                VignetteIntensity = 0.40f,
+                VignetteIntensity = 0.16f,
                 FilmGrain = 0.25f
             },
             new Mood {
@@ -297,7 +303,7 @@ public class MoodDirector : MonoBehaviour {
                 PostExposure = -0.3f,
                 Contrast = 24f,
                 Saturation = -35f,
-                VignetteIntensity = 0.47f,
+                VignetteIntensity = 0.18f,
                 FilmGrain = 0.30f
             }
         };

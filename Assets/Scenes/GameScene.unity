@@ -8730,7 +8730,7 @@ MonoBehaviour:
     PostExposure: 0.3
     Contrast: 10
     Saturation: 6
-    VignetteIntensity: 0.25
+    VignetteIntensity: 0.1
     FilmGrain: 0.14
   - Name: "1. \u042D\u043B\u0435\u043A\u0442\u0440\u0438\u0447\u0435\u0441\u0442\u0432\u043E
       \u2014 \u0432\u043E\u0437\u0434\u0443\u0445 \u043E\u0441\u0442\u044B\u0432\u0430\u0435\u0442"
@@ -8742,7 +8742,7 @@ MonoBehaviour:
     PostExposure: 0.18
     Contrast: 13
     Saturation: -5
-    VignetteIntensity: 0.3
+    VignetteIntensity: 0.12
     FilmGrain: 0.18
   - Name: "2. \u0420\u0430\u0434\u0438\u043E \u2014 \u0441\u0432\u0435\u0442 \u043E\u0442\u0441\u0442\u0443\u043F\u0430\u0435\u0442"
     AmbientSky: {r: 0.047, g: 0.056, b: 0.09, a: 1}
@@ -8753,7 +8753,7 @@ MonoBehaviour:
     PostExposure: 0.04
     Contrast: 16
     Saturation: -14
-    VignetteIntensity: 0.35
+    VignetteIntensity: 0.14
     FilmGrain: 0.21
   - Name: "3. \u0427\u0438\u043F \u2014 \u0446\u0432\u0435\u0442 \u0443\u0445\u043E\u0434\u0438\u0442"
     AmbientSky: {r: 0.039, g: 0.048, b: 0.082, a: 1}
@@ -8764,7 +8764,7 @@ MonoBehaviour:
     PostExposure: -0.12
     Contrast: 20
     Saturation: -24
-    VignetteIntensity: 0.4
+    VignetteIntensity: 0.16
     FilmGrain: 0.25
   - Name: "4. \u0424\u0438\u043D\u0430\u043B \u2014 \u0445\u043E\u043B\u043E\u0434\u043D\u0430\u044F
       \u0438 \u0432\u044B\u0446\u0432\u0435\u0442\u0448\u0430\u044F"
@@ -8776,7 +8776,7 @@ MonoBehaviour:
     PostExposure: -0.3
     Contrast: 24
     Saturation: -35
-    VignetteIntensity: 0.47
+    VignetteIntensity: 0.18
     FilmGrain: 0.3
   BlendSpeed: 0.25
   PollInterval: 0.5
@@ -9972,7 +9972,7 @@ MonoBehaviour:
     Frames:
     - {fileID: 21300000, guid: 7f53e20c5783406448db203c634e1b05, type: 3}
     - {fileID: 21300000, guid: 0a8b6c56f1d1bbb4aa8f1fa65df15b04, type: 3}
-    MaxAlpha: 0.6
+    MaxAlpha: 0.35
     FrameDuration: 0.23
     PhaseOffset: 0.07
   - Image: {fileID: 883914358}
@@ -9988,40 +9988,40 @@ MonoBehaviour:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 0.2
       inSlope: 0
       outSlope: 0
-      tangentMode: 0
+      tangentMode: 137
       weightedMode: 0
-      inWeight: 0
-      outWeight: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
     - serializedVersion: 3
       time: 0.35
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
+      value: 0.35
+      inSlope: 0.64285713
+      outSlope: 0.64285713
+      tangentMode: 137
       weightedMode: 0
-      inWeight: 0
-      outWeight: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
     - serializedVersion: 3
       time: 0.7
-      value: 0.45
-      inSlope: 1.4
-      outSlope: 1.4
-      tangentMode: 0
+      value: 0.65
+      inSlope: 1
+      outSlope: 1
+      tangentMode: 137
       weightedMode: 0
-      inWeight: 0
-      outWeight: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
     - serializedVersion: 3
       time: 1
       value: 1
-      inSlope: 1.9
+      inSlope: 0
       outSlope: 0
-      tangentMode: 0
+      tangentMode: 137
       weightedMode: 0
-      inWeight: 0
-      outWeight: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
@@ -11231,7 +11231,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: b3f05aab1bb605b448d80d2866e5bc27, type: 3}
+  m_Sprite: {fileID: 21300000, guid: a8922f62dae752349a23c9e1b562cfed, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -21697,6 +21697,18 @@ PrefabInstance:
     - target: {fileID: 8780078184884129443, guid: 4f4e7c962f838d64f98702de9983c3b2, type: 3}
       propertyPath: m_RenderingLayerMask
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8826118377974490231, guid: 4f4e7c962f838d64f98702de9983c3b2, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.76
+      objectReference: {fileID: 0}
+    - target: {fileID: 8826118377974490231, guid: 4f4e7c962f838d64f98702de9983c3b2, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.09
+      objectReference: {fileID: 0}
+    - target: {fileID: 8826118377974490231, guid: 4f4e7c962f838d64f98702de9983c3b2, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 1.29
       objectReference: {fileID: 0}
     - target: {fileID: 8861118654614364608, guid: 4f4e7c962f838d64f98702de9983c3b2, type: 3}
       propertyPath: m_RenderingLayerMask
