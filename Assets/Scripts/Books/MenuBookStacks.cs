@@ -5,6 +5,8 @@ using Random = UnityEngine.Random;
 /// Раскладывает собранные книги неаккуратными стопками на столе в главном меню.
 /// Книги настоящие: их можно взять в руки и повертеть, как в игре, —
 /// но в коллекцию они не уходят (<see cref="CollectableBook.CollectOnDrop"/> = false).
+/// Заодно снимает сборку и лимит дистанции со всех остальных предметов сцены —
+/// см. <see cref="PrepareScenePickables"/>.
 ///
 /// Места стопок задаются вручную точками <c>_stackAnchors</c>: каждая точка —
 /// низ своей стопки. Гизмо в сцене рисует, как книги лягут, — можно двигать точки
@@ -59,7 +61,7 @@ public class MenuBookStacks : MonoBehaviour {
             return;
         }
 
-        FreeAllPickablesFromRangeLimit();
+        PrepareScenePickables();
 
         Random.State savedState = Random.state;
         Random.InitState(_seed);
@@ -81,11 +83,18 @@ public class MenuBookStacks : MonoBehaviour {
     }
 
     /// <summary>
-    /// В меню курсор свободный и прицела нет, поэтому лимит дистанции в 1.6 м только
-    /// мешает: стопки стоят там, где их поставил художник, и до дальней уже «не дотянуться».
-    /// Снимаем ограничение со всего, что вообще можно взять в руки в этой сцене.
+    /// Приводит всё, что можно взять в руки в этой сцене, к «меню-правилам».
+    ///
+    /// Дистанция: в меню курсор свободный и прицела нет, поэтому лимит в 1.6 м только
+    /// мешает — стопки стоят там, где их поставил художник, и до дальней уже «не дотянуться».
+    ///
+    /// Сборка: в меню лежит декоративная копия комнаты, и книги в ней — обычные
+    /// инстансы BookGeneral с включённым <see cref="CollectableBook.CollectOnDrop"/>.
+    /// Пока плашки коллекции в меню не было, это ничем не грозило, но теперь она есть —
+    /// и такая книга при опускании ушла бы в коллекцию и выключилась прямо на столе.
+    /// В меню не собирается ничего.
     /// </summary>
-    private void FreeAllPickablesFromRangeLimit() {
+    private void PrepareScenePickables() {
         foreach (Pickable pickable in FindObjectsByType<Pickable>(FindObjectsInactive.Include, FindObjectsSortMode.None)) {
             if (pickable.gameObject.scene != gameObject.scene) {
                 continue;
@@ -94,6 +103,11 @@ public class MenuBookStacks : MonoBehaviour {
             InteractiveObj interactive = pickable.GetComponent<InteractiveObj>();
             if (interactive != null) {
                 interactive.IgnoreRange = true;
+            }
+
+            CollectableBook book = pickable.GetComponent<CollectableBook>();
+            if (book != null) {
+                book.CollectOnDrop = false;
             }
         }
     }

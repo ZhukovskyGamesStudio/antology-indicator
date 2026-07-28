@@ -19,9 +19,17 @@ public class CollectableBook : MonoBehaviour {
 
     /// <summary>
     /// Собирать книги можно только там, где есть плашка коллекции, то есть в игре.
-    /// В главном меню те же префабы стоят декорацией — их можно вертеть, но не собирать.
+    /// В главном меню <see cref="MenuBookStacks"/> снимает <see cref="CollectOnDrop"/>
+    /// со всех книг сцены — их можно вертеть, но не собирать.
     /// </summary>
     private bool CanCollect => CollectOnDrop && BookCollectedUI.instance != null;
+
+    /// <summary>
+    /// Книга, которая никогда не уйдёт в коллекцию (меню), — единственный повод
+    /// показать плашку у неё это момент, когда её берут в руки. У собираемой книги
+    /// плашка выезжает при опускании, вместе с самим фактом «книга найдена».
+    /// </summary>
+    private bool ShowsPlateOnPick => !CollectOnDrop && BookCollectedUI.instance != null;
 
     /// <summary>Имя модели внутри — оно же идентификатор книги.</summary>
     public static string ResolveId(Transform bookRoot) {
@@ -50,6 +58,12 @@ public class CollectableBook : MonoBehaviour {
     private void HandlePick() {
         if (CanCollect && MadnessManager.instance != null) {
             MadnessManager.instance.SetBookPause(true);
+        }
+
+        if (ShowsPlateOnPick) {
+            // isNew = false: в меню ничего не находится заново, плашка просто
+            // напоминает, сколько книг собрано.
+            BookCollectedUI.instance.Show(false);
         }
     }
 

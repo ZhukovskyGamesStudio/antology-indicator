@@ -5,6 +5,10 @@ using UnityEngine;
 /// <summary>
 /// Плашка «книга в коллекции» в правом нижнем углу: выезжает, висит пару секунд
 /// и уезжает обратно. Текст — сколько книг собрано из скольких.
+///
+/// Есть в обеих сценах, но поводы разные (см. <see cref="CollectableBook"/>):
+/// в игре плашка выезжает, когда книгу КЛАДУТ и она уходит в коллекцию,
+/// в меню — когда книгу БЕРУТ в руки, потому что собирать там уже нечего.
 /// </summary>
 public class BookCollectedUI : MonoBehaviour {
     public static BookCollectedUI instance;
@@ -35,6 +39,13 @@ public class BookCollectedUI : MonoBehaviour {
     [SerializeField]
     private int _totalOverride;
 
+    [Tooltip("Пересчитать книги по сцене и сохранить это число как общее. " +
+             "Включено в игровой сцене и ОБЯЗАНО быть выключено в главном меню: " +
+             "там на сцене лежит декоративная копия комнаты с парой книг, и пересчёт " +
+             "затёр бы сохранённое число (19) этой парой")]
+    [SerializeField]
+    private bool _countsLevelBooks = true;
+
     private RectTransform _rect;
     private Vector2 _shownPos;
     private Sequence _sequence;
@@ -49,8 +60,18 @@ public class BookCollectedUI : MonoBehaviour {
             _group = GetComponent<CanvasGroup>();
         }
 
-        _total = _totalOverride > 0 ? _totalOverride : CountBooksInScene();
-        BookCollection.Total = _total;
+        if (_totalOverride > 0) {
+            _total = _totalOverride;
+        } else if (_countsLevelBooks) {
+            _total = CountBooksInScene();
+        } else {
+            // В меню считать нечего — берём число, посчитанное игровой сценой.
+            _total = BookCollection.Total;
+        }
+
+        if (_countsLevelBooks) {
+            BookCollection.Total = _total;
+        }
 
         _group.alpha = 0f;
         _group.blocksRaycasts = false;
