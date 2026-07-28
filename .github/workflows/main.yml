@@ -140,11 +140,40 @@ jobs:
           path: build/webgl
 
       - name: Install itch.io butler
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # Запасная версия на случай, если API недоступен или ответ пустой.
+          BUTLER_FALLBACK: v15.29.0
         run: |
-          curl -L -o butler.zip https://github.com/itchio/butler/releases/latest/download/butler-linux-amd64.zip
-          unzip butler.zip
+          set -euo pipefail
+
+          # Намеренно НЕ используем /releases/latest/download/: релиз butler может
+          # выйти вообще без бинарников (так случилось с v15.30.0 от 27.07.2026),
+          # и тогда эта ссылка отдаёт 404 с девятибайтовым телом "Not Found",
+          # curl молча кладёт его в butler.zip, а падает уже unzip — с сообщением,
+          # по которому причину не угадать. Ищем свежайший релиз, у которого
+          # нужный ассет реально есть.
+          # "|| url=" обязателен: под set -e и pipefail упавший curl или jq
+          # уронил бы весь шаг прямо здесь, и до запасного варианта дело бы не дошло.
+          url=$(curl -sSL -H "Authorization: Bearer ${GH_TOKEN:-}" \
+                  "https://api.github.com/repos/itchio/butler/releases?per_page=20" \
+                | jq -r '[.[] | select(.draft == false and .prerelease == false)
+                             | .assets[]?
+                             | select(.name == "butler-linux-amd64.zip")
+                             | .browser_download_url][0] // empty') || url=""
+
+          if [ -z "$url" ]; then
+            echo "Релиз с butler-linux-amd64.zip через API не нашёлся, беру запасной $BUTLER_FALLBACK"
+            url="https://github.com/itchio/butler/releases/download/$BUTLER_FALLBACK/butler-linux-amd64.zip"
+          fi
+
+          echo "Качаю butler: $url"
+          # --fail: любой не-200 роняет шаг здесь, а не через unzip.
+          curl -sSL --fail -o butler.zip "$url"
+          unzip -q butler.zip
           chmod +x linux-amd64/butler
           sudo mv linux-amd64/butler /usr/local/bin/
+          butler -V || true
 
       - name: Authenticate butler
         run: |
