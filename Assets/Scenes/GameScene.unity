@@ -9973,22 +9973,24 @@ MonoBehaviour:
     - {fileID: 21300000, guid: 7f53e20c5783406448db203c634e1b05, type: 3}
     - {fileID: 21300000, guid: 0a8b6c56f1d1bbb4aa8f1fa65df15b04, type: 3}
     MaxAlpha: 0.35
-    FrameDuration: 0.23
-    PhaseOffset: 0.07
+    FrameDurationCalm: 2.6
+    FrameDurationMad: 0.23
+    StartPhase: 0.5
   - Image: {fileID: 883914358}
     Frames:
     - {fileID: 21300000, guid: a8922f62dae752349a23c9e1b562cfed, type: 3}
     - {fileID: 21300000, guid: c2a85be970399cf45a32fd6c27e0f7bf, type: 3}
     - {fileID: 21300000, guid: 4d7a3c8a5d678024bbe5a5682f8b780f, type: 3}
     MaxAlpha: 1
-    FrameDuration: 0.13
-    PhaseOffset: 0
+    FrameDurationCalm: 1.6
+    FrameDurationMad: 0.13
+    StartPhase: 0
   _alphaCurve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0.2
+      value: 0
       inSlope: 0
       outSlope: 0
       tangentMode: 137
@@ -9996,19 +9998,19 @@ MonoBehaviour:
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.35
-      value: 0.35
-      inSlope: 0.64285713
-      outSlope: 0.64285713
+      time: 0.2
+      value: 0
+      inSlope: 0
+      outSlope: 0
       tangentMode: 137
       weightedMode: 0
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.7
-      value: 0.65
-      inSlope: 1
-      outSlope: 1
+      time: 0.55
+      value: 0.4
+      inSlope: 1.25
+      outSlope: 1.25
       tangentMode: 137
       weightedMode: 0
       inWeight: 0.33333334
@@ -11554,7 +11556,7 @@ MonoBehaviour:
   finalOutdoors: {fileID: 687554335}
   finalSteps: {fileID: 167078302}
   isDropProgress: 1
-  StartingChapter: 2
+  StartingChapter: 0
 --- !u!4 &1199463264
 Transform:
   m_ObjectHideFlags: 0
