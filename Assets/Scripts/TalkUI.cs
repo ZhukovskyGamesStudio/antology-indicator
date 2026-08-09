@@ -19,11 +19,28 @@ public class TalkUI : MonoBehaviour {
     [Tooltip("Скорость набора символов в секунду.")]
     public float charsPerSecond = 35f;
 
-    [Tooltip("Сколько секунд держать полностью набранную фразу перед скрытием.")]
+    [Tooltip("Сколько секунд держать реплику ПОСЛЕ того, как рядом с ней появилась иконка пробела.")]
     public float holdAfterTyping = 2.5f;
 
-    [Tooltip("Минимальное суммарное время показа реплики (typewriter + hold).")]
+    [Tooltip("Минимальное суммарное время показа реплики (typewriter + обе паузы).")]
     public float minTotalDuration = 3f;
+
+    [Header("Иконка «Пробел» после реплики")]
+    [Tooltip("Картинка клавиши пробела. Появляется, когда реплика набралась целиком — " +
+             "сразу за последней буквой. Пусто — иконки не будет")]
+    public Image spaceIcon;
+
+    [Tooltip("Пауза между концом набора и появлением иконки, сек")]
+    public float spaceIconDelay = 1f;
+
+    [Tooltip("Высота иконки в долях кегля текста")]
+    public float spaceIconHeight = 0.62f;
+
+    [Tooltip("Отступ от последней буквы до иконки, в долях кегля")]
+    public float spaceIconGap = 0.35f;
+
+    [Tooltip("Насколько центр иконки поднят над базовой линией, в долях кегля")]
+    public float spaceIconRise = 0.28f;
 
     [Header("Humanization")]
     [Tooltip("Множитель паузы после . ! ? - длинный 'вдох' в конце предложения.")]
@@ -128,6 +145,12 @@ public class TalkUI : MonoBehaviour {
         text.text = BuildDisplay(_onScreenSource);
         text.ForceMeshUpdate();
         text.maxVisibleCharacters = text.textInfo.characterCount;
+
+        // Реплика перерисовалась другой длины — иконка осталась бы висеть там,
+        // где кончался прежний текст.
+        if (spaceIcon != null && spaceIcon.gameObject.activeSelf) {
+            ShowSpaceIcon();
+        }
     }
 
     private const string UnclePrefix = "Дядя:";
@@ -285,6 +308,7 @@ public class TalkUI : MonoBehaviour {
             back.gameObject.SetActive(true);
         }
 
+        HideSpaceIcon();
         _onScreenSource = phrase;
         text.text = BuildDisplay(phrase);
         text.maxVisibleCharacters = 0;
@@ -317,20 +341,90 @@ public class TalkUI : MonoBehaviour {
             }
         }
 
-        float hold = Mathf.Max(holdAfterTyping, minTotalDuration - typed);
-        if (hold > 0f) {
-            await WaitOrSkip(hold);
+        // Реплика набралась. Дальше две паузы: первая — чтобы игрок дочитал
+        // сам текст, вторая — уже с иконкой пробела рядом с последней буквой,
+        // как приглашение промотать. Жалоба с плейтеста была ровно про это:
+        // реплики уезжали раньше, чем их успевали дочитать.
+        float beforeIcon = Mathf.Max(spaceIconDelay, minTotalDuration - typed - holdAfterTyping);
+        bool closed = false;
+        if (beforeIcon > 0f) {
+            closed = await WaitOrSkip(beforeIcon);
         }
 
         if (!IsAlive) {
             return;
         }
 
+        // Промотали до появления иконки — показывать её уже некому.
+        if (!closed) {
+            ShowSpaceIcon();
+            if (holdAfterTyping > 0f) {
+                await WaitOrSkip(holdAfterTyping);
+            }
+        }
+
+        if (!IsAlive) {
+            return;
+        }
+
+        HideSpaceIcon();
         _onScreenSource = null;
         text.text = "";
         text.maxVisibleCharacters = 0;
         if (back != null) {
             back.gameObject.SetActive(false);
+        }
+    }
+
+    /// <summary>
+    /// Ставит иконку пробела вплотную за последней видимой буквой реплики.
+    /// Позиция берётся из разметки TMP, поэтому иконка сама попадает на нужную
+    /// строку при любом переносе и любом выравнивании, а цвет — из вершинного
+    /// цвета этой буквы, то есть учитывает и тег цвета реплик дяди.
+    /// </summary>
+    private void ShowSpaceIcon() {
+        if (spaceIcon == null || text == null) {
+            return;
+        }
+
+        text.ForceMeshUpdate();
+        TMP_TextInfo info = text.textInfo;
+        int last = -1;
+        for (int i = info.characterCount - 1; i >= 0; i--) {
+            if (info.characterInfo[i].isVisible) {
+                last = i;
+                break;
+            }
+        }
+
+        if (last < 0) {
+            return; // реплика из одних пробелов — цепляться не за что
+        }
+
+        TMP_CharacterInfo ci = info.characterInfo[last];
+        // При автосайзе TMP кладёт вычисленный кегль обратно в fontSize, так что
+        // иконка масштабируется вместе с текстом.
+        float size = text.fontSize;
+        float height = size * spaceIconHeight;
+        float aspect = spaceIcon.sprite != null && spaceIcon.sprite.rect.height > 0f
+            ? spaceIcon.sprite.rect.width / spaceIcon.sprite.rect.height
+            : 1f;
+
+        RectTransform rt = spaceIcon.rectTransform;
+        rt.pivot = new Vector2(0f, 0.5f);
+        rt.sizeDelta = new Vector2(height * aspect, height);
+        // characterInfo лежит в локальных координатах самого TMP, а иконка —
+        // его дочерний объект, поэтому localPosition совпадает один в один.
+        rt.localPosition = new Vector3(ci.xAdvance + size * spaceIconGap,
+            ci.baseLine + size * spaceIconRise, 0f);
+
+        spaceIcon.color = ci.color;
+        spaceIcon.gameObject.SetActive(true);
+    }
+
+    private void HideSpaceIcon() {
+        if (spaceIcon != null) {
+            spaceIcon.gameObject.SetActive(false);
         }
     }
 

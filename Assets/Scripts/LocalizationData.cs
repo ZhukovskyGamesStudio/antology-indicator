@@ -135,8 +135,8 @@ public static class LocalizationData {
             "So that's where my uncle got his hospital horror stories..."),
 
         // ── Реакции-осознания (книги/папки/шкафы/подушки/лабиринт/финал) ──
-        ("Ох... я даже отвлёкся от этого жуткого шума.",
-            "Oh... it even took my mind off that awful noise."),
+        ("Ох... сознание не плывёт, пока я читаю.",
+            "Oh... my mind stops slipping while I read."),
         ("Бредовые записки дядьки…",
             "Uncle's crackpot notes…"),
         ("Жаба… Что за бред?",

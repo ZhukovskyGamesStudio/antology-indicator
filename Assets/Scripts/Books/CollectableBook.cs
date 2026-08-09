@@ -60,6 +60,11 @@ public class CollectableBook : MonoBehaviour {
             MadnessManager.instance.SetBookPause(true);
         }
 
+        // Мир глохнет, пока игрок читает (см. ReadingMuffle). Книга со стола из
+        // туториала сюда не попадает — и не должна: там задача как раз в том,
+        // чтобы на слух поймать музыкальную волну на радио.
+        ReadingMuffle.SetReading(_pickable, true);
+
         if (ShowsPlateOnPick) {
             // isNew = false: в меню ничего не находится заново, плашка просто
             // напоминает, сколько книг собрано.
@@ -71,6 +76,8 @@ public class CollectableBook : MonoBehaviour {
         if (MadnessManager.instance != null) {
             MadnessManager.instance.SetBookPause(false);
         }
+
+        ReadingMuffle.SetReading(_pickable, false);
 
         if (!CanCollect) {
             return;

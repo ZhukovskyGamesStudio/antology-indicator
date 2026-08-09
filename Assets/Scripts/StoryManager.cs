@@ -16,8 +16,6 @@ public class StoryManager : MonoBehaviour {
     public Pickable book;
     public HintUI hintUI;
 
-    [Tooltip("Плашка «Пропустить текст (Пробел)» в правом верхнем углу — обучение проматыванию")]
-    public GameObject skipHint;
     public static StoryManager instance;
 
     /// <summary>Открыт ли выход из квартиры (ставится в финале). До этого дверь реагирует «нет ключей».</summary>
@@ -169,17 +167,6 @@ public class StoryManager : MonoBehaviour {
         await WinChapter();
     }
 
-    /// <summary>Показывает плашку «Пропустить текст (Пробел)» на seconds секунд (обучение проматыванию).</summary>
-    private async UniTaskVoid ShowSkipHint(float seconds) {
-        if (skipHint == null) {
-            return;
-        }
-
-        skipHint.SetActive(true);
-        await UniTask.WaitForSeconds(seconds, cancellationToken: _lifetimeCt);
-        skipHint.SetActive(false);
-    }
-
     private async UniTask TableChapter() {
         playerMovement.playerCanMove = false;
 
@@ -188,8 +175,9 @@ public class StoryManager : MonoBehaviour {
         //поработать над анимацией вступления
         await UniTask.WaitForSeconds(4f, cancellationToken: _lifetimeCt);
         await TalkUI.Say("\"Феномен меметического гипноза...\"\nХах, ну и бред. Кто вообще верит в такое?");
-        // Обучение проматыванию: после первой реплики на 5 секунд показываем плашку про Пробел.
-        ShowSkipHint(5f).Forget();
+        // Плашки «Пропустить текст (Пробел)» в углу больше нет: проматыванию учит
+        // сама иконка пробела, которая появляется рядом с дочитанной репликой
+        // (см. TalkUI.ShowSpaceIcon).
         await TalkUI.Say("Такое только мой дядька и читает.\nАтлантида!.. Планета Нибиру...");
         await TalkUI.Say("Сам-то в больницу уехал — как на похороны, жутко ему от врачей...\nА я после операции как новенький!");
         await TalkUI.Say("Поразвлекаюсь пока с его книжками, всё равно он нескоро вернётся.");
@@ -467,6 +455,17 @@ public class StoryManager : MonoBehaviour {
     private void SetPuddles(bool isActive) {
         foreach (GameObject puddle in storyObjectsContainer.Puddles) {
             puddle.SetActive(isActive);
+        }
+
+        // Лужа и текущий кран — одно событие: вода в ванной идёт ровно с того
+        // момента, как из-под шторы натекло. Дальше кран в руках игрока — он его
+        // перекроет, и лужи высохнут сами (RunningWater.StopAll -> Puddle.DryAll).
+        if (storyObjectsContainer.BathroomWaters != null) {
+            foreach (RunningWater water in storyObjectsContainer.BathroomWaters) {
+                if (water != null) {
+                    water.SetFlowing(isActive);
+                }
+            }
         }
 
         // Ванная за шторой открывается ровно тогда же, когда из-под двери натекает

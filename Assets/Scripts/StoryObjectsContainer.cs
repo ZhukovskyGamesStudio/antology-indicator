@@ -25,6 +25,10 @@ public class StoryObjectsContainer : MonoBehaviour {
 
     public GameObject[] Puddles;
 
+    [Tooltip("Вода из кранов в ванных — та, что натекла лужами. Включается ровно тогда же, " +
+             "когда появляются лужи; перекрывает её игрок сам (см. RunningWater)")]
+    public RunningWater[] BathroomWaters;
+
     [Tooltip("Шторы, за которыми ванная. Сдвинуть их можно только с того момента, как появляются лужи")]
     public InteractiveObj[] BathroomCurtains;
     public Pickable ChipOnTable, BookMoved, BookUnmoved;

@@ -12,6 +12,10 @@ public class PuddleZone : MonoBehaviour {
 
     private static bool _reacted;
 
+    // Кто сейчас стоит в луже. Нужен, чтобы отпустить его, если лужа исчезнет
+    // прямо у него под ногами (высохла, комнату выключили).
+    private Footsteps _inside;
+
     /// <summary>Забыть, что реплика уже звучала — новый запуск игры начинается с нуля.</summary>
     public static void ResetSaid() {
         _reacted = false;
@@ -31,6 +35,7 @@ public class PuddleZone : MonoBehaviour {
 
         Footsteps f = other.GetComponentInParent<Footsteps>();
         if (f != null) {
+            _inside = f;
             f.EnterPuddle();
         }
 
@@ -47,7 +52,25 @@ public class PuddleZone : MonoBehaviour {
 
         Footsteps f = other.GetComponentInParent<Footsteps>();
         if (f != null) {
+            if (_inside == f) {
+                _inside = null;
+            }
+
             f.ExitPuddle();
+        }
+    }
+
+    /// <summary>
+    /// Лужа высохла (или комнату выключили) прямо под ногами. На выключение
+    /// объекта OnTriggerExit приходит не всегда, а счётчик мокрых шагов в
+    /// <see cref="Footsteps"/> накопительный — игрок остался бы «мокрым» навсегда.
+    /// Если OnTriggerExit всё же пришёл, <see cref="_inside"/> уже пуст и второй
+    /// раз никто не вычитается.
+    /// </summary>
+    private void OnDisable() {
+        if (_inside != null) {
+            _inside.ExitPuddle();
+            _inside = null;
         }
     }
 }
