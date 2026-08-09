@@ -26,9 +26,41 @@ public class MadnessManager : MonoBehaviour {
     /// </summary>
     public bool IsBookPaused { get; private set; }
 
+    // До какого момента держится служебная пауза безумия (см. PauseForSeconds).
+    private float _storyPauseUntil = -1f;
+
+    /// <summary>
+    /// Служебная пауза: играет анимация, которой игрок не управляет (применил
+    /// предмет для чиханья, добивает радио). Безумие не растёт и проиграть
+    /// нельзя. В отличие от <see cref="IsBookPaused"/> значок паузы НЕ
+    /// показывается — это не механика, а страховка от смерти в катсцене.
+    /// </summary>
+    public bool IsStoryPaused => Time.time < _storyPauseUntil;
+
+    /// <summary>
+    /// Придержать безумие на seconds секунд. Вызовы складываются по максимуму,
+    /// так что серия ударов по радио держит паузу непрерывно. Пауза снимается
+    /// сама по времени: пропущенное событие анимации не может «залипнуть».
+    /// </summary>
+    public void PauseForSeconds(float seconds) {
+        _storyPauseUntil = Mathf.Max(_storyPauseUntil, Time.time + seconds);
+    }
+
     public float HummingChillPerS = 2;
 
+    [Tooltip("Нижний порог «силы голоса» для пения, в процентах шкалы.\n" +
+             "Лечение от пения пропорционально остатку шкалы, и без порога оно на выдохе " +
+             "сравнивается с ростом безумия: игрок держит E, шкала пения ещё не пуста, " +
+             "а шкала рассудка уже стоит на месте. Порог держит пение чуть сильнее роста " +
+             "до самого конца шкалы — пока есть чем петь, рассудок растёт.")]
+    [Range(0f, 100f)]
+    public float MinHummingPercent = 35f;
+
+    [Tooltip("Сколько безумия снимает один щелчок при ПОЛНОЙ шкале щелчков (дальше — пропорционально остатку)")]
     public float ClickChillPerClick = 10;
+
+    [Tooltip("Сколько процентов шкалы щелчков тратит один щелчок")]
+    public float ClickCostPerClick = 12.5f;
 
     public bool IsHumming;
 
@@ -125,15 +157,21 @@ public class MadnessManager : MonoBehaviour {
             }
         }
 
-        if (IsMadnessRaising && !IsBookPaused) {
+        if (IsMadnessRaising && !IsBookPaused && !IsStoryPaused) {
             Madness += MadnessSpeedPerS * speedMultiplier * Time.deltaTime;
         }
 
         if (IsHumming) {
-            Madness -= HummingChillPerS * speedMultiplier * 0.01f * HummingPower * Time.deltaTime;
+            // Порог: на остатке шкалы пение не должно уходить в ноль эффекта,
+            // иначе рассудок визуально замирает, хотя игрок ещё поёт.
+            float voice = Mathf.Max(HummingPower, MinHummingPercent);
+            Madness -= HummingChillPerS * speedMultiplier * 0.01f * voice * Time.deltaTime;
         }
 
-        ClickingPower += RefillClicking * speedMultiplier * Time.deltaTime;
+        // Обе шкалы восстанавливаются по одной формуле: щелчки раньше копились
+        // в 1.67 раза быстрее пения (лишний speedMultiplier), и «полная шкала»
+        // у них стоила разного времени.
+        ClickingPower += RefillClicking * Time.deltaTime;
 
         HummingPower = Mathf.Clamp(HummingPower, 0, 100);
         ClickingPower = Mathf.Clamp(ClickingPower, 0, 100);
@@ -153,7 +191,9 @@ public class MadnessManager : MonoBehaviour {
 
         humming.volume = FakeHummingFade.volume * HummingPower / 100f;
 
-        if (!isDead && Madness >= MaxMadness) {
+        // Проигрыш посреди неуправляемой анимации (чиханье, добивание радио)
+        // запрещён — см. PauseForSeconds.
+        if (!isDead && !IsStoryPaused && Madness >= MaxMadness) {
             StoryManager.Lose();
             isDead = true;
         }
@@ -173,7 +213,10 @@ public class MadnessManager : MonoBehaviour {
 
     public void Click() {
         Madness -= ClickChillPerClick * 0.01f * ClickingPower;
-        ClickingPower -= ClickChillPerClick * speedMultiplier * 1.5f;
+        // Цена щелчка — отдельное число, а не производная от его силы. Раньше
+        // они были связаны, и «полная шкала щелчков» всегда давала одно и то же
+        // суммарное лечение, как ClickChillPerClick ни крути.
+        ClickingPower -= ClickCostPerClick;
         hud.TriggerClick();
         Openable.SnapAllVisible();
     }

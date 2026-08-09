@@ -22,13 +22,29 @@ public class RadioVfx : MonoBehaviour {
         Line.transform.DOLocalMoveX(Random.Range(-0.264f, 0.216f), dur);
     }
 
+    [Header("Пауза безумия")]
+    [Tooltip("На сколько придержать безумие на каждом ударе — чтобы серия ударов держала паузу непрерывно")]
+    public float HitPauseSeconds = 1.5f;
+
+    [Tooltip("На сколько придержать безумие на добивающей анимации")]
+    public float BreakPauseSeconds = 3f;
+
     public void LogRadioHit() {
         if (isBroken) {
             return;
         }
 
+        // Пока игрок долбит радио, он не поёт и не щёлкает — умереть на этой
+        // анимации было бы обидно и непонятно.
+        PauseMadness(HitPauseSeconds);
         Animation.Play(hitClip.name);
         StoryManager.instance.LogEvent("RadioHit");
+    }
+
+    private static void PauseMadness(float seconds) {
+        if (MadnessManager.instance != null) {
+            MadnessManager.instance.PauseForSeconds(seconds);
+        }
     }
 
 
@@ -38,6 +54,7 @@ public class RadioVfx : MonoBehaviour {
         }
 
         isBroken = true;
+        PauseMadness(BreakPauseSeconds);
         DisableHittables();
         BreakAsync().Forget();
     }

@@ -44,6 +44,11 @@ public class Openable : MonoBehaviour {
     public float swapAt = 0.25f;
 
     [Header("Условия")]
+    [Tooltip("Реагирует ли предмет на щелчок пальцем. Выключено — висит неподвижно.\n" +
+             "Нужно шторам: содержимое за ними больше не перещёлкивается (states пуст), " +
+             "и дёргаться на каждый щелчок им незачем")]
+    public bool ReactsToSnap = true;
+
     [Tooltip("Минимальный интервал между сменами, чтобы спам Q не дёргал предмет каждый кадр")]
     public float cooldown = 0.5f;
 
@@ -233,7 +238,7 @@ public class Openable : MonoBehaviour {
 
     public void TrySnap() {
         // Работаем только с тем, что сейчас в кадре и не в процессе анимации.
-        if (_isChanging || !IsVisible) {
+        if (!ReactsToSnap || _isChanging || !IsVisible) {
             return;
         }
 

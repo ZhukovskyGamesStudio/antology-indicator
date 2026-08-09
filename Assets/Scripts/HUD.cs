@@ -31,8 +31,18 @@ public class HUD : MonoBehaviour {
     public Animation fpsAnim;
     public AnimationClip sneeze, death;
 
-    public Action OnHitLand; 
-    
+    public Action OnHitLand;
+
+    [Header("Чиханье")]
+    [Tooltip("Звуки чиханья по нарастающей: 1-й применённый предмет — слабый чих, 2-й — сильнее, " +
+             "3-й — во всю силу. Клип выбирается по номеру предмета; если список короче, " +
+             "берётся последний. Пусто — играет клип, назначенный на сам AudioSource")]
+    public AudioClip[] sneezeClips;
+
+    [Tooltip("На сколько придерживать безумие с момента применения предмета для чиханья: " +
+             "анимация руки (~2 с) + выравнивание камеры (0.7 с) + сам чих (~2.9 с)")]
+    public float SneezePauseSeconds = 6f;
+
     public void HitLand() {
         OnHitLand?.Invoke();
     }
@@ -58,19 +68,37 @@ public class HUD : MonoBehaviour {
     }
 
  public void TriggerFeather() {
+        PauseMadnessForSneeze();
         anim.SetTrigger(Feather);
     }
 
  public void TriggerPepper() {
+        PauseMadnessForSneeze();
         anim.SetTrigger(Pepper);
     }
 
  public void TriggerStick() {
+        PauseMadnessForSneeze();
         anim.SetTrigger(Stick);
     }
- 
+
+    /// <summary>
+    /// Вызывается из UnityEvent предметов (PlayHandAnim). Предметы для чиханья
+    /// приходят сюда же, поэтому паузу безумия ставим по имени триггера —
+    /// иначе игрок может умереть посреди анимации, которой не управляет.
+    /// </summary>
     public void TriggerAnim(string trigger) {
+        if (trigger == "Pepper" || trigger == "Stick" || trigger == "Feather") {
+            PauseMadnessForSneeze();
+        }
+
         anim.SetTrigger(trigger);
+    }
+
+    private void PauseMadnessForSneeze() {
+        if (MadnessManager.instance != null) {
+            MadnessManager.instance.PauseForSeconds(SneezePauseSeconds);
+        }
     }
 
     public void SetCursorAndHand(bool isOn) {
@@ -118,8 +146,27 @@ public class HUD : MonoBehaviour {
         Hit.Play();
     }
 
+    /// <summary>
+    /// Чих. Сила чиха растёт от предмета к предмету: первый — слабый, третий —
+    /// во всю силу. Номер берётся из счётчика применённых предметов в сюжете
+    /// (событие предмета логается раньше, чем запускается анимация руки).
+    /// </summary>
     public void PlaySneeze() {
+        AudioClip clip = PickSneezeClip();
+        if (clip != null) {
+            Sneeze.clip = clip;
+        }
+
         Sneeze.Play();
+    }
+
+    private AudioClip PickSneezeClip() {
+        if (sneezeClips == null || sneezeClips.Length == 0) {
+            return null;
+        }
+
+        int used = StoryManager.instance != null ? StoryManager.instance.SneezeItemsUsed : 0;
+        return sneezeClips[Mathf.Clamp(used - 1, 0, sneezeClips.Length - 1)];
     }
 
     public void PlayDeath() {

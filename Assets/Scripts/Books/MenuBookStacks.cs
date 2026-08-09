@@ -103,6 +103,10 @@ public class MenuBookStacks : MonoBehaviour {
             InteractiveObj interactive = pickable.GetComponent<InteractiveObj>();
             if (interactive != null) {
                 interactive.IgnoreRange = true;
+                // В меню берётся всё, что лежит на столе. Часть предметов
+                // приезжает из игровой сцены с выключенным интерактивом (там его
+                // включает сюжет) — например раскрытая книга на столе.
+                interactive.enabled = true;
             }
 
             CollectableBook book = pickable.GetComponent<CollectableBook>();

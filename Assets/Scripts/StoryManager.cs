@@ -30,6 +30,16 @@ public class StoryManager : MonoBehaviour {
     public StoryObjectsContainer storyObjectsContainer;
     public HUD HUD;
 
+    [Header("Финал: моргание света под подмену знака в заголовке")]
+    [Tooltip("Сколько раз моргнуть светом в самом конце")]
+    public int FinalFlickers = 3;
+
+    [Tooltip("Длительность тёмной фазы моргания")]
+    public float FinalFlickerDark = 0.12f;
+
+    [Tooltip("Длительность светлой фазы между морганиями")]
+    public float FinalFlickerLit = 0.35f;
+
     [Header("Финал (диалог ГГ и дяди)")]
     [Tooltip("Уличный эмбиент, играет фоном во время титров/диалога")]
     public AudioSource finalOutdoors;
@@ -474,6 +484,12 @@ public class StoryManager : MonoBehaviour {
         return l.Contains("PepperDust") || l.Contains("Earstick") || l.Contains("Feather");
     }
 
+    /// <summary>
+    /// Сколько предметов для чиханья игрок уже применил (1..3). По этому номеру
+    /// <see cref="HUD.PlaySneeze"/> выбирает силу чиха.
+    /// </summary>
+    public int SneezeItemsUsed => EventsLogged.Count(IsSneezeItem);
+
     // Пока идёт этап чихания: если за интервал не появилось новых «чихательных»
     // предметов — ненавязчиво напоминаем, что искать. Останавливается по токену.
     private async UniTaskVoid SneezeHintLoop(CancellationToken token) {
@@ -585,7 +601,45 @@ public class StoryManager : MonoBehaviour {
         }
 
         await UniTask.WaitForSeconds(3f, cancellationToken: _lifetimeCt);
-        UI.WinPanel.SetText("Вы спасли свой разум?");
+        await FlickerAndDoubt();
+    }
+
+    /// <summary>
+    /// Финальная подмена: «Вы спасли свой разум!» → «…разум?». Заголовок меняется
+    /// не сам по себе, а на моргании света — свет уходит, и в тот же кадр вместо
+    /// восклицательного знака стоит вопросительный. Иначе подмена читается как
+    /// опечатка, а не как то, что с картинкой что-то не так.
+    /// </summary>
+    private async UniTask FlickerAndDoubt() {
+        bool changed = false;
+        for (int i = 0; i < FinalFlickers; i++) {
+            SetFinalLight(false);
+            // Знак подменяем в темноте, на предпоследнем моргании: к моменту,
+            // когда свет вернётся, надпись уже другая.
+            if (!changed && i >= FinalFlickers - 2) {
+                changed = true;
+                UI.WinPanel.SetText("Вы спасли свой разум?");
+            }
+
+            await UniTask.WaitForSeconds(FinalFlickerDark, cancellationToken: _lifetimeCt);
+            SetFinalLight(true);
+            await UniTask.WaitForSeconds(FinalFlickerLit, cancellationToken: _lifetimeCt);
+        }
+
+        if (!changed) {
+            UI.WinPanel.SetText("Вы спасли свой разум?");
+        }
+    }
+
+    /// <summary>Настольная лампа на титрах — единственный источник света в кадре.</summary>
+    private void SetFinalLight(bool isOn) {
+        if (storyObjectsContainer.Lamp != null) {
+            storyObjectsContainer.Lamp.Set(isOn);
+        }
+
+        if (storyObjectsContainer.LampEmission != null) {
+            storyObjectsContainer.LampEmission.Set(isOn);
+        }
     }
 
     public async UniTask Lose() {

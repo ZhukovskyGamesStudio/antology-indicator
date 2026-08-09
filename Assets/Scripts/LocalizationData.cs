@@ -199,6 +199,8 @@ public static class LocalizationData {
             "Skip Text (Space)"),
         ("Играть снова",
             "Play Again"),
+        ("Вы можете рассмотреть все книги!",
+            "You can take a closer look at every book!"),
         ("Громкость",
             "Volume"),
         // Счётчик коллекции книг: {0} — найдено, {1} — всего

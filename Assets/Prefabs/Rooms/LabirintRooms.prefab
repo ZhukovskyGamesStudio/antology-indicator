@@ -516,7 +516,6 @@ Transform:
   - {fileID: 3805996767856832756}
   - {fileID: 4627664500219366466}
   - {fileID: 1353069057266509114}
-  - {fileID: 4576018921693757421}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4194753934014724956
@@ -588,6 +587,75 @@ MonoBehaviour:
   reactionOnce: "\u041E\u0442\u043A\u0443\u0434\u0430 \u0432\u043E\u0434\u0430? \u041D\u0430
     \u0443\u043B\u0438\u0446\u0435 \u0436 \u043D\u0435\u0442 \u0434\u043E\u0436\u0434\u044F!
     \u0427\u0442\u043E \u0437\u0430 \u0434\u0432\u0435\u0440\u044C\u044E?.."
+--- !u!1 &4620447390617437238
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1200329060495497102}
+  - component: {fileID: 8740619980605899579}
+  - component: {fileID: 6318190128556118254}
+  m_Layer: 0
+  m_Name: LabyrinthEntranceCollider
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1200329060495497102
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4620447390617437238}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.11, y: 1.2, z: 0.5}
+  m_LocalScale: {x: 4.6, y: 2.4, z: 1.8}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4453152766227032791}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &8740619980605899579
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4620447390617437238}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &6318190128556118254
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4620447390617437238}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3bab884f4584ed45a06eae6343f4624, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ReactionZone
+  reactionOnce: "\u0410 \u0432\u0430\u043D\u043D\u0430\u044F \u0433\u0434\u0435..?"
+  globalOnce: 1
+  SkipIfBusy: 0
 --- !u!1 &5777500549907594674
 GameObject:
   m_ObjectHideFlags: 0
@@ -1640,69 +1708,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DoorLockedReaction
   reaction: "\u041D\u0435 \u043F\u043E\u043C\u043D\u044E, \u043A\u0443\u0434\u0430
     \u0434\u0435\u043B \u043A\u043B\u044E\u0447\u0438..."
---- !u!1001 &4595013342727879647
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 6950021142030087368}
-    m_Modifications:
-    - target: {fileID: 19576515804791858, guid: e937451290fb8614f8ba052542532284, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -0.748
-      objectReference: {fileID: 0}
-    - target: {fileID: 19576515804791858, guid: e937451290fb8614f8ba052542532284, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.019962005
-      objectReference: {fileID: 0}
-    - target: {fileID: 19576515804791858, guid: e937451290fb8614f8ba052542532284, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 2.871
-      objectReference: {fileID: 0}
-    - target: {fileID: 19576515804791858, guid: e937451290fb8614f8ba052542532284, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.010427483
-      objectReference: {fileID: 0}
-    - target: {fileID: 19576515804791858, guid: e937451290fb8614f8ba052542532284, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0.046505645
-      objectReference: {fileID: 0}
-    - target: {fileID: 19576515804791858, guid: e937451290fb8614f8ba052542532284, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0.99886346
-      objectReference: {fileID: 0}
-    - target: {fileID: 19576515804791858, guid: e937451290fb8614f8ba052542532284, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0.00048548856
-      objectReference: {fileID: 0}
-    - target: {fileID: 19576515804791858, guid: e937451290fb8614f8ba052542532284, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 19576515804791858, guid: e937451290fb8614f8ba052542532284, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 178.804
-      objectReference: {fileID: 0}
-    - target: {fileID: 19576515804791858, guid: e937451290fb8614f8ba052542532284, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 5.331
-      objectReference: {fileID: 0}
-    - target: {fileID: 6449039012275866851, guid: e937451290fb8614f8ba052542532284, type: 3}
-      propertyPath: m_Name
-      value: FolderPapers Variant
-      objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 8353891944569942726, guid: e937451290fb8614f8ba052542532284, type: 3}
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: e937451290fb8614f8ba052542532284, type: 3}
---- !u!4 &4576018921693757421 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 19576515804791858, guid: e937451290fb8614f8ba052542532284, type: 3}
-  m_PrefabInstance: {fileID: 4595013342727879647}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &5177155420989385996
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1993,6 +1998,10 @@ PrefabInstance:
       propertyPath: m_LocalScale.x
       value: 1.4999996
       objectReference: {fileID: 0}
+    - target: {fileID: 7297381406126487811, guid: f3ca7d4e75cb2ad4cb73784be3637abe, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.4999995
+      objectReference: {fileID: 0}
     - target: {fileID: 7375944363949484119, guid: f3ca7d4e75cb2ad4cb73784be3637abe, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
@@ -2051,17 +2060,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 7586437056145374219, guid: f3ca7d4e75cb2ad4cb73784be3637abe, type: 3}
   m_PrefabInstance: {fileID: 6196975793797825902}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &5569187179006708583 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1966294702786956809, guid: f3ca7d4e75cb2ad4cb73784be3637abe, type: 3}
-  m_PrefabInstance: {fileID: 6196975793797825902}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 164dcbf52469186408828bc46022539e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::InteractiveObj
 --- !u!4 &5676301253748025615 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1785203692325235809, guid: f3ca7d4e75cb2ad4cb73784be3637abe, type: 3}
@@ -2697,17 +2695,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1785203692325235809, guid: f3ca7d4e75cb2ad4cb73784be3637abe, type: 3}
   m_PrefabInstance: {fileID: 8088610234704671373}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &7712742817171274884 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1966294702786956809, guid: f3ca7d4e75cb2ad4cb73784be3637abe, type: 3}
-  m_PrefabInstance: {fileID: 8088610234704671373}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 164dcbf52469186408828bc46022539e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::InteractiveObj
 --- !u!1001 &8878006088189014398
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2801,72 +2788,3 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 68e0e1eb4aea2cc4cbc992680bb2019b, type: 3}
   m_PrefabInstance: {fileID: 8878006088189014398}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &4620447390617437238
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1200329060495497102}
-  - component: {fileID: 8740619980605899579}
-  - component: {fileID: 6318190128556118254}
-  m_Layer: 0
-  m_Name: LabyrinthEntranceCollider
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1200329060495497102
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4620447390617437238}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.11, y: 1.2, z: 0.5}
-  m_LocalScale: {x: 4.6, y: 2.4, z: 1.8}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 4453152766227032791}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &8740619980605899579
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4620447390617437238}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &6318190128556118254
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4620447390617437238}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f3bab884f4584ed45a06eae6343f4624, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ReactionZone
-  reactionOnce: "\u0410 \u0432\u0430\u043D\u043D\u0430\u044F \u0433\u0434\u0435..?"
-  globalOnce: 1
-  SkipIfBusy: 0
