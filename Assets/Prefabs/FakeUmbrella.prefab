@@ -123,19 +123,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-      - m_Target: {fileID: 2681612123810274210}
-        m_TargetAssemblyTypeName: MonoBehLogger, Assembly-CSharp
-        m_MethodName: ReactOnce
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: "\u0427\u0442\u043E-\u0442\u043E \u0443 \u043C\u0435\u043D\u044F
-            \u0441 \u0433\u043B\u0430\u0437\u0430\u043C\u0438\u2026"
-          m_BoolArgument: 0
-        m_CallState: 2
   OnDrop:
     m_PersistentCalls:
       m_Calls:
@@ -170,6 +157,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: d40a3a47e224e2d4a91e396404ea7cec, type: 3}
   - {fileID: 8300000, guid: e6fee91aa6701a7488970d63d052cec2, type: 3}
   rotateSpeed: 200
+  dropDragTolerance: 1.2
   rotateLogEvent: 
   rotateLogThreshold: 90
 --- !u!114 &6645352345916385145
@@ -185,6 +173,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ToggleOnOff
   target: {fileID: 1105623296903690627}
+  onClip: {fileID: 0}
+  offClip: {fileID: 0}
 --- !u!114 &4335431172793317073
 MonoBehaviour:
   m_ObjectHideFlags: 0

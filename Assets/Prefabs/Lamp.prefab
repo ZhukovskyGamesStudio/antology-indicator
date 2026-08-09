@@ -170,6 +170,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ToggleOnOff
   target: {fileID: 8429238040686926749}
+  onClip: {fileID: 8300000, guid: f65d9a32ed9b76743a5cb7db938d2e22, type: 3}
+  offClip: {fileID: 8300000, guid: f65d9a32ed9b76743a5cb7db938d2e22, type: 3}
 --- !u!82 &4662292745134847642
 AudioSource:
   m_ObjectHideFlags: 0

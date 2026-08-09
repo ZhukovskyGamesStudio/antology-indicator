@@ -83,6 +83,34 @@ public class Pickable : MonoBehLogger {
         startingRot = transform.rotation;
     }
 
+    /// <summary>
+    /// Предмет могут выключить прямо в руках: сюжет прячет комнату-родителя
+    /// (NormalRooms в главе с молотком), уход в меню выгружает сцену и т.п.
+    /// У неактивного объекта Update не тикает — положить его штатно уже нельзя,
+    /// а статический isHolding навсегда заблокировал бы движение, камеру и все
+    /// клики. Поэтому принудительно возвращаем предмет на место и освобождаем
+    /// руки. OnPick/OnDrop здесь сознательно не зовутся: скрытие предмета не
+    /// должно двигать сюжет или коллекцию книг.
+    /// </summary>
+    private void OnDisable() {
+        _cts.Cancel();
+
+        if (!IsPicked) {
+            return;
+        }
+
+        IsPicked = false;
+        transform.position = startingPos;
+        transform.rotation = startingRot;
+        RestoreOriginalLayer();
+        RestoreColliders();
+        FirstPersonController.isHolding = false;
+
+        if (HUD.instance != null) {
+            HUD.instance.SetCursorAndHand(true);
+        }
+    }
+
     public void PickUp() {
         if (!IsPicked) {
             if ((transform.position - startingPos).magnitude > 3f) {

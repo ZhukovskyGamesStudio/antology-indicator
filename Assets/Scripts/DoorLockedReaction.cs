@@ -11,7 +11,7 @@ using UnityEngine;
 /// </summary>
 public class DoorLockedReaction : MonoBehaviour {
     [Tooltip("Реплика при попытке уйти до финала")]
-    [TextArea] public string reaction = "я пока не могу покинуть квартиру";
+    [TextArea] public string reaction = "Не помню, куда дел ключи...";
 
     private void OnMouseDown() {
         // Держим предмет — с миром не взаимодействуем (как в InteractiveObj).

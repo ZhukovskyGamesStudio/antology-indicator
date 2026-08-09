@@ -929,6 +929,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 6266749606540134512}
     m_Modifications:
+    - target: {fileID: 562965707609985590, guid: 33b6a9a562bfa454f9301d9f9a159ea9, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 2.5000367
+      objectReference: {fileID: 0}
+    - target: {fileID: 562965707609985590, guid: 33b6a9a562bfa454f9301d9f9a159ea9, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 2.5000367
+      objectReference: {fileID: 0}
     - target: {fileID: 1489882185296697898, guid: 33b6a9a562bfa454f9301d9f9a159ea9, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.26
@@ -1214,6 +1222,35 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: d0082743b1f9a0b40aefd70bc207946a, type: 3}
+    - target: {fileID: 3450974957270275399, guid: c72180c6db268964bbcec82b021ed93f, type: 3}
+      propertyPath: OnPick.m_PersistentCalls.m_Calls.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3450974957270275399, guid: c72180c6db268964bbcec82b021ed93f, type: 3}
+      propertyPath: OnPick.m_PersistentCalls.m_Calls.Array.data[2].m_Mode
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3450974957270275399, guid: c72180c6db268964bbcec82b021ed93f, type: 3}
+      propertyPath: OnPick.m_PersistentCalls.m_Calls.Array.data[2].m_Target
+      value: 
+      objectReference: {fileID: 3555131495086638155}
+    - target: {fileID: 3450974957270275399, guid: c72180c6db268964bbcec82b021ed93f, type: 3}
+      propertyPath: OnPick.m_PersistentCalls.m_Calls.Array.data[2].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3450974957270275399, guid: c72180c6db268964bbcec82b021ed93f, type: 3}
+      propertyPath: OnPick.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
+      value: ReactOnce
+      objectReference: {fileID: 0}
+    - target: {fileID: 3450974957270275399, guid: c72180c6db268964bbcec82b021ed93f, type: 3}
+      propertyPath: OnPick.m_PersistentCalls.m_Calls.Array.data[2].m_TargetAssemblyTypeName
+      value: MonoBehLogger, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 3450974957270275399, guid: c72180c6db268964bbcec82b021ed93f, type: 3}
+      propertyPath: OnPick.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_StringArgument
+      value: "\u0427\u0442\u043E-\u0442\u043E \u0443 \u043C\u0435\u043D\u044F \u0441
+        \u0433\u043B\u0430\u0437\u0430\u043C\u0438\u2026"
+      objectReference: {fileID: 0}
     - target: {fileID: 7145043843543218720, guid: c72180c6db268964bbcec82b021ed93f, type: 3}
       propertyPath: m_LocalScale.x
       value: 1
@@ -1267,6 +1304,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c72180c6db268964bbcec82b021ed93f, type: 3}
+--- !u!114 &3555131495086638155 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3450974957270275399, guid: c72180c6db268964bbcec82b021ed93f, type: 3}
+  m_PrefabInstance: {fileID: 2211845978370887948}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ba11ffaa3124a35b17ca93bf7a8a3c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Pickable
 --- !u!4 &9050623056796478252 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7145043843543218720, guid: c72180c6db268964bbcec82b021ed93f, type: 3}
@@ -2596,6 +2644,35 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: 12945e79c6475a3458993fda0451c913, type: 3}
+    - target: {fileID: 3450974957270275399, guid: c72180c6db268964bbcec82b021ed93f, type: 3}
+      propertyPath: OnPick.m_PersistentCalls.m_Calls.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3450974957270275399, guid: c72180c6db268964bbcec82b021ed93f, type: 3}
+      propertyPath: OnPick.m_PersistentCalls.m_Calls.Array.data[2].m_Mode
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3450974957270275399, guid: c72180c6db268964bbcec82b021ed93f, type: 3}
+      propertyPath: OnPick.m_PersistentCalls.m_Calls.Array.data[2].m_Target
+      value: 
+      objectReference: {fileID: 7160083248216945409}
+    - target: {fileID: 3450974957270275399, guid: c72180c6db268964bbcec82b021ed93f, type: 3}
+      propertyPath: OnPick.m_PersistentCalls.m_Calls.Array.data[2].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3450974957270275399, guid: c72180c6db268964bbcec82b021ed93f, type: 3}
+      propertyPath: OnPick.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
+      value: ReactOnce
+      objectReference: {fileID: 0}
+    - target: {fileID: 3450974957270275399, guid: c72180c6db268964bbcec82b021ed93f, type: 3}
+      propertyPath: OnPick.m_PersistentCalls.m_Calls.Array.data[2].m_TargetAssemblyTypeName
+      value: MonoBehLogger, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 3450974957270275399, guid: c72180c6db268964bbcec82b021ed93f, type: 3}
+      propertyPath: OnPick.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_StringArgument
+      value: "\u0427\u0442\u043E-\u0442\u043E \u0443 \u043C\u0435\u043D\u044F \u0441
+        \u0433\u043B\u0430\u0437\u0430\u043C\u0438\u2026"
+      objectReference: {fileID: 0}
     - target: {fileID: 7145043843543218720, guid: c72180c6db268964bbcec82b021ed93f, type: 3}
       propertyPath: m_LocalScale.x
       value: 1
@@ -2654,6 +2731,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7145043843543218720, guid: c72180c6db268964bbcec82b021ed93f, type: 3}
   m_PrefabInstance: {fileID: 5528708092577916486}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &7160083248216945409 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3450974957270275399, guid: c72180c6db268964bbcec82b021ed93f, type: 3}
+  m_PrefabInstance: {fileID: 5528708092577916486}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ba11ffaa3124a35b17ca93bf7a8a3c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Pickable
 --- !u!1001 &5591535302261915961
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2865,6 +2953,35 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: cae16384d198ed7428d1bca3e91e63bf, type: 3}
+    - target: {fileID: 3450974957270275399, guid: c72180c6db268964bbcec82b021ed93f, type: 3}
+      propertyPath: OnPick.m_PersistentCalls.m_Calls.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3450974957270275399, guid: c72180c6db268964bbcec82b021ed93f, type: 3}
+      propertyPath: OnPick.m_PersistentCalls.m_Calls.Array.data[2].m_Mode
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3450974957270275399, guid: c72180c6db268964bbcec82b021ed93f, type: 3}
+      propertyPath: OnPick.m_PersistentCalls.m_Calls.Array.data[2].m_Target
+      value: 
+      objectReference: {fileID: 8704320645270593427}
+    - target: {fileID: 3450974957270275399, guid: c72180c6db268964bbcec82b021ed93f, type: 3}
+      propertyPath: OnPick.m_PersistentCalls.m_Calls.Array.data[2].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3450974957270275399, guid: c72180c6db268964bbcec82b021ed93f, type: 3}
+      propertyPath: OnPick.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
+      value: ReactOnce
+      objectReference: {fileID: 0}
+    - target: {fileID: 3450974957270275399, guid: c72180c6db268964bbcec82b021ed93f, type: 3}
+      propertyPath: OnPick.m_PersistentCalls.m_Calls.Array.data[2].m_TargetAssemblyTypeName
+      value: MonoBehLogger, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 3450974957270275399, guid: c72180c6db268964bbcec82b021ed93f, type: 3}
+      propertyPath: OnPick.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_StringArgument
+      value: "\u0427\u0442\u043E-\u0442\u043E \u0443 \u043C\u0435\u043D\u044F \u0441
+        \u0433\u043B\u0430\u0437\u0430\u043C\u0438\u2026"
+      objectReference: {fileID: 0}
     - target: {fileID: 7145043843543218720, guid: c72180c6db268964bbcec82b021ed93f, type: 3}
       propertyPath: m_LocalScale.x
       value: 1
@@ -2923,6 +3040,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7145043843543218720, guid: c72180c6db268964bbcec82b021ed93f, type: 3}
   m_PrefabInstance: {fileID: 6282423567286979284}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &8704320645270593427 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3450974957270275399, guid: c72180c6db268964bbcec82b021ed93f, type: 3}
+  m_PrefabInstance: {fileID: 6282423567286979284}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ba11ffaa3124a35b17ca93bf7a8a3c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Pickable
 --- !u!1001 &6666679635868513149
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2943,6 +3071,35 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: eac1af9c63adba84c82f2058d93dd776, type: 3}
+    - target: {fileID: 3450974957270275399, guid: c72180c6db268964bbcec82b021ed93f, type: 3}
+      propertyPath: OnPick.m_PersistentCalls.m_Calls.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3450974957270275399, guid: c72180c6db268964bbcec82b021ed93f, type: 3}
+      propertyPath: OnPick.m_PersistentCalls.m_Calls.Array.data[2].m_Mode
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3450974957270275399, guid: c72180c6db268964bbcec82b021ed93f, type: 3}
+      propertyPath: OnPick.m_PersistentCalls.m_Calls.Array.data[2].m_Target
+      value: 
+      objectReference: {fileID: 8313819451805460026}
+    - target: {fileID: 3450974957270275399, guid: c72180c6db268964bbcec82b021ed93f, type: 3}
+      propertyPath: OnPick.m_PersistentCalls.m_Calls.Array.data[2].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3450974957270275399, guid: c72180c6db268964bbcec82b021ed93f, type: 3}
+      propertyPath: OnPick.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
+      value: ReactOnce
+      objectReference: {fileID: 0}
+    - target: {fileID: 3450974957270275399, guid: c72180c6db268964bbcec82b021ed93f, type: 3}
+      propertyPath: OnPick.m_PersistentCalls.m_Calls.Array.data[2].m_TargetAssemblyTypeName
+      value: MonoBehLogger, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 3450974957270275399, guid: c72180c6db268964bbcec82b021ed93f, type: 3}
+      propertyPath: OnPick.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_StringArgument
+      value: "\u0427\u0442\u043E-\u0442\u043E \u0443 \u043C\u0435\u043D\u044F \u0441
+        \u0433\u043B\u0430\u0437\u0430\u043C\u0438\u2026"
+      objectReference: {fileID: 0}
     - target: {fileID: 7145043843543218720, guid: c72180c6db268964bbcec82b021ed93f, type: 3}
       propertyPath: m_LocalScale.x
       value: 1
@@ -3001,6 +3158,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7145043843543218720, guid: c72180c6db268964bbcec82b021ed93f, type: 3}
   m_PrefabInstance: {fileID: 6666679635868513149}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &8313819451805460026 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3450974957270275399, guid: c72180c6db268964bbcec82b021ed93f, type: 3}
+  m_PrefabInstance: {fileID: 6666679635868513149}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ba11ffaa3124a35b17ca93bf7a8a3c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Pickable
 --- !u!1001 &6771316381573371907
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3021,6 +3189,35 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: acdfcc8bdf4082c4fb15ec09412c8f5c, type: 3}
+    - target: {fileID: 3450974957270275399, guid: c72180c6db268964bbcec82b021ed93f, type: 3}
+      propertyPath: OnPick.m_PersistentCalls.m_Calls.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3450974957270275399, guid: c72180c6db268964bbcec82b021ed93f, type: 3}
+      propertyPath: OnPick.m_PersistentCalls.m_Calls.Array.data[2].m_Mode
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3450974957270275399, guid: c72180c6db268964bbcec82b021ed93f, type: 3}
+      propertyPath: OnPick.m_PersistentCalls.m_Calls.Array.data[2].m_Target
+      value: 
+      objectReference: {fileID: 8222692412790394180}
+    - target: {fileID: 3450974957270275399, guid: c72180c6db268964bbcec82b021ed93f, type: 3}
+      propertyPath: OnPick.m_PersistentCalls.m_Calls.Array.data[2].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3450974957270275399, guid: c72180c6db268964bbcec82b021ed93f, type: 3}
+      propertyPath: OnPick.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
+      value: ReactOnce
+      objectReference: {fileID: 0}
+    - target: {fileID: 3450974957270275399, guid: c72180c6db268964bbcec82b021ed93f, type: 3}
+      propertyPath: OnPick.m_PersistentCalls.m_Calls.Array.data[2].m_TargetAssemblyTypeName
+      value: MonoBehLogger, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 3450974957270275399, guid: c72180c6db268964bbcec82b021ed93f, type: 3}
+      propertyPath: OnPick.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_StringArgument
+      value: "\u0427\u0442\u043E-\u0442\u043E \u0443 \u043C\u0435\u043D\u044F \u0441
+        \u0433\u043B\u0430\u0437\u0430\u043C\u0438\u2026"
+      objectReference: {fileID: 0}
     - target: {fileID: 7145043843543218720, guid: c72180c6db268964bbcec82b021ed93f, type: 3}
       propertyPath: m_LocalScale.x
       value: 1
@@ -3079,6 +3276,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7145043843543218720, guid: c72180c6db268964bbcec82b021ed93f, type: 3}
   m_PrefabInstance: {fileID: 6771316381573371907}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &8222692412790394180 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3450974957270275399, guid: c72180c6db268964bbcec82b021ed93f, type: 3}
+  m_PrefabInstance: {fileID: 6771316381573371907}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ba11ffaa3124a35b17ca93bf7a8a3c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Pickable
 --- !u!1001 &7016163207559684460
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3318,6 +3526,35 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: d0082743b1f9a0b40aefd70bc207946a, type: 3}
+    - target: {fileID: 3450974957270275399, guid: c72180c6db268964bbcec82b021ed93f, type: 3}
+      propertyPath: OnPick.m_PersistentCalls.m_Calls.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3450974957270275399, guid: c72180c6db268964bbcec82b021ed93f, type: 3}
+      propertyPath: OnPick.m_PersistentCalls.m_Calls.Array.data[2].m_Mode
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3450974957270275399, guid: c72180c6db268964bbcec82b021ed93f, type: 3}
+      propertyPath: OnPick.m_PersistentCalls.m_Calls.Array.data[2].m_Target
+      value: 
+      objectReference: {fileID: 5133530134630510567}
+    - target: {fileID: 3450974957270275399, guid: c72180c6db268964bbcec82b021ed93f, type: 3}
+      propertyPath: OnPick.m_PersistentCalls.m_Calls.Array.data[2].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3450974957270275399, guid: c72180c6db268964bbcec82b021ed93f, type: 3}
+      propertyPath: OnPick.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
+      value: ReactOnce
+      objectReference: {fileID: 0}
+    - target: {fileID: 3450974957270275399, guid: c72180c6db268964bbcec82b021ed93f, type: 3}
+      propertyPath: OnPick.m_PersistentCalls.m_Calls.Array.data[2].m_TargetAssemblyTypeName
+      value: MonoBehLogger, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 3450974957270275399, guid: c72180c6db268964bbcec82b021ed93f, type: 3}
+      propertyPath: OnPick.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_StringArgument
+      value: "\u0427\u0442\u043E-\u0442\u043E \u0443 \u043C\u0435\u043D\u044F \u0441
+        \u0433\u043B\u0430\u0437\u0430\u043C\u0438\u2026"
+      objectReference: {fileID: 0}
     - target: {fileID: 7145043843543218720, guid: c72180c6db268964bbcec82b021ed93f, type: 3}
       propertyPath: m_LocalScale.x
       value: 1
@@ -3376,6 +3613,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7145043843543218720, guid: c72180c6db268964bbcec82b021ed93f, type: 3}
   m_PrefabInstance: {fileID: 7555251295057558176}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &5133530134630510567 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3450974957270275399, guid: c72180c6db268964bbcec82b021ed93f, type: 3}
+  m_PrefabInstance: {fileID: 7555251295057558176}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ba11ffaa3124a35b17ca93bf7a8a3c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Pickable
 --- !u!1001 &7653285866902000314
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3488,6 +3736,35 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: 12945e79c6475a3458993fda0451c913, type: 3}
+    - target: {fileID: 3450974957270275399, guid: c72180c6db268964bbcec82b021ed93f, type: 3}
+      propertyPath: OnPick.m_PersistentCalls.m_Calls.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3450974957270275399, guid: c72180c6db268964bbcec82b021ed93f, type: 3}
+      propertyPath: OnPick.m_PersistentCalls.m_Calls.Array.data[2].m_Mode
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3450974957270275399, guid: c72180c6db268964bbcec82b021ed93f, type: 3}
+      propertyPath: OnPick.m_PersistentCalls.m_Calls.Array.data[2].m_Target
+      value: 
+      objectReference: {fileID: 4685951557621417675}
+    - target: {fileID: 3450974957270275399, guid: c72180c6db268964bbcec82b021ed93f, type: 3}
+      propertyPath: OnPick.m_PersistentCalls.m_Calls.Array.data[2].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3450974957270275399, guid: c72180c6db268964bbcec82b021ed93f, type: 3}
+      propertyPath: OnPick.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
+      value: ReactOnce
+      objectReference: {fileID: 0}
+    - target: {fileID: 3450974957270275399, guid: c72180c6db268964bbcec82b021ed93f, type: 3}
+      propertyPath: OnPick.m_PersistentCalls.m_Calls.Array.data[2].m_TargetAssemblyTypeName
+      value: MonoBehLogger, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 3450974957270275399, guid: c72180c6db268964bbcec82b021ed93f, type: 3}
+      propertyPath: OnPick.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_StringArgument
+      value: "\u0427\u0442\u043E-\u0442\u043E \u0443 \u043C\u0435\u043D\u044F \u0441
+        \u0433\u043B\u0430\u0437\u0430\u043C\u0438\u2026"
+      objectReference: {fileID: 0}
     - target: {fileID: 7145043843543218720, guid: c72180c6db268964bbcec82b021ed93f, type: 3}
       propertyPath: m_LocalScale.x
       value: 1
@@ -3546,6 +3823,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7145043843543218720, guid: c72180c6db268964bbcec82b021ed93f, type: 3}
   m_PrefabInstance: {fileID: 7990383467414918028}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &4685951557621417675 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3450974957270275399, guid: c72180c6db268964bbcec82b021ed93f, type: 3}
+  m_PrefabInstance: {fileID: 7990383467414918028}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ba11ffaa3124a35b17ca93bf7a8a3c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Pickable
 --- !u!1001 &8312716046908369681
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3566,6 +3854,35 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: cae16384d198ed7428d1bca3e91e63bf, type: 3}
+    - target: {fileID: 3450974957270275399, guid: c72180c6db268964bbcec82b021ed93f, type: 3}
+      propertyPath: OnPick.m_PersistentCalls.m_Calls.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3450974957270275399, guid: c72180c6db268964bbcec82b021ed93f, type: 3}
+      propertyPath: OnPick.m_PersistentCalls.m_Calls.Array.data[2].m_Mode
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3450974957270275399, guid: c72180c6db268964bbcec82b021ed93f, type: 3}
+      propertyPath: OnPick.m_PersistentCalls.m_Calls.Array.data[2].m_Target
+      value: 
+      objectReference: {fileID: 6681336626619399766}
+    - target: {fileID: 3450974957270275399, guid: c72180c6db268964bbcec82b021ed93f, type: 3}
+      propertyPath: OnPick.m_PersistentCalls.m_Calls.Array.data[2].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3450974957270275399, guid: c72180c6db268964bbcec82b021ed93f, type: 3}
+      propertyPath: OnPick.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
+      value: ReactOnce
+      objectReference: {fileID: 0}
+    - target: {fileID: 3450974957270275399, guid: c72180c6db268964bbcec82b021ed93f, type: 3}
+      propertyPath: OnPick.m_PersistentCalls.m_Calls.Array.data[2].m_TargetAssemblyTypeName
+      value: MonoBehLogger, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 3450974957270275399, guid: c72180c6db268964bbcec82b021ed93f, type: 3}
+      propertyPath: OnPick.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_StringArgument
+      value: "\u0427\u0442\u043E-\u0442\u043E \u0443 \u043C\u0435\u043D\u044F \u0441
+        \u0433\u043B\u0430\u0437\u0430\u043C\u0438\u2026"
+      objectReference: {fileID: 0}
     - target: {fileID: 7145043843543218720, guid: c72180c6db268964bbcec82b021ed93f, type: 3}
       propertyPath: m_LocalScale.x
       value: 1
@@ -3624,6 +3941,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7145043843543218720, guid: c72180c6db268964bbcec82b021ed93f, type: 3}
   m_PrefabInstance: {fileID: 8312716046908369681}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &6681336626619399766 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3450974957270275399, guid: c72180c6db268964bbcec82b021ed93f, type: 3}
+  m_PrefabInstance: {fileID: 8312716046908369681}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ba11ffaa3124a35b17ca93bf7a8a3c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Pickable
 --- !u!1001 &8566285005288828991
 PrefabInstance:
   m_ObjectHideFlags: 0

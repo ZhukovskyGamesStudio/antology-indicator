@@ -14,6 +14,12 @@ public class ReactionZone : MonoBehaviour {
     [Tooltip("Один раз на всю игру (true) или один раз на этот конкретный триггер (false)")]
     public bool globalOnce = true;
 
+    [Tooltip("Промолчать, если в момент входа уже играет (или стоит в очереди) другая реплика.\n" +
+             "Реплика-«узнавание» имеет смысл только в свою секунду: если игрок вошёл, уже что-то " +
+             "сказав (взял предмет прямо на пороге), она выедет с опозданием и невпопад. " +
+             "Такая пропущенная реплика сгорает совсем и позже не всплывает.")]
+    public bool SkipIfBusy;
+
     // Дедуп по тексту — как ReactOnce, чтобы одинаковые зоны не повторяли реплику.
     private static readonly HashSet<string> _saidGlobal = new();
     private bool _saidLocal;
@@ -47,6 +53,12 @@ public class ReactionZone : MonoBehaviour {
             }
 
             _saidLocal = true;
+        }
+
+        // Помечаем сказанной в любом случае — реплика одноразовая, и если её
+        // момент занят чужой репликой, она не откладывается, а сгорает.
+        if (SkipIfBusy && TalkUI.instance.IsBusy) {
+            return;
         }
 
         TalkUI.instance.Say(reactionOnce).Forget();
