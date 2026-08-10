@@ -508,6 +508,7 @@ MonoBehaviour:
           m_StringArgument: RadioDisabled
           m_BoolArgument: 0
         m_CallState: 2
+  IgnoreRange: 0
 --- !u!114 &8911048714667821593
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -521,6 +522,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ToggleOnOff
   target: {fileID: 7299821101450183899}
+  onClip: {fileID: 0}
+  offClip: {fileID: 0}
 --- !u!114 &2792548033699049675
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -534,6 +537,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ToggleOnOff
   target: {fileID: 8470438783350035461}
+  onClip: {fileID: 0}
+  offClip: {fileID: 0}
 --- !u!65 &6635066866022884897
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1333,6 +1338,8 @@ MonoBehaviour:
   breakClip: {fileID: 7400000, guid: 1b5acd380faa93e4a92a6d994ba28a46, type: 2}
   radioMain: {fileID: 5871822157078615096}
   note: {fileID: 6199434417835066006}
+  HitPauseSeconds: 1.5
+  BreakPauseSeconds: 3
 --- !u!111 &376559523977606229
 Animation:
   m_ObjectHideFlags: 0
@@ -1879,7 +1886,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1298683248965794160, guid: 329464837f557e9448fe6a1212926975, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.304
+      value: 0.3228
       objectReference: {fileID: 0}
     - target: {fileID: 1298683248965794160, guid: 329464837f557e9448fe6a1212926975, type: 3}
       propertyPath: m_LocalPosition.z
@@ -2017,6 +2024,7 @@ MonoBehaviour:
           m_StringArgument: RadioSwitched
           m_BoolArgument: 0
         m_CallState: 2
+  IgnoreRange: 0
 --- !u!4 &5126757252027326814 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1298683248965794160, guid: 329464837f557e9448fe6a1212926975, type: 3}

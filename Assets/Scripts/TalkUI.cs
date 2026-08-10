@@ -31,7 +31,7 @@ public class TalkUI : MonoBehaviour {
     public Image spaceIcon;
 
     [Tooltip("Пауза между концом набора и появлением иконки, сек")]
-    public float spaceIconDelay = 1f;
+    public float spaceIconDelay = 0.4f;
 
     [Tooltip("Высота иконки в долях кегля текста")]
     public float spaceIconHeight = 0.62f;

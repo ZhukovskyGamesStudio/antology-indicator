@@ -100,6 +100,14 @@ public class MenuBookStacks : MonoBehaviour {
                 continue;
             }
 
+            // Сам компонент тоже включаем, и это не то же самое, что включить
+            // интерактив. С выключенным Pickable предмет прекрасно берётся
+            // (PickUp зовут напрямую из UnityEvent), но положить его уже нельзя:
+            // за опускание отвечает Update, а он у выключенного компонента не
+            // тикает — предмет залипал в руках навсегда вместе с isHolding.
+            // Ровно так вела себя раскрытая книга на столе.
+            pickable.enabled = true;
+
             InteractiveObj interactive = pickable.GetComponent<InteractiveObj>();
             if (interactive != null) {
                 interactive.IgnoreRange = true;
@@ -171,6 +179,11 @@ public class MenuBookStacks : MonoBehaviour {
         InteractiveObj interactive = book.GetComponent<InteractiveObj>();
         if (interactive != null) {
             interactive.IgnoreRange = true;
+        }
+
+        Pickable pickable = book.GetComponent<Pickable>();
+        if (pickable != null) {
+            pickable.shiftPos = new Vector3(-0.15f, 0, pickable.shiftPos.z);
         }
 
         Transform model = book.transform.childCount > 0 ? book.transform.GetChild(0) : null;
