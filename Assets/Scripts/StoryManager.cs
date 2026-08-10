@@ -38,6 +38,11 @@ public class StoryManager : MonoBehaviour {
     [Tooltip("Длительность светлой фазы между морганиями")]
     public float FinalFlickerLit = 0.35f;
 
+    [Header("Вода из ванной")]
+    [Tooltip("Сколько секунд между лужами: они натекают по очереди, по номеру Puddle.Order, " +
+             "а не появляются разом — чтобы игрок заметил движение и пошёл к источнику")]
+    public float PuddleInterval = 10f;
+
     [Header("Финал (диалог ГГ и дяди)")]
     [Tooltip("Уличный эмбиент, играет фоном во время титров/диалога")]
     public AudioSource finalOutdoors;
@@ -198,12 +203,12 @@ public class StoryManager : MonoBehaviour {
         tasksUI.CompleteTask();
         await UniTask.WaitForSeconds(1.5f, cancellationToken: _lifetimeCt);
 
-        tasksUI.ShowTask("Подпевайте радиостанции (<b>E</b>)");
+        tasksUI.ShowTask("Подпевайте радиостанции (<b>Q</b>)");
         await UniTask.WaitUntil(() => EventsLogged.Any(l => l == "Hummed"), cancellationToken: _lifetimeCt);
         tasksUI.CompleteTask();
         await UniTask.WaitForSeconds(1.5f, cancellationToken: _lifetimeCt);
 
-        tasksUI.ShowTask("Щёлкайте в ритм радиостанции (<b>Q</b>)");
+        tasksUI.ShowTask("Щёлкайте в ритм радиостанции (<b>E</b>)");
         await UniTask.WaitUntil(() => EventsLogged.Any(l => l == "Clicked"), cancellationToken: _lifetimeCt);
         tasksUI.CompleteTask();
         await UniTask.WaitForSeconds(1.5f, cancellationToken: _lifetimeCt);
@@ -325,8 +330,11 @@ public class StoryManager : MonoBehaviour {
         await UniTask.WaitForSeconds(5f, cancellationToken: _lifetimeCt);
 
         storyObjectsContainer.Watertap.enabled = false;
-        storyObjectsContainer.FridgeDoor.enabled = false;
-        storyObjectsContainer.MicrowaveDoor.enabled = false;
+
+        // Дверцы холодильника и микроволновки остаются в руках игрока: шум из них
+        // уже вынут (клипы гасят их AudioSource и обратно его не включают), так что
+        // закрывать доступ незачем — а закрытая дверца, которая перестала открываться
+        // после сюжетной сцены, читается как поломка. Ведут себя как дверцы шкафчиков.
 
         madnessManager.TmpMaxMadness = 100;
 
@@ -435,6 +443,16 @@ public class StoryManager : MonoBehaviour {
         await UniTask.WaitForSeconds(1.5f, cancellationToken: _lifetimeCt);
         tasksUI.ShowTask("Заставьте себя чихнуть (2 из 3)");
         await UniTask.WaitUntil(() => EventsLogged.Count(IsSneezeItem) >= 3, cancellationToken: _lifetimeCt);
+
+        // Нужные три применены — остальные предметы для чиханья больше не берутся
+        // в руки. Их по квартире одиннадцать (в лабиринте по копии на каждую комнату),
+        // и каждый на опускании дёргает СВОЮ анимацию руки. Переход к ней идёт из
+        // Any State, то есть обрывает финальный HandWin вместе с его событием
+        // TeleportBack на 3.1 сек — см. ниже, чем это заканчивается.
+        foreach (InteractiveObj dust in storyObjectsContainer.SneezeObjects) {
+            dust.enabled = false;
+        }
+
         tasksUI.CompleteTask();
         await UniTask.WaitForSeconds(1.5f, cancellationToken: _lifetimeCt);
         tasksUI.ShowTask("Заставьте себя чихнуть (3 из 3)");
@@ -444,17 +462,33 @@ public class StoryManager : MonoBehaviour {
         playerMovement.playerCanMove = false;
         storyObjectsContainer.BookMoved.gameObject.SetActive(true);
         storyObjectsContainer.BookUnmoved.gameObject.SetActive(false);
+
+        // Предмет в руках кладут кликом, и этот клик приходится ровно на начало
+        // финальной анимации. Ждём пустых рук — так же, как перед подменой комнат
+        // в главе с молотком.
+        await UniTask.WaitUntil(() => !FirstPersonController.isHolding, cancellationToken: _lifetimeCt);
         HUD.TriggerSneeze();
         //teleport player to starting pos
-        
+
         madnessManager.IsMadnessRaising = false;
         madnessManager.DropMadness(3f).Forget();
         await UniTask.WaitForSeconds(6f, cancellationToken: _lifetimeCt);
+
+        // Страховка: возврат в NormalRooms висит событием на 3.1 сек анимации
+        // HandWin, а анимацию всё-таки можно оборвать. Без возврата финал ломается
+        // насмерть — чип лежит в выключенной комнате, взять его нельзя, и сюжет
+        // навсегда встаёт на ожидании ChipPuttedAway. Повторный вызов — no-op.
+        HUD.TeleportBack();
     }
 
     private void SetPuddles(bool isActive) {
-        foreach (GameObject puddle in storyObjectsContainer.Puddles) {
-            puddle.SetActive(isActive);
+        // Лужи сами держат себя в статическом списке, поэтому перечислять их в
+        // инспекторе не нужно: натекут все, что есть в активной сейчас копии
+        // квартиры, по очереди — по своему Puddle.Order.
+        if (isActive) {
+            Puddle.FloodAll(PuddleInterval, _lifetimeCt);
+        } else {
+            Puddle.HideAll();
         }
 
         // Лужа и текущий кран — одно событие: вода в ванной идёт ровно с того
@@ -512,6 +546,10 @@ public class StoryManager : MonoBehaviour {
         storyObjectsContainer.BookUnmoved.gameObject.SetActive(false);
         
         
+        // Чип сюжет вкладывает в руку сам, поэтому рука должна быть пустой: пока
+        // игрок ждал чих, он мог взять со стола книгу, и тогда в руке оказались бы
+        // два предмета сразу, а положить их можно только одним и тем же кликом.
+        await UniTask.WaitUntil(() => !FirstPersonController.isHolding, cancellationToken: _lifetimeCt);
         storyObjectsContainer.ChipOnTable.gameObject.SetActive(true);
         storyObjectsContainer.ChipOnTable.PickUp();
         await TalkUI.Say("...Всё закончилось?");

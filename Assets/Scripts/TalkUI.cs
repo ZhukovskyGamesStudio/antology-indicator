@@ -120,14 +120,23 @@ public class TalkUI : MonoBehaviour {
         DrainQueue();
     }
 
-    /// <summary>Завершает все незакрытые ожидания — реплики показывать больше негде.</summary>
+    /// <summary>
+    /// Разрывает все незакрытые ожидания — реплики показывать больше негде.
+    /// Зовётся только на разрушении (OnDestroy и обрыв Process), поэтому именно
+    /// ОТМЕНА, а не завершение: `await TalkUI.Say(...)` в сюжете — это точка,
+    /// с которой сценарий продолжает трогать объекты сцены. Завершив ожидание,
+    /// мы будили StoryManager в уже уничтоженной сцене, и следующая же строка
+    /// главы падала с MissingReferenceException (при выходе из плей-мода это
+    /// стабильно ловилось на TableChapter). Отмена вместо этого разматывает всю
+    /// цепочку Story() наружу, где UniTask штатно глотает OperationCanceledException.
+    /// </summary>
     private void DrainQueue() {
         while (_queue.Count > 0) {
-            _queue.Dequeue().Tcs.TrySetResult();
+            _queue.Dequeue().Tcs.TrySetCanceled(_lifetime);
         }
 
         if (_currentTcs != null) {
-            _currentTcs.TrySetResult();
+            _currentTcs.TrySetCanceled(_lifetime);
         }
 
         _currentPhrase = null;

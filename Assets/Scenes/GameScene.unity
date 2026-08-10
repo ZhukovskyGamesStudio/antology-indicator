@@ -493,10 +493,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 958179393}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 200}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 123, y: 55.0992}
+  m_SizeDelta: {x: 242.38, y: 200}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &66100451
 MonoBehaviour:
@@ -6101,7 +6101,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: -1819, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &169876196
 MonoBehaviour:
@@ -8117,9 +8117,6 @@ MonoBehaviour:
   Radio: {fileID: 1277255082}
   FirstRadioPoint: {fileID: 883366392}
   NextRadioPoint: {fileID: 3494163924984855798}
-  Puddles:
-  - {fileID: 598548321}
-  - {fileID: 1776545320}
   BathroomWaters:
   - {fileID: 3602376}
   - {fileID: 3602375}
@@ -8170,11 +8167,6 @@ MonoBehaviour:
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2053733042368386308, guid: 4f4e7c962f838d64f98702de9983c3b2, type: 3}
   m_PrefabInstance: {fileID: 8399756536862886682}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &598548321 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4530109885141021293, guid: 3ef1a105f3fe0494383e375d6e0a0082, type: 3}
-  m_PrefabInstance: {fileID: 3494163924984855797}
   m_PrefabAsset: {fileID: 0}
 --- !u!114 &621008721 stripped
 MonoBehaviour:
@@ -9493,9 +9485,9 @@ RectTransform:
   - {fileID: 840791363}
   m_Father: {fileID: 169876195}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 15, y: 34.120003}
   m_SizeDelta: {x: 0, y: 200}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &856448986
@@ -10594,7 +10586,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 50, y: -20}
-  m_SizeDelta: {x: 0, y: 89.8016}
+  m_SizeDelta: {x: 415.38, y: 89.8016}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &958179394
 MonoBehaviour:
@@ -11308,10 +11300,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 958179393}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 61}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 0, y: -44.9008}
+  m_SizeDelta: {x: 63, y: 61}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &1148896896
 MonoBehaviour:
@@ -11580,6 +11572,7 @@ MonoBehaviour:
   FinalFlickers: 3
   FinalFlickerDark: 0.12
   FinalFlickerLit: 0.35
+  PuddleInterval: 10
   finalOutdoors: {fileID: 687554335}
   finalSteps: {fileID: 167078302}
   isDropProgress: 1
@@ -14713,8 +14706,8 @@ MonoBehaviour:
   RefillHumming: 2.5
   RefillClicking: 2.5
   ClickCooldown: 0.5
-  HummingKey: 101
-  ClickKey: 113
+  HummingKey: 113
+  ClickKey: 101
   RadioAudio: {fileID: 694799586}
   StoryManager: {fileID: 1199463263}
   hud: {fileID: 2028131268}
@@ -15187,11 +15180,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1769632015}
   m_CullTransparentMesh: 1
---- !u!1 &1776545320 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1774064698195068302, guid: 3ef1a105f3fe0494383e375d6e0a0082, type: 3}
-  m_PrefabInstance: {fileID: 3494163924984855797}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1799362960
 GameObject:
   m_ObjectHideFlags: 0
@@ -17149,7 +17137,7 @@ MonoBehaviour:
     - \u041B\u041A\u041C\n\u0412\u0440\u0430\u0449\u0430\u0442\u044C - \u0437\u0430\u0436\u0430\u0442\u044C
     \u041B\u041A\u041C\n\u041F\u0440\u043E\u043F\u0443\u0441\u0442\u0438\u0442\u044C
     \u0442\u0435\u043A\u0441\u0442 - \u041F\u0440\u043E\u0431\u0435\u043B\n\u0429\u0435\u043B\u0447\u043E\u043A
-    - Q\n\u041F\u0435\u043D\u0438\u0435 - E"
+    - E\n\u041F\u0435\u043D\u0438\u0435 - Q"
 --- !u!114 &2123469266
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17175,7 +17163,7 @@ MonoBehaviour:
     - \u041B\u041A\u041C\n\u0412\u0440\u0430\u0449\u0430\u0442\u044C - \u0437\u0430\u0436\u0430\u0442\u044C
     \u041B\u041A\u041C\n\u041F\u0440\u043E\u043F\u0443\u0441\u0442\u0438\u0442\u044C
     \u0442\u0435\u043A\u0441\u0442 - \u041F\u0440\u043E\u0431\u0435\u043B\n\u0429\u0435\u043B\u0447\u043E\u043A
-    - Q\n\u041F\u0435\u043D\u0438\u0435 - E"
+    - E\n\u041F\u0435\u043D\u0438\u0435 - Q"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 53912c1292ee3094a82dcf9cb2fb880b, type: 2}
   m_sharedMaterial: {fileID: 8230523711061176378, guid: 53912c1292ee3094a82dcf9cb2fb880b, type: 2}

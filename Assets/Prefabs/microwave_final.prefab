@@ -802,6 +802,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 7324896632093168772, guid: 3bafbd7561deea2469da0a4d82e64591, type: 3}
       insertIndex: -1
       addedObject: {fileID: 6785326558725630836}
+    - targetCorrespondingSourceObject: {fileID: 7324896632093168772, guid: 3bafbd7561deea2469da0a4d82e64591, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 730277118502791202}
   m_SourcePrefab: {fileID: 100100000, guid: 3bafbd7561deea2469da0a4d82e64591, type: 3}
 --- !u!1 &3868489205142920442 stripped
 GameObject:
@@ -823,9 +826,9 @@ MonoBehaviour:
   OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 4813365615021294}
-        m_TargetAssemblyTypeName: PlayAnim, Assembly-CSharp
-        m_MethodName: Play
+      - m_Target: {fileID: 730277118502791202}
+        m_TargetAssemblyTypeName: Openable, Assembly-CSharp
+        m_MethodName: Interact
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -865,22 +868,10 @@ MonoBehaviour:
         m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName:
+          m_ObjectArgumentAssemblyTypeName: 
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument:
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 6798355380499682083}
-        m_TargetAssemblyTypeName: InteractiveObj, Assembly-CSharp
-        m_MethodName: set_enabled
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument:
+          m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
   IgnoreRange: 0
@@ -911,7 +902,7 @@ MeshCollider:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 1
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
@@ -1017,6 +1008,29 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &730277118502791202
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3868489205142920442}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ba42011423e36d4890317613ab0345f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Openable
+  anim: {fileID: 9008095480219109826}
+  openClip: {fileID: 7400000, guid: ac8e7b772eb107e429b84bbb85f013df, type: 2}
+  closeClip: {fileID: 7400000, guid: 75a2794262bb3fa4bbd9f396ef088971, type: 2}
+  changeClip: {fileID: 0}
+  openSound: {fileID: 0}
+  closeSound: {fileID: 0}
+  states: []
+  swapAt: 0.25
+  ReactsToSnap: 0
+  cooldown: 0.5
+  snapReactionOnce: 
 --- !u!4 &6305701106942554005 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 3bafbd7561deea2469da0a4d82e64591, type: 3}
@@ -1040,6 +1054,7 @@ Animation:
   m_Animations:
   - {fileID: 7400000, guid: ac8e7b772eb107e429b84bbb85f013df, type: 2}
   - {fileID: 7400000, guid: dd7dc9433381b2d458e4f606ead693f0, type: 2}
+  - {fileID: 7400000, guid: 75a2794262bb3fa4bbd9f396ef088971, type: 2}
   m_WrapMode: 0
   m_PlayAutomatically: 0
   m_AnimatePhysics: 0

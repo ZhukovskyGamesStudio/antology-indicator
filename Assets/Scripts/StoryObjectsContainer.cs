@@ -23,7 +23,8 @@ public class StoryObjectsContainer : MonoBehaviour {
     public GameObject Radio, FirstRadioPoint, NextRadioPoint;
     public InteractiveObj[] SneezeObjects => FindObjectsByType<InteractiveObj>(FindObjectsInactive.Include, FindObjectsSortMode.None).Where(o=>o.CompareTag("Sneeze")).ToArray();
 
-    public GameObject[] Puddles;
+    // Список луж здесь не нужен: Puddle ведёт свой статический реестр и
+    // натекает по номеру Order — см. Puddle и StoryManager.SetPuddles.
 
     [Tooltip("Вода из кранов в ванных — та, что натекла лужами. Включается ровно тогда же, " +
              "когда появляются лужи; перекрывает её игрок сам (см. RunningWater)")]

@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -11,6 +13,10 @@ using Random = UnityEngine.Random;
 /// Места стопок задаются вручную точками <c>_stackAnchors</c>: каждая точка —
 /// низ своей стопки. Гизмо в сцене рисует, как книги лягут, — можно двигать точки
 /// прямо в редакторе и сразу видеть результат.
+///
+/// Стопка — живая: взял книгу снизу или из середины, и всё, что лежало выше,
+/// оседает вниз, а не висит в воздухе. Кладут книгу всегда на вершину той стопки,
+/// откуда её взяли, — возвращать её в середину некуда, там уже нет места.
 /// </summary>
 public class MenuBookStacks : MonoBehaviour {
     [SerializeField]
@@ -42,6 +48,16 @@ public class MenuBookStacks : MonoBehaviour {
     [SerializeField]
     private int _seed = 20260727;
 
+    [Header("Осадка стопки")]
+    [Tooltip("Сколько падает книга, оставшаяся без соседа снизу")]
+    [SerializeField]
+    private float _settleDuration = 0.22f;
+
+    [Tooltip("Пауза перед осадкой: книгу сначала вынимают из стопки, и только потом " +
+             "верхние проваливаются на её место")]
+    [SerializeField]
+    private float _settleDelay = 0.1f;
+
     [Header("Гизмо")]
     [Tooltip("Сколько книг рисовать в каждой стопке при расстановке точек")]
     [SerializeField]
@@ -49,6 +65,12 @@ public class MenuBookStacks : MonoBehaviour {
 
     [SerializeField]
     private Color _gizmoColor = new(1f, 0.85f, 0.4f, 0.9f);
+
+    // Что сейчас лежит в каждой стопке, снизу вверх. Индекс списка = индекс точки.
+    private readonly List<List<Pickable>> _stacks = new();
+
+    // Из какой стопки книга — чтобы вернуть её именно туда, откуда взяли.
+    private readonly Dictionary<Pickable, int> _stackOf = new();
 
     private void Start() {
         if (_catalog == null || _catalog.BookPrefab == null) {
@@ -63,8 +85,9 @@ public class MenuBookStacks : MonoBehaviour {
 
         PrepareScenePickables();
 
-        Random.State savedState = Random.state;
-        Random.InitState(_seed);
+        for (int i = 0; i < StackCount; i++) {
+            _stacks.Add(new List<Pickable>());
+        }
 
         int index = 0;
         foreach (string id in BookCollection.Found) {
@@ -79,7 +102,9 @@ public class MenuBookStacks : MonoBehaviour {
             index++;
         }
 
-        Random.state = savedState;
+        for (int i = 0; i < StackCount; i++) {
+            Relayout(i, instant: true);
+        }
     }
 
     /// <summary>
@@ -127,31 +152,125 @@ public class MenuBookStacks : MonoBehaviour {
     private int StackCount => _stackAnchors == null ? 0 : _stackAnchors.Length;
 
     /// <summary>Книги идут по стопкам по кругу, чтобы стопки росли вместе, а не одна за другой.</summary>
-    private Transform StackOf(int index) => _stackAnchors[index % StackCount];
-
-    private int LevelOf(int index) => index / StackCount;
+    private int StackIndexOf(int index) => index % StackCount;
 
     private void Spawn(BookCatalog.Entry entry, int index) {
-        Transform anchor = StackOf(index);
+        int stack = StackIndexOf(index);
+        Transform anchor = _stackAnchors[stack];
         if (anchor == null) {
             return;
         }
 
-        Quaternion rotation = Rotation(anchor, Random.Range(-_angleJitter, _angleJitter));
-        Vector3 center = Center(anchor, LevelOf(index),
-            Random.Range(-_positionJitter, _positionJitter),
-            Random.Range(-_positionJitter, _positionJitter));
-
-        // Пивот книги — у корешка, а не в центре, поэтому сдвигаем точку заранее:
-        // Pickable в Awake запоминает стартовую позицию, и двигать объект после
-        // Instantiate уже поздно — книга возвращалась бы не на своё место.
-        BoxCollider prefabBox = _catalog.BookPrefab.GetComponent<BoxCollider>();
-        Vector3 position = prefabBox != null ? center - rotation * prefabBox.center : center;
+        SlotPose(stack, _stacks[stack].Count, out Vector3 position, out Quaternion rotation);
 
         GameObject book = Instantiate(_catalog.BookPrefab, position, rotation, anchor);
         book.name = "MenuBook_" + entry.Id;
 
         Apply(book, entry);
+
+        Pickable pickable = book.GetComponent<Pickable>();
+        if (pickable == null) {
+            return;
+        }
+
+        _stacks[stack].Add(pickable);
+        _stackOf[pickable] = stack;
+
+        // Стопка должна знать, что книгу из неё вынули: иначе всё, что лежало
+        // выше, останется висеть в воздухе, а сама книга вернётся в дырку,
+        // которой к тому моменту уже нет.
+        pickable.OnPick.AddListener(() => OnBookPicked(pickable));
+        pickable.OnDrop.AddListener(() => OnBookDropped(pickable));
+    }
+
+    private void OnBookPicked(Pickable book) {
+        if (!_stackOf.TryGetValue(book, out int stack)) {
+            return;
+        }
+
+        // Книгу теперь ведёт Pickable — осадка стопки не должна тянуть её обратно.
+        book.transform.DOKill();
+
+        _stacks[stack].Remove(book);
+        Relayout(stack, instant: false);
+    }
+
+    private void OnBookDropped(Pickable book) {
+        if (!_stackOf.TryGetValue(book, out int stack)) {
+            return;
+        }
+
+        book.transform.DOKill();
+
+        if (!_stacks[stack].Contains(book)) {
+            _stacks[stack].Add(book);
+        }
+
+        // Опускаемую книгу к её новому месту тянет сам Pickable (MoveTo), поэтому
+        // здесь ей достаточно назначить «дом» — вершину стопки.
+        Relayout(stack, instant: false, skip: book);
+    }
+
+    /// <summary>
+    /// Пересобрать стопку снизу вверх: каждая книга занимает своё место по порядку.
+    /// Место — за слотом, а не за книгой, поэтому осевшая книга наследует наклон
+    /// того места, куда легла, и стопка остаётся такой же неаккуратной, как была.
+    /// </summary>
+    private void Relayout(int stack, bool instant, Pickable skip = null) {
+        List<Pickable> books = _stacks[stack];
+        for (int level = 0; level < books.Count; level++) {
+            Pickable book = books[level];
+            if (book == null) {
+                continue;
+            }
+
+            SlotPose(stack, level, out Vector3 position, out Quaternion rotation);
+            book.SetHomePose(position, rotation);
+
+            // Книга в руках (или та, что как раз летит из рук) едет сама.
+            if (book == skip || book.IsPicked) {
+                continue;
+            }
+
+            if (instant) {
+                book.transform.SetPositionAndRotation(position, rotation);
+                continue;
+            }
+
+            if (book.transform.position == position && book.transform.rotation == rotation) {
+                continue;
+            }
+
+            book.transform.DOKill();
+            book.transform.DOMove(position, _settleDuration).SetDelay(_settleDelay).SetEase(Ease.InQuad);
+            book.transform.DORotateQuaternion(rotation, _settleDuration).SetDelay(_settleDelay).SetEase(Ease.OutQuad);
+        }
+    }
+
+    /// <summary>
+    /// Куда встаёт книга на уровне <paramref name="level"/> в стопке. Разброс
+    /// детерминированный (зерно + номер стопки + номер уровня): одно и то же место
+    /// всегда получает один и тот же наклон, поэтому раскладка не прыгает ни между
+    /// запусками, ни когда стопка оседает.
+    /// </summary>
+    private void SlotPose(int stack, int level, out Vector3 position, out Quaternion rotation) {
+        Transform anchor = _stackAnchors[stack];
+
+        Random.State saved = Random.state;
+        Random.InitState(_seed + stack * 7919 + level * 104729);
+        float yaw = Random.Range(-_angleJitter, _angleJitter);
+        float right = Random.Range(-_positionJitter, _positionJitter);
+        float forward = Random.Range(-_positionJitter, _positionJitter);
+        Random.state = saved;
+
+        rotation = Rotation(anchor, yaw);
+        Vector3 center = Center(anchor, level, right, forward);
+
+        // Пивот книги — у корешка, а не в центре, поэтому сдвигаем точку заранее.
+        BoxCollider prefabBox = _catalog != null && _catalog.BookPrefab != null
+            ? _catalog.BookPrefab.GetComponent<BoxCollider>()
+            : null;
+        position = prefabBox != null ? center - rotation * prefabBox.center : center;
     }
 
     private Quaternion Rotation(Transform anchor, float yawJitter) {
@@ -226,16 +345,27 @@ public class MenuBookStacks : MonoBehaviour {
             Gizmos.DrawLine(anchor.position - anchor.forward * 0.1f, anchor.position + anchor.forward * 0.1f);
 
             for (int level = 0; level < _gizmoBooksPerStack; level++) {
-                // Тот же «случайный» наклон, что и в игре: индекс книги по кругу,
-                // так что гизмо показывает примерно ту же стопку, что получится.
-                float yaw = Mathf.Sin((stack + 1) * 12.9898f + level * 78.233f) * _angleJitter;
-                Gizmos.matrix = Matrix4x4.TRS(Center(anchor, level, 0f, 0f), Rotation(anchor, yaw), Vector3.one);
+                // Те же слоты, что и в игре, — гизмо показывает ровно ту стопку,
+                // которая получится.
+                SlotPose(stack, level, out Vector3 position, out Quaternion rotation);
+                Gizmos.matrix = Matrix4x4.TRS(position, rotation, Vector3.one);
                 Gizmos.color = new Color(_gizmoColor.r, _gizmoColor.g, _gizmoColor.b, _gizmoColor.a * (level == 0 ? 1f : 0.55f));
-                Gizmos.DrawWireCube(Vector3.zero, size);
+                Gizmos.DrawWireCube(PrefabBoxCenter(), size);
             }
         }
 
         Gizmos.matrix = Matrix4x4.identity;
+    }
+
+    private Vector3 PrefabBoxCenter() {
+        if (_catalog != null && _catalog.BookPrefab != null) {
+            BoxCollider box = _catalog.BookPrefab.GetComponent<BoxCollider>();
+            if (box != null) {
+                return box.center;
+            }
+        }
+
+        return Vector3.zero;
     }
 
     /// <summary>Габариты книги берём с коллайдера префаба, чтобы гизмо не врало.</summary>

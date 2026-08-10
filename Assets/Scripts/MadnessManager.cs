@@ -69,8 +69,11 @@ public class MadnessManager : MonoBehaviour {
 
     public DateTime LastClickTime;
     public float ClickCooldown = 1.5f;
-    public KeyCode HummingKey = KeyCode.E;
-    public KeyCode ClickKey = KeyCode.Q;
+    // Клавиши перебиты в инспекторе (объект MadnessManager в GameScene) — правка
+    // одного только дефолта здесь на игру не влияет. Тексты задач с буквами живут
+    // в StoryManager и LocalizationData.
+    public KeyCode HummingKey = KeyCode.Q;
+    public KeyCode ClickKey = KeyCode.E;
 
     public RadioAudio RadioAudio;
 

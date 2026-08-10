@@ -27,10 +27,10 @@ public static class LocalizationData {
             "Find a music station"),
         ("Найдите музыкальную волну (<b>ЛКМ</b> положить предмет)",
             "Find a music station (<b>LMB</b> to put item down)"),
-        ("Подпевайте радиостанции (<b>E</b>)",
-            "Sing along with the station (<b>E</b>)"),
-        ("Щёлкайте в ритм радиостанции (<b>Q</b>)",
-            "Snap along to the station's beat (<b>Q</b>)"),
+        ("Подпевайте радиостанции (<b>Q</b>)",
+            "Sing along with the station (<b>Q</b>)"),
+        ("Щёлкайте в ритм радиостанции (<b>E</b>)",
+            "Snap along to the station's beat (<b>E</b>)"),
         ("Найду лучше что-то нейтральное",
             "Better find something more neutral"),
         ("Найдите расслабляющую волну",
@@ -228,8 +228,8 @@ public static class LocalizationData {
         // ── Экран паузы: подсказка по управлению (EscapePanel/Help, ключи = sourceOverride) ──
         ("Управление",
             "Controls"),
-        ("Взаимодействие - ЛКМ\nВзять/положить - ЛКМ\nВращать - зажать ЛКМ\nПропустить текст - Пробел\nЩелчок - Q\nПение - E",
-            "Interact - LMB\nTake/put down - LMB\nRotate - Hold LMB\nSkip Text - Space\nClick - Q\nSing - E"),
+        ("Взаимодействие - ЛКМ\nВзять/положить - ЛКМ\nВращать - зажать ЛКМ\nПропустить текст - Пробел\nЩелчок - E\nПение - Q",
+            "Interact - LMB\nTake/put down - LMB\nRotate - Hold LMB\nSkip Text - Space\nClick - E\nSing - Q"),
 
         // ───────────────────────── Финал: осознание (внутренний монолог ГГ) ─────────────────────────
         ("...Всё закончилось?",

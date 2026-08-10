@@ -198,10 +198,22 @@ public class HUD : MonoBehaviour {
         firstPersonController.cameraCanMove = true;
     }
 
+    /// <summary>
+    /// Возврат из лабиринта в настоящую квартиру. Приходит дважды: событием на
+    /// 3.1 сек анимации HandWin и страховкой из <see cref="StoryManager"/> после
+    /// финального чиха — анимацию можно оборвать (переходы к анимациям предметов
+    /// идут из Any State), а без возврата финал не работает вовсе. Второй вызов
+    /// должен быть no-op, иначе игрока дёрнет на стартовую точку второй раз.
+    /// </summary>
     public void TeleportBack() {
+        StoryObjectsContainer objs = StoryManager.instance.storyObjectsContainer;
+        if (!objs.LabirintRooms.activeSelf) {
+            return;
+        }
+
         firstPersonController.gameObject.transform.position = new Vector3(3.08f, 1.25f, 7.41f);
-        StoryManager.instance.storyObjectsContainer.NormalRooms.SetActive(true);
-        StoryManager.instance.storyObjectsContainer.LabirintRooms.SetActive(false);
+        objs.NormalRooms.SetActive(true);
+        objs.LabirintRooms.SetActive(false);
         StoryManager.instance.TeleportRadioBack();
     }
 }
