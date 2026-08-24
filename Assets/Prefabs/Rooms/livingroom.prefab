@@ -2255,13 +2255,63 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7070003333813674514, guid: 329464837f557e9448fe6a1212926975, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6771223158439828945}
+    - targetCorrespondingSourceObject: {fileID: 7070003333813674514, guid: 329464837f557e9448fe6a1212926975, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 752684062375483436}
   m_SourcePrefab: {fileID: 100100000, guid: 329464837f557e9448fe6a1212926975, type: 3}
 --- !u!4 &3896084441771694180 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1298683248965794160, guid: 329464837f557e9448fe6a1212926975, type: 3}
   m_PrefabInstance: {fileID: 2599832217318416660}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &5046783876419797766 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7070003333813674514, guid: 329464837f557e9448fe6a1212926975, type: 3}
+  m_PrefabInstance: {fileID: 2599832217318416660}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &6771223158439828945
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5046783876419797766}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad5221c58a604d709d26bad21a29d65a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HittableObj
+  Hp: 1
+  OnHit:
+    m_PersistentCalls:
+      m_Calls: []
+  OnDeath:
+    m_PersistentCalls:
+      m_Calls: []
+  hitClips: []
+  deathClips:
+  - {fileID: 8300000, guid: d370945b15be0ee40a3d662ce52b2562, type: 3}
+--- !u!114 &752684062375483436
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5046783876419797766}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 616f0902ff750454cbfe824dad9c2ff5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BreakableProp
+  brokenSprite: {fileID: 21300000, guid: f8e61fb70be8a0044aa6a5e8a339c722, type: 3}
+  hammerClips:
+  - {fileID: 8300000, guid: 2bcefd1c1ebc1714085cbc47e1634dad, type: 3}
+  punchScale: 0.14
+  punchDuration: 0.35
 --- !u!1001 &3280657383936115462
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2771,8 +2821,58 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7070003333813674514, guid: 329464837f557e9448fe6a1212926975, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3001030686117222322}
+    - targetCorrespondingSourceObject: {fileID: 7070003333813674514, guid: 329464837f557e9448fe6a1212926975, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6659132905241485761}
   m_SourcePrefab: {fileID: 100100000, guid: 329464837f557e9448fe6a1212926975, type: 3}
+--- !u!1 &3045923859058292562 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7070003333813674514, guid: 329464837f557e9448fe6a1212926975, type: 3}
+  m_PrefabInstance: {fileID: 5213190409232373056}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &3001030686117222322
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3045923859058292562}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad5221c58a604d709d26bad21a29d65a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HittableObj
+  Hp: 1
+  OnHit:
+    m_PersistentCalls:
+      m_Calls: []
+  OnDeath:
+    m_PersistentCalls:
+      m_Calls: []
+  hitClips: []
+  deathClips:
+  - {fileID: 8300000, guid: d370945b15be0ee40a3d662ce52b2562, type: 3}
+--- !u!114 &6659132905241485761
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3045923859058292562}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 616f0902ff750454cbfe824dad9c2ff5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BreakableProp
+  brokenSprite: {fileID: 21300000, guid: 6f1a07a61fda73e45a099eaee9bc6d8f, type: 3}
+  hammerClips:
+  - {fileID: 8300000, guid: 2bcefd1c1ebc1714085cbc47e1634dad, type: 3}
+  punchScale: 0.14
+  punchDuration: 0.35
 --- !u!4 &6511396399276354608 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1298683248965794160, guid: 329464837f557e9448fe6a1212926975, type: 3}

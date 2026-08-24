@@ -10,6 +10,9 @@ public class HintUI : MonoBehaviour {
 
     private void OnEnable() {
         Language.OnLanguageChanged += Apply;
+        // Подсказка прячется вместе с игровым UI на паузу, а OnDisable отписывает
+        // от смены языка — добираем пропущенное переключение при включении.
+        Apply();
     }
 
     private void OnDisable() {

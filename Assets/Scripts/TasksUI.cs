@@ -15,6 +15,10 @@ public class TasksUI : MonoBehaviour {
 
     private void OnEnable() {
         Language.OnLanguageChanged += OnLanguageChanged;
+        // Пауза прячет TaskPanel целиком (UI.OnPressedEsc), и OnDisable нас отписывает:
+        // смена языка в паузе проходила мимо, задача возвращалась на старом языке.
+        // Вернулись на экран — перерисовываемся по текущему языку сами.
+        OnLanguageChanged();
     }
 
     private void OnDisable() {

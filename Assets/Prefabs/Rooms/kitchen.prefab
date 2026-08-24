@@ -1011,6 +1011,12 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 7070003333813674514, guid: 329464837f557e9448fe6a1212926975, type: 3}
       insertIndex: -1
       addedObject: {fileID: 6210542135309082323}
+    - targetCorrespondingSourceObject: {fileID: 7070003333813674514, guid: 329464837f557e9448fe6a1212926975, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8009628395880218392}
+    - targetCorrespondingSourceObject: {fileID: 7070003333813674514, guid: 329464837f557e9448fe6a1212926975, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 245294637882401896}
   m_SourcePrefab: {fileID: 100100000, guid: 329464837f557e9448fe6a1212926975, type: 3}
 --- !u!4 &614190518489720684 stripped
 Transform:
@@ -1035,6 +1041,45 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FaceCamera
   IsLockX: 1
+--- !u!114 &8009628395880218392
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8691490019890674702}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad5221c58a604d709d26bad21a29d65a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HittableObj
+  Hp: 1
+  OnHit:
+    m_PersistentCalls:
+      m_Calls: []
+  OnDeath:
+    m_PersistentCalls:
+      m_Calls: []
+  hitClips: []
+  deathClips:
+  - {fileID: 8300000, guid: d370945b15be0ee40a3d662ce52b2562, type: 3}
+--- !u!114 &245294637882401896
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8691490019890674702}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 616f0902ff750454cbfe824dad9c2ff5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BreakableProp
+  brokenSprite: {fileID: 21300000, guid: b30dbd8c7484610458bb5167fd5c0ed5, type: 3}
+  hammerClips:
+  - {fileID: 8300000, guid: 2bcefd1c1ebc1714085cbc47e1634dad, type: 3}
+  punchScale: 0.14
+  punchDuration: 0.35
 --- !u!1001 &2174741200806141954
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2368,6 +2413,12 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 7070003333813674514, guid: 329464837f557e9448fe6a1212926975, type: 3}
       insertIndex: -1
       addedObject: {fileID: 499136198327036069}
+    - targetCorrespondingSourceObject: {fileID: 7070003333813674514, guid: 329464837f557e9448fe6a1212926975, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4389532090493092375}
+    - targetCorrespondingSourceObject: {fileID: 7070003333813674514, guid: 329464837f557e9448fe6a1212926975, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4677583245907577852}
   m_SourcePrefab: {fileID: 100100000, guid: 329464837f557e9448fe6a1212926975, type: 3}
 --- !u!1 &2806982226185632287 stripped
 GameObject:
@@ -2387,6 +2438,45 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FaceCamera
   IsLockX: 1
+--- !u!114 &4389532090493092375
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2806982226185632287}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad5221c58a604d709d26bad21a29d65a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HittableObj
+  Hp: 1
+  OnHit:
+    m_PersistentCalls:
+      m_Calls: []
+  OnDeath:
+    m_PersistentCalls:
+      m_Calls: []
+  hitClips: []
+  deathClips:
+  - {fileID: 8300000, guid: d370945b15be0ee40a3d662ce52b2562, type: 3}
+--- !u!114 &4677583245907577852
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2806982226185632287}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 616f0902ff750454cbfe824dad9c2ff5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BreakableProp
+  brokenSprite: {fileID: 21300000, guid: e78fa61d64ec0bb419a29514834d1fc7, type: 3}
+  hammerClips:
+  - {fileID: 8300000, guid: 2bcefd1c1ebc1714085cbc47e1634dad, type: 3}
+  punchScale: 0.14
+  punchDuration: 0.35
 --- !u!4 &6263394841509536125 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1298683248965794160, guid: 329464837f557e9448fe6a1212926975, type: 3}
@@ -3378,6 +3468,12 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 7070003333813674514, guid: 329464837f557e9448fe6a1212926975, type: 3}
       insertIndex: -1
       addedObject: {fileID: 4329249538923817617}
+    - targetCorrespondingSourceObject: {fileID: 7070003333813674514, guid: 329464837f557e9448fe6a1212926975, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8129018446791884207}
+    - targetCorrespondingSourceObject: {fileID: 7070003333813674514, guid: 329464837f557e9448fe6a1212926975, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5796293440771591163}
   m_SourcePrefab: {fileID: 100100000, guid: 329464837f557e9448fe6a1212926975, type: 3}
 --- !u!1 &421386431197111119 stripped
 GameObject:
@@ -3397,6 +3493,45 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FaceCamera
   IsLockX: 1
+--- !u!114 &8129018446791884207
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 421386431197111119}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad5221c58a604d709d26bad21a29d65a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HittableObj
+  Hp: 1
+  OnHit:
+    m_PersistentCalls:
+      m_Calls: []
+  OnDeath:
+    m_PersistentCalls:
+      m_Calls: []
+  hitClips: []
+  deathClips:
+  - {fileID: 8300000, guid: d370945b15be0ee40a3d662ce52b2562, type: 3}
+--- !u!114 &5796293440771591163
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 421386431197111119}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 616f0902ff750454cbfe824dad9c2ff5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BreakableProp
+  brokenSprite: {fileID: 21300000, guid: 4bfadc55ed003454c86c7adbb21dfc5d, type: 3}
+  hammerClips:
+  - {fileID: 8300000, guid: 2bcefd1c1ebc1714085cbc47e1634dad, type: 3}
+  punchScale: 0.14
+  punchDuration: 0.35
 --- !u!4 &8485199100507977773 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1298683248965794160, guid: 329464837f557e9448fe6a1212926975, type: 3}
