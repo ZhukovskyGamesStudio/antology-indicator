@@ -516,7 +516,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 70e6b78a68cb0c247931b51c0fc15f23, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -3351,6 +3351,7 @@ MonoBehaviour:
   - {fileID: 8927246585325642814}
   - {fileID: 7983531095972489839}
   swapAt: 0.15
+  ReactsToSnap: 1
   cooldown: 0.5
   snapReactionOnce: "\u0418\u0437\u0434\u0435\u0432\u0430\u0435\u0442\u0435\u0441\u044C?..
     \u0422\u0435\u043F\u0435\u0440\u044C \u044F \u0434\u0432\u0438\u0433\u0430\u044E
