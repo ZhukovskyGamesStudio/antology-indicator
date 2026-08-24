@@ -512,6 +512,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TasksUI
   text: {fileID: 66100452}
   Ckeck: {fileID: 0}
+  maxTextWidth: 1400
 --- !u!114 &66100452
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7027,6 +7028,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TasksUI
   text: {fileID: 316025657}
   Ckeck: {fileID: 0}
+  maxTextWidth: 1400
 --- !u!114 &316025657
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7077,9 +7079,9 @@ MonoBehaviour:
   m_fontSize: 30.8
   m_fontSizeBase: 30.8
   m_fontWeight: 400
-  m_enableAutoSizing: 0
-  m_fontSizeMin: 18
-  m_fontSizeMax: 72
+  m_enableAutoSizing: 1
+  m_fontSizeMin: 20
+  m_fontSizeMax: 30.8
   m_fontStyle: 4
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 4096
@@ -7091,7 +7093,7 @@ MonoBehaviour:
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
-  m_TextWrappingMode: 1
+  m_TextWrappingMode: 0
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
   m_linkedTextComponent: {fileID: 0}
@@ -9699,6 +9701,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TasksUI
   text: {fileID: 856448987}
   Ckeck: {fileID: 0}
+  maxTextWidth: 1400
 --- !u!114 &856448987
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10797,6 +10800,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TasksUI
   text: {fileID: 66100452}
   Ckeck: {fileID: 1148896895}
+  maxTextWidth: 1400
 --- !u!222 &958179396
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -11390,6 +11394,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WinPanel
   _endText: {fileID: 1868079413}
+  _maxTextWidth: 1400
 --- !u!1001 &1112825482
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -15704,6 +15709,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TasksUI
   text: {fileID: 1868079413}
   Ckeck: {fileID: 0}
+  maxTextWidth: 1400
 --- !u!114 &1868079413
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16065,9 +16071,9 @@ MonoBehaviour:
   m_fontSize: 48
   m_fontSizeBase: 48
   m_fontWeight: 400
-  m_enableAutoSizing: 0
-  m_fontSizeMin: 18
-  m_fontSizeMax: 72
+  m_enableAutoSizing: 1
+  m_fontSizeMin: 30
+  m_fontSizeMax: 48
   m_fontStyle: 0
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 4096
@@ -16079,7 +16085,7 @@ MonoBehaviour:
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
-  m_TextWrappingMode: 1
+  m_TextWrappingMode: 0
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
   m_linkedTextComponent: {fileID: 0}
@@ -16234,9 +16240,9 @@ MonoBehaviour:
   m_fontSize: 48
   m_fontSizeBase: 48
   m_fontWeight: 400
-  m_enableAutoSizing: 0
-  m_fontSizeMin: 18
-  m_fontSizeMax: 72
+  m_enableAutoSizing: 1
+  m_fontSizeMin: 30
+  m_fontSizeMax: 48
   m_fontStyle: 0
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 4096
@@ -16248,7 +16254,7 @@ MonoBehaviour:
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
-  m_TextWrappingMode: 1
+  m_TextWrappingMode: 0
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
   m_linkedTextComponent: {fileID: 0}
@@ -17175,6 +17181,7 @@ MonoBehaviour:
   newlinePauseMultiplier: 6
   spacePauseMultiplier: 1.2
   letterJitter: 0.18
+  maxTextWidth: 1500
   skipKey: 32
   skipOnLeftClick: 1
 --- !u!114 &2094456331 stripped

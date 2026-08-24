@@ -62,6 +62,12 @@ public class TalkUI : MonoBehaviour {
     [Range(0f, 0.5f)]
     public float letterJitter = 0.18f;
 
+    [Header("Ширина плашки")]
+    [Tooltip("Предельная ширина текста в единицах канваса (1920 = вся ширина экрана).\n" +
+             "Строка длиннее — реплика переносится на вторую строку, а плашка перестаёт расти.\n" +
+             "Запас до края нужен: справа к последней букве ещё пристраивается иконка пробела.")]
+    public float maxTextWidth = 1500f;
+
     [Header("Skip")]
     [Tooltip("Клавиша скипа в дополнение к ЛКМ. Первое нажатие во время печати " +
              "мгновенно дописывает реплику, второе во время hold-фазы — закрывает её.")]
@@ -98,9 +104,14 @@ public class TalkUI : MonoBehaviour {
     /// <summary>Объект ещё жив и есть куда писать текст.</summary>
     private bool IsAlive => this != null && text != null;
 
+    // Через него навязывается предельная ширина: без ограничения плашка тянулась
+    // по длине строки и на длинных английских репликах уезжала за края экрана.
+    private LayoutElement _textLayout;
+
     private void Awake() {
         instance = this;
         _lifetime = this.GetCancellationTokenOnDestroy();
+        _textLayout = TextWidthLimit.EnsureElement(text);
     }
 
     private void OnEnable() {
@@ -152,6 +163,7 @@ public class TalkUI : MonoBehaviour {
         }
 
         text.text = BuildDisplay(_onScreenSource);
+        TextWidthLimit.Apply(text, _textLayout, maxTextWidth);
         text.ForceMeshUpdate();
         text.maxVisibleCharacters = text.textInfo.characterCount;
 
@@ -320,6 +332,7 @@ public class TalkUI : MonoBehaviour {
         HideSpaceIcon();
         _onScreenSource = phrase;
         text.text = BuildDisplay(phrase);
+        TextWidthLimit.Apply(text, _textLayout, maxTextWidth);
         text.maxVisibleCharacters = 0;
         // TMP сам разделит rich-text-теги от видимых символов после ForceMeshUpdate.
         text.ForceMeshUpdate();

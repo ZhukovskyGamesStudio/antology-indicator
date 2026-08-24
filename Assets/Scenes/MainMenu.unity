@@ -1825,6 +1825,8 @@ MonoBehaviour:
   _angleJitter: 14
   _flatEuler: {x: 90, y: 0, z: 0}
   _seed: 20260727
+  _settleDuration: 0.22
+  _settleDelay: 0.1
   _gizmoBooksPerStack: 6
   _gizmoColor: {r: 1, g: 0.85, b: 0.4, a: 0.9}
 --- !u!4 &689798704
@@ -6079,9 +6081,9 @@ MonoBehaviour:
   m_fontSize: 36
   m_fontSizeBase: 36
   m_fontWeight: 400
-  m_enableAutoSizing: 0
-  m_fontSizeMin: 18
-  m_fontSizeMax: 72
+  m_enableAutoSizing: 1
+  m_fontSizeMin: 22
+  m_fontSizeMax: 36
   m_fontStyle: 0
   m_HorizontalAlignment: 4
   m_VerticalAlignment: 256
