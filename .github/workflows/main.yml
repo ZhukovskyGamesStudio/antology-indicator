@@ -7,7 +7,10 @@ on:
 
 jobs:
   build-windows:
-    runs-on: windows-latest
+    # На ubuntu, а не windows: раннер windows-latest (Windows Server 2025) больше не
+    # поднимает Docker-демон, а game-ci на Windows собирает только через Docker.
+    # Standalone у проекта на Mono, так что Linux-образ windows-mono подходит.
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
