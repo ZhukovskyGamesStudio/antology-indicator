@@ -539,7 +539,7 @@ python Tools/fix_tmp_kerning.py
 
 ## CI/CD
 
-[.github/workflows/main.yml](.github/workflows/main.yml) — три параллельные джобы (`build-windows`, `build-macos`, `build-webgl`) на `game-ci/unity-builder@v4`, версия Unity берётся из `vars.UNITY_VERSION`, лицензия и креды — из секретов. После сборок четвёртая джоба `deploy-itch` качает артефакты и пушит их через `butler` на itch.io по каналам `windows`, `macos`, `html`. Триггеры: `workflow_dispatch` и `repository_dispatch` типа `unity-build-trigger`.
+[.github/workflows/main.yml](.github/workflows/main.yml) — три параллельные джобы (`build-windows`, `build-macos`, `build-webgl`) на `game-ci/unity-builder@v4`, версия Unity — `auto`, то есть из `ProjectSettings/ProjectVersion.txt` (раньше бралась из `vars.UNITY_VERSION`, и после апгрейда проекта до 6000.6 CI падал на резолве пакетов: модули `physicscore2d`/`tetgen`/`timelinefoundation` и Timeline 6.6 в 6000.3 не существуют). Лицензия и креды — из секретов. Образ game-ci под новую версию Unity должен существовать на Docker Hub (`unityci/editor`), обычно появляется через несколько дней после релиза. После сборок четвёртая джоба `deploy-itch` качает артефакты и пушит их через `butler` на itch.io по каналам `windows`, `macos`, `html`. Триггеры: `workflow_dispatch` и `repository_dispatch` типа `unity-build-trigger`.
 
 ## Замеченные шероховатости
 
