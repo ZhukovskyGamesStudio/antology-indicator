@@ -85,6 +85,9 @@ public static class SteamAchievements {
 
         uint appId = SteamUtils.GetAppID().m_AppId;
         _isSpacewar = appId == SpacewarAppId;
+#if UNITY_EDITOR
+        WarnIfAppIdFileIsStale(appId);
+#endif
         if (_isSpacewar) {
             Debug.LogWarning($"[Steam] App ID {appId} — это Spacewar. Достижения подменены на тестовые: " +
                              $"{FinishGame} → {SpacewarNames[FinishGame]}, {AllBooks} → {SpacewarNames[AllBooks]}.");
@@ -93,6 +96,28 @@ public static class SteamAchievements {
         }
 #endif
     }
+
+#if STEAM_AVAILABLE && UNITY_EDITOR
+    /// <summary>
+    /// Steam читает steam_appid.txt только при ПЕРВОМ Init в процессе, а дальше
+    /// берёт ID из переменных окружения SteamAppId/SteamGameId, которые сам же
+    /// и выставил. Поэтому правка файла вступает в силу только после перезапуска
+    /// редактора — и без этой проверки расхождение ловилось бы вслепую.
+    /// </summary>
+    private static void WarnIfAppIdFileIsStale(uint actualAppId) {
+        string path = System.IO.Path.Combine(Application.dataPath, "..", "steam_appid.txt");
+        if (!System.IO.File.Exists(path)) {
+            return;
+        }
+
+        string raw = System.IO.File.ReadAllText(path).Trim();
+        if (uint.TryParse(raw, out uint fileAppId) && fileAppId != actualAppId) {
+            Debug.LogWarning($"[Steam] В steam_appid.txt записан {fileAppId}, а Steam работает с {actualAppId}: " +
+                             "App ID читается из файла только при первом запуске Steam API в процессе. " +
+                             "Перезапусти Unity, чтобы новый ID вступил в силу.");
+        }
+    }
+#endif
 
     /// <summary>Имя, под которым достижение реально живёт в текущем App ID.</summary>
     private static string Resolve(string id) {
