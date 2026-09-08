@@ -518,6 +518,24 @@ python Tools/fix_tmp_kerning.py
 
 **Мерить в редакторе бесполезно:** время кадра скачет 22↔42 мс без всяких изменений (мешают другие открытые копии Unity и компиляция шейдер-вариантов после каждой смены настроек). Опираться нужно на счётчик событий фрейм-дебаггера и попиксельные диффы — они детерминированы.
 
+## Steam-достижения
+
+Два достижения, оба через [SteamAchievements](Assets/Scripts/Steam/SteamAchievements.cs) поверх пакета `com.rlabrecque.steamworks.net` (Steamworks.NET 2025.164.1, git-URL в `Packages/manifest.json`):
+
+| API-имя | Когда | Где зовётся |
+|---|---|---|
+| `CT_WIN_GAME` | старт титров | `StoryManager.WinChapter` сразу после `UI.ShowTitlesScreen()` |
+| `CT_ALL_BOOKS` | положена последняя книга коллекции | `CollectableBook.HandleDrop`, если книга новая и `BookCollection.IsComplete`; плюс добор в `MainMenu.Start` при каждом заходе в меню, если коллекция уже полная (собрали до Steam-версии или без запущенного Steam) — там книги лежат на столе перед игроком |
+
+Имена — константы в `SteamAchievements`, и ровно такие же должны быть заведены (и опубликованы) в Steamworks → Stats & Achievements. Локализованные названия и описания живут там же, в игре текста нет.
+
+- **`SteamAPI.RestartAppIfNecessary` намеренно не зовётся.** Одна и та же сборка уходит на itch.io: запущенная не из Steam, она бы перезапускалась через Steam или падала. Вместо этого `InitEx` при старте (до первой сцены, `RuntimeInitializeOnLoadMethod`), и если Steam не запущен или игра стартовала не из него — `IsAvailable = false`, все `Unlock` молча ничего не делают. Ни один игровой скрипт про Steam знать не должен.
+- **WebGL собирается без Steamworks.** asmdef пакета включает только Standalone/Android/Editor, поэтому весь код с типами `Steamworks` в скрипте спрятан за файловым дефайном `STEAM_AVAILABLE` (`UNITY_STANDALONE || UNITY_EDITOR`). Добавляешь ещё вызов Steam-API — только внутри `#if STEAM_AVAILABLE`.
+- **Открытие достижения — с повторами.** Статистика игрока приходит от Steam асинхронно после `Init`, и `SetAchievement` до неё возвращает false. Поэтому неудавшийся `Unlock` откладывается и добивается раз в секунду из `SteamRunner.Update` (DDOL-объект, он же крутит `SteamAPI.RunCallbacks`), до 30 попыток — после этого в консоль падает предупреждение с именами: обычно это значит, что имя не заведено в Steamworks. Уже открытое достижение второй раз не открывается (`GetAchievement` перед `SetAchievement`).
+- **`steam_appid.txt` в корне проекта — только для редактора.** Steam читает его при запуске не из клиента; в билд файл не попадает (CI собирает в `build/`), Steam-клиент подставляет ID сам. Сейчас там **480** (тестовый Spacewar от Valve) — когда игра появится в Steam, **замени на её App ID**.
+- **Под Spacewar имена подменяются сами.** Если Steam отдал App ID 480, `SteamAchievements` при инициализации пишет предупреждение и дальше открывает вместо `CT_WIN_GAME` → `ACH_WIN_ONE_GAME` (Winner), вместо `CT_ALL_BOOKS` → `ACH_TRAVEL_FAR_SINGLE` (Orbiter). Так вся цепочка проверяется без заведения достижений в Steamworks: запущенный Steam + Play → в консоли `Достижение открыто`, в клиенте Библиотека → Spacewar → Достижения. Оверлей к окну редактора обычно не цепляется, плашку увидишь только в standalone-билде с `steam_appid.txt` рядом с exe. Для быстрого теста: `StartingChapter` на `StoryManager` = последняя глава (титры), `_totalOverride` = 1 на `BookCollectedUI` (первая книга закрывает коллекцию); после теста верни 0 и сбрось коллекцию в паузе.
+- Отладка: `Tools → Steam → Показать состояние` / `Сбросить достижения` (только в Play Mode при запущенном Steam).
+
 ## CI/CD
 
 [.github/workflows/main.yml](.github/workflows/main.yml) — три параллельные джобы (`build-windows`, `build-macos`, `build-webgl`) на `game-ci/unity-builder@v4`, версия Unity берётся из `vars.UNITY_VERSION`, лицензия и креды — из секретов. После сборок четвёртая джоба `deploy-itch` качает артефакты и пушит их через `butler` на itch.io по каналам `windows`, `macos`, `html`. Триггеры: `workflow_dispatch` и `repository_dispatch` типа `unity-build-trigger`.

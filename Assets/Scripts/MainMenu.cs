@@ -11,6 +11,17 @@ public class MainMenu : MonoBehaviour {
         FirstPersonController.isHolding = false;
     }
 
+    private void Start() {
+        // Коллекция книг переживает прохождения и живёт в PlayerPrefs, а достижение
+        // могло не открыться: собирали до появления Steam-версии или без запущенного
+        // Steam. Добираем именно в меню — здесь собранные книги лежат на столе
+        // перед игроком, и плашка Steam приходится к месту. Повторный Unlock
+        // на уже открытом достижении безвреден.
+        if (BookCollection.IsComplete) {
+            SteamAchievements.Unlock(SteamAchievements.AllBooks);
+        }
+    }
+
     public void Play() {
         SceneManager.LoadScene("GameScene");
     }

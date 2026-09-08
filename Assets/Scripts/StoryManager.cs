@@ -594,6 +594,8 @@ public class StoryManager : MonoBehaviour {
 
         await UI.ShowFade(1, 0.5f);
         UI.ShowTitlesScreen();
+        // Достижение за прохождение — в момент старта титров.
+        SteamAchievements.Unlock(SteamAchievements.FinishGame);
         UI.WinPanel.SetText("Вы спасли свой разум!");
         await UniTask.WaitForSeconds(1f, cancellationToken: _lifetimeCt);
         storyObjectsContainer.TitlesAnimation.Play();

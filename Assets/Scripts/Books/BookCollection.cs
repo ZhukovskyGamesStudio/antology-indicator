@@ -49,6 +49,12 @@ public static class BookCollection {
         }
     }
 
+    /// <summary>
+    /// Все книги уровня найдены. False, пока общее число ещё не посчитано
+    /// (<see cref="Total"/> пишет игровая сцена в Awake плашки коллекции).
+    /// </summary>
+    public static bool IsComplete => Total > 0 && Count >= Total;
+
     public static bool IsFound(string id) {
         Load();
         return _found.Contains(id);

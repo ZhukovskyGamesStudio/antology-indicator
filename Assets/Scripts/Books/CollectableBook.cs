@@ -83,7 +83,14 @@ public class CollectableBook : MonoBehaviour {
             return;
         }
 
-        BookCollectedUI.instance.Show(BookCollection.Add(Id));
+        bool isNew = BookCollection.Add(Id);
+        BookCollectedUI.instance.Show(isNew);
+
+        // Достижение за полную коллекцию — ровно на той книге, которая её закрыла.
+        if (isNew && BookCollection.IsComplete) {
+            SteamAchievements.Unlock(SteamAchievements.AllBooks);
+        }
+
         gameObject.SetActive(false);
     }
 }
