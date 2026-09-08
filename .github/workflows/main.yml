@@ -28,9 +28,7 @@ jobs:
         uses: game-ci/unity-builder@v4
         with:
           targetPlatform: StandaloneWindows64
-          # auto = версия из ProjectSettings/ProjectVersion.txt: CI всегда собирает тем же
-          # редактором, что и проект, и апгрейд Unity не требует править переменные репозитория.
-          unityVersion: auto
+          unityVersion: ${{ vars.UNITY_VERSION }}
         env:
           UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
           UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
@@ -64,9 +62,7 @@ jobs:
         uses: game-ci/unity-builder@v4
         with:
           targetPlatform: StandaloneOSX
-          # auto = версия из ProjectSettings/ProjectVersion.txt: CI всегда собирает тем же
-          # редактором, что и проект, и апгрейд Unity не требует править переменные репозитория.
-          unityVersion: auto
+          unityVersion: ${{ vars.UNITY_VERSION }}
         env:
           UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
           UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
@@ -109,9 +105,7 @@ jobs:
         uses: game-ci/unity-builder@v4
         with:
           targetPlatform: WebGL
-          # auto = версия из ProjectSettings/ProjectVersion.txt: CI всегда собирает тем же
-          # редактором, что и проект, и апгрейд Unity не требует править переменные репозитория.
-          unityVersion: auto
+          unityVersion: ${{ vars.UNITY_VERSION }}
         env:
           UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
           UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
